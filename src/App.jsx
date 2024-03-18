@@ -1,22 +1,21 @@
 import * as React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import ProTip from './ProTip';
-import Copyright from './Copyright';
+import SearchAppBar from './components/appbar';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import Home from './pages/home';
+import Chat from './pages/chat';
+import Profile from './pages/profile';
 
 export default function App() {
   return (
-    <Container maxWidth="sm">
-      <Box sx={{ my: 4 }}>
-        <Typography variant="h4" component="h1" sx={{ mb: 2 }}>
-          Material UI Vite.js example
-        </Typography>
-        <Button variant="contained">Hello World!</Button>
-        <ProTip />
-        <Copyright />
-      </Box>
-    </Container>
+    <>
+      <BrowserRouter>
+          <SearchAppBar />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/messages' element={<Chat />} />
+            <Route path='/profile' element={<Profile />} />
+          </Routes>
+      </BrowserRouter>
+    </>
   );
 }
