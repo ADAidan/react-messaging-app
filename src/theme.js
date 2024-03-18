@@ -3,6 +3,20 @@ import { red } from '@mui/material/colors';
 
 // Create a theme instance.
 const theme = createTheme({
+  components: {
+		MuiTypography: {
+			variants: [
+				{
+					props: {
+						variant: "caption",
+					},
+					style: {
+						fontSize: 11,
+					}
+				}
+			]
+		}
+	},
   palette: {
     primary: {
       main: '#556cd6',
