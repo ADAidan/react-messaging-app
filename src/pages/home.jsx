@@ -46,6 +46,7 @@ const Home = () => {
 				<Stack direction="row" spacing={2} sx={{
 					justifyContent: 'center',
 				}}>
+					<Button variant="contained" href='/login'>join for free</Button>
 					<Button variant="contained" href='/messages'>messages</Button>
 				</Stack>
 				<Copyright />
