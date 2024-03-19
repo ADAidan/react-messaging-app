@@ -3,7 +3,7 @@ import SearchAppBar from './components/appbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/home';
 import Messages from './pages/Messages';
-import Profile from './pages/profile';
+import SignUp from './pages/SignUp';
 
 export default function App() {
   return (
@@ -13,7 +13,7 @@ export default function App() {
           <Routes>
             <Route path='/' element={<Home />} />
             <Route path='/messages' element={<Messages />} />
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/signup' element={<SignUp />} />
           </Routes>
       </BrowserRouter>
     </>
