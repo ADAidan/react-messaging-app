@@ -1,6 +1,6 @@
 import * as React from 'react';
-import ResponsiveAppBar from './components/Appbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ResponsiveAppBar from './components/Appbar';
 import Home from './pages/Home';
 import Messages from './pages/Messages';
 import SignUp from './pages/SignUp';

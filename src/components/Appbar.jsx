@@ -39,7 +39,10 @@ function ResponsiveAppBar() {
 
   return (
     <>
-      <AppBar>
+      <AppBar 
+        elevation={3}
+        color='transparent' 
+      >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
             <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -50,7 +53,7 @@ function ResponsiveAppBar() {
                 variant="h6"
                 noWrap
                 component="p"
-                href="#app-bar-with-responsive-menu"
+                href="/"
                 sx={{
                   mr: 2,
                   display: { xs: 'none', md: 'flex' },
