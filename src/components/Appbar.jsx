@@ -41,7 +41,7 @@ function ResponsiveAppBar() {
     <>
       <AppBar 
         elevation={3}
-        color='transparent' 
+        color='inherit' 
       >
         <Container maxWidth="xl">
           <Toolbar disableGutters>
@@ -130,7 +130,7 @@ function ResponsiveAppBar() {
                 <Button
                   key={page}
                   onClick={handleCloseNavMenu}
-                  sx={{ color: 'white', display: 'block' }}
+                  sx={{ color: 'black', display: 'block' }}
                   href={`/${page.toLowerCase()}`}
                 >
                   {page}
