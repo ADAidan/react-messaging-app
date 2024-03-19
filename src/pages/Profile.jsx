@@ -4,10 +4,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import TextField from '@mui/material/TextField';
 import Divider from '@mui/material/Divider';
-import Button from '@mui/material/Button';
 import { Stack, Toolbar } from '@mui/material';
 import { FormControl, FilledInput, InputLabel, InputAdornment, IconButton } from '@mui/material';
-import { Visibility, VisibilityOff} from '@mui/icons-material';
 import EditIcon from '@mui/icons-material/Edit';
 
 const Profile = () => {
