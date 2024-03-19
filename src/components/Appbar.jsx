@@ -96,11 +96,21 @@ function ResponsiveAppBar() {
                 sx={{
                   display: { xs: 'block', md: 'none' },
                 }}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      width: '25ch',
+                    }
+                  }
+                }}
               >
                 {pages.map((page) => (
                   <MenuItem key={page} onClick={handleCloseNavMenu}>
                     <MuiLink href={`/${page.toLowerCase()}`} underline='none'>
-                      <Typography textAlign="center">{page}</Typography>
+                      <Typography 
+                        variant='button'
+                        component='p'
+                      >{page}</Typography>
                     </MuiLink>
                   </MenuItem>
                 ))}
