@@ -145,7 +145,16 @@ function ResponsiveAppBar() {
                 </IconButton>
               </Tooltip>
               <Menu
-                sx={{ mt: '45px' }}
+                sx={{ 
+                  mt: '45px', 
+                }}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      width: '25ch',
+                    }
+                  }
+                }}
                 id="menu-appbar"
                 anchorEl={anchorElUser}
                 anchorOrigin={{
@@ -163,7 +172,10 @@ function ResponsiveAppBar() {
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
                     <MuiLink href={`/${setting.toLowerCase()}`} underline='none'>
-                      <Typography textAlign="center">{setting}</Typography>
+                      <Typography 
+                        variant='button'
+                        component='p'
+                      >{setting}</Typography>
                     </MuiLink>
                   </MenuItem>
                 ))}
