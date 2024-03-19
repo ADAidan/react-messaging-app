@@ -1,6 +1,7 @@
-# Material UI - Vite.js example
+# Concord
+This is a messaging app built with React and Material-UI. 
 
-## How to use
+## How to use MUI
 
 Download the example [or clone the repo](https://github.com/mui/material-ui):
 
