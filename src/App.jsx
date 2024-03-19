@@ -1,5 +1,5 @@
 import * as React from 'react';
-import SearchAppBar from './components/appbar';
+import SearchAppBar from './components/Appbar';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Home from './pages/Home';
 
