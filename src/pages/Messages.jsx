@@ -10,6 +10,11 @@ import { Box, IconButton, Stack } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 
 const Messages = () => {
+	const messageContainerRef = React.useRef(null);
+
+	React.useEffect(() => {
+		messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+	}, []);
 
 	const handleClickAddChat = () => {
 		console.info('Added new Chat');
@@ -76,11 +81,14 @@ const Messages = () => {
 						height: '100vh',
 						borderRadius: 0,
 					}}>
-						<Box sx={{
-							overflowY: 'auto',
-							p: 1,
-							height: 'calc(100vh - 150px)',
-						}}>
+						<Box 
+							ref={messageContainerRef}
+							sx={{
+								overflowY: 'auto',
+								p: 1,
+								height: 'calc(100vh - 150px)',
+							}}
+						>
 							<Grid container spacing={2}>
 								<Message />
 								<Message />
