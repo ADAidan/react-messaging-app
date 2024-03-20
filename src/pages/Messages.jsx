@@ -17,6 +17,11 @@ const Messages = () => {
 		messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
 	}, []);
 	const user = React.useContext(UserContext);
+	const messageContainerRef = React.useRef(null);
+
+	React.useEffect(() => {
+		messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+	}, []);
 
 	const handleClickAddChat = () => {
 		console.info('Added new Chat');
