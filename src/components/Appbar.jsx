@@ -7,18 +7,20 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import MenuIcon from '@mui/icons-material/Menu';
 import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link as MuiLink } from '@mui/material';
-import { deepPurple } from '@mui/material/colors';
+import Divider from '@mui/material/Divider';
+import { Link as MuiLink, Stack } from '@mui/material';
+import DynamicAvatar from './DynamicAvatar';
+import { UserContext } from '../Context';
 
 const pages = ['Messages', 'Contacts'];
 const settings = ['Profile', 'Settings', 'Logout'];
 
 function ResponsiveAppBar() {
+  const user = React.useContext(UserContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -151,7 +153,7 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar sx={{bgcolor: deepPurple[500]}}>A</Avatar>
+                  { user.username && <DynamicAvatar name={user.username} /> }
                 </IconButton>
               </Tooltip>
               <Menu
@@ -179,9 +181,30 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                <Stack direction='row' sx={{
+                  p: 2,
+                  alignItems: 'center',
+                }}>
+                  <DynamicAvatar name={user.username} />
+                  <Typography 
+                    variant='subtitle1'
+                    component='p'
+                    sx={{
+                      textAlign: 'center',
+                      px: 1,
+                    }}
+                  >{user.username}</Typography>
+                </Stack>
+                <Divider />
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <MuiLink href={`/${setting.toLowerCase()}`} underline='none'>
+                    <MuiLink 
+                      href={`/${setting.toLowerCase()}`} 
+                      underline='none'
+                      sx={{
+                        width: '100%',
+                      }}
+                    >
                       <Typography 
                         variant='button'
                         component='p'
