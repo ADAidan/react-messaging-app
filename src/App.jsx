@@ -6,10 +6,26 @@ import Messages from './pages/Messages';
 import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
+import UserContext from './Context';
 
 export default function App() {
+  const [username, setUsername] = React.useState('AidanDyer');
+  const [profilePicture, setProfilePicture] = React.useState('');
+  const [contacts, setContacts] = React.useState([]);
+  const [directMessages, setDirectMessages] = React.useState([]);
+  const [status, setStatus] = React.useState('online');
+
+  const UserContextValue = {
+    username,
+    profilePicture,
+    contacts,
+    directMessages,
+    status,
+  }
+
   return (
     <>
+    <UserContext.Provider value={UserContextValue} />
       <BrowserRouter>
           <ResponsiveAppBar />
           <Routes>
