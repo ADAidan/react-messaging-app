@@ -1,16 +1,19 @@
 import { createContext } from 'react';
 
-const UserContext = createContext({
+export const UserContext = createContext({
   username: '',
-  profilePicture: '',
-  setProfilePicture: () => {},
-  setUsername: () => {},
+  profilePicture: null,
   Contacts: [],
-  setContacts: () => {},
   directMessages: [],
-  setDirectMessages: () => {},
   status: '',
+  settings: {
+    theme: 'light',
+    notifications: false,
+  },
+  setUsername: () => {},
+  setProfilePicture: () => {},
+  setContacts: () => {},
+  setDirectMessages: () => {},
   setStatus: () => {},
+  setSettings: () => {},
 });
-
-export default UserContext;
