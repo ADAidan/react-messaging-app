@@ -12,6 +12,11 @@ import { UserContext } from '../Context';
 
 const Messages = () => {
 	const user = React.useContext(UserContext);
+	const messageContainerRef = React.useRef(null);
+
+	React.useEffect(() => {
+		messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
+	}, []);
 
 	const handleClickAddChat = () => {
 		console.info('Added new Chat');
@@ -71,18 +76,18 @@ const Messages = () => {
 						height: '100vh',
 						borderRadius: 0,
 					}}>
-						<Box sx={{
-							overflowY: 'auto',
-							p: 1,
-							height: 'calc(100vh - 150px)',
-						}}>
+						<Box 
+							ref={messageContainerRef}
+							sx={{
+								overflowY: 'auto',
+								p: 1,
+								height: 'calc(100vh - 150px)',
+							}}
+						>
 							<Grid container spacing={2}>
-								<Message />
-								<Message />
-								<Message />
-								<Message />
-								<Message />
-								<Message />
+								{user.directMessages[0] && user.directMessages[0].messages.map((message) => (
+									<Message key={message.id} message={message} />
+								))}
 							</Grid>
 						</Box>
 						<MessageInput />

@@ -5,16 +5,16 @@ import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { AccessTime } from '@mui/icons-material';
 
-const Message = () => {
+const Message = ({message}) => {
   return (
     <Grid item xs={12}>
 			<Paper elevation={3}>
 				<Box paddingX={1}>
 					<Typography variant="subtitle1" component="h3">
-						Hello World!
+						{message.author}
 					</Typography>
 					<Typography variant="body2" component="p">
-						Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus orci ac auctor augue mauris augue neque gravida in.
+						{message.text}
 					</Typography>
 					<Box sx={{
 						display: 'flex',
@@ -26,7 +26,7 @@ const Message = () => {
 							height: 15,
 						}}/>
 						<Typography variant="caption" component="p">
-							11:57 PM
+							{message.time}
 						</Typography>
 					</Box>
 				</Box>
