@@ -6,7 +6,7 @@ import Messages from './pages/Messages';
 import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
-import UserContext from './Context';
+import { UserContext } from './Context';
 
 export default function App() {
   const [username, setUsername] = React.useState('AidanDyer');
@@ -25,7 +25,7 @@ export default function App() {
 
   return (
     <>
-    <UserContext.Provider value={UserContextValue} />
+    <UserContext.Provider value={UserContextValue} >
       <BrowserRouter>
           <ResponsiveAppBar />
           <Routes>
@@ -36,6 +36,7 @@ export default function App() {
             <Route path='/profile' element={<Profile />} />
           </Routes>
       </BrowserRouter>
+    </UserContext.Provider>
     </>
   );
 }
