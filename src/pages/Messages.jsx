@@ -8,8 +8,10 @@ import MessageInput from '../components/MessageInput';
 import ChatCard from '../components/ChatCard';
 import { Box, IconButton, Stack } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import { UserContext } from '../Context';
 
 const Messages = () => {
+	const user = React.useContext(UserContext);
 
 	const handleClickAddChat = () => {
 		console.info('Added new Chat');
@@ -54,16 +56,9 @@ const Messages = () => {
 								<AddIcon />
 							</IconButton>
 						</Stack>
-						<ChatCard />
-						<ChatCard />
-						<ChatCard />
-						<ChatCard />
-						<ChatCard /> 
-						<ChatCard />
-						<ChatCard />
-						<ChatCard />
-						<ChatCard />
-						<ChatCard /> 
+						{user.directMessages.map((chat) => (
+							<ChatCard key={chat.id} chat={chat} />
+						))}
 					</Paper>
 				</Grid>
 				<Grid item xs={8}>

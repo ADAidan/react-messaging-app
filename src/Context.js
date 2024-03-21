@@ -3,7 +3,7 @@ import { createContext } from 'react';
 export const UserContext = createContext({
   username: '',
   profilePicture: null,
-  Contacts: [],
+  contacts: [],
   directMessages: [],
   status: '',
   settings: {
