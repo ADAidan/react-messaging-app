@@ -11,11 +11,6 @@ import AddIcon from '@mui/icons-material/Add';
 import { UserContext } from '../Context';
 
 const Messages = () => {
-	const messageContainerRef = React.useRef(null);
-
-	React.useEffect(() => {
-		messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
-	}, []);
 	const user = React.useContext(UserContext);
 	const messageContainerRef = React.useRef(null);
 
