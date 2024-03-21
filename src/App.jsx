@@ -16,8 +16,31 @@ export default function App() {
   const [directMessages, setDirectMessages] = React.useState([]);
   const [status, setStatus] = React.useState('online');
 
+
   React.useEffect(() => {
     setContacts([
+      {
+        id: 1,
+        username: 'Seymour Wade'
+      },
+      {
+        id: 2,
+        username: 'Kaiya Mccarthy'
+      },
+      {
+        id: 3,
+        username: 'Brooks Sosa'
+      },
+      {
+        id: 4,
+        username: 'Anton Boone'
+      },
+      {
+        id: 5,
+        username: 'Hung Buchanan'
+      },
+    ]);
+    setDirectMessages([
       {
         id: 1,
         username: 'Seymour Wade'
