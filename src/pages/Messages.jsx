@@ -90,12 +90,9 @@ const Messages = () => {
 							}}
 						>
 							<Grid container spacing={2}>
-								<Message />
-								<Message />
-								<Message />
-								<Message />
-								<Message />
-								<Message />
+								{user.directMessages[0] && user.directMessages[0].messages.map((message) => (
+									<Message key={message.id} message={message} />
+								))}
 							</Grid>
 						</Box>
 						<MessageInput />
