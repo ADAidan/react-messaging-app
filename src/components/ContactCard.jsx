@@ -2,9 +2,9 @@ import React from 'react';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import Avatar from '@mui/material/Avatar';
 import Badge from '@mui/material/Badge';
 import styled from '@mui/material/styles/styled';
+import DynamicAvatar from './DynamicAvatar';
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   '& .MuiBadge-badge': {
@@ -35,7 +35,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const ContactCard = ({name}) => {
+const ContactCard = ({contact}) => {
   return (
     <Paper elevation={0} sx={{ 
       p: 1,
@@ -52,15 +52,11 @@ const ContactCard = ({name}) => {
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           variant="dot"
         >
-          <Avatar
-            sx={{
-              bgcolor: '#3f51b5',
-            }}
-          >T</Avatar>
+          <DynamicAvatar name={contact.username} />
         </StyledBadge>
         <Stack>
           <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
-            {name}
+            {contact.username}
           </Typography>
           <Typography variant="body2" component="p" sx={{m: 0, p: 0}}>
             Online
