@@ -12,13 +12,51 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
-import { Link as MuiLink } from '@mui/material';
-import { deepPurple } from '@mui/material/colors';
+import Divider from '@mui/material/Divider';
+import { Link as MuiLink, Stack } from '@mui/material';
+import { UserContext } from '../Context';
 
 const pages = ['Messages', 'Contacts'];
 const settings = ['Profile', 'Settings', 'Logout'];
 
+function stringToColor(string) {
+  let hash = 0;
+  let i;
+
+  /* eslint-disable no-bitwise */
+  for (i = 0; i < string.length; i += 1) {
+    hash = string.charCodeAt(i) + ((hash << 5) - hash);
+  }
+
+  let color = '#';
+
+  for (i = 0; i < 3; i += 1) {
+    const value = (hash >> (i * 8)) & 0xff;
+    color += `00${value.toString(16)}`.slice(-2);
+  }
+  /* eslint-enable no-bitwise */
+
+  return color;
+}
+
+function stringAvatar(name) {
+  let initials;
+  try {
+    initials = name.split(' ')[0][0] + name.split(' ')[1][0];
+  } catch (error) {
+    initials = name[0][0];
+  }
+
+  return {
+    sx: {
+      bgcolor: stringToColor(name),
+    },
+    children: `${initials}`,
+  };
+}
+
 function ResponsiveAppBar() {
+  const user = React.useContext(UserContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -151,7 +189,7 @@ function ResponsiveAppBar() {
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="Open settings">
                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar sx={{bgcolor: deepPurple[500]}}>A</Avatar>
+                  { user.username && <Avatar {...stringAvatar(user.username)} /> }
                 </IconButton>
               </Tooltip>
               <Menu
@@ -179,9 +217,30 @@ function ResponsiveAppBar() {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
+                <Stack direction='row' sx={{
+                  p: 2,
+                  alignItems: 'center',
+                }}>
+                  <Avatar {...stringAvatar(user.username)} />
+                  <Typography 
+                    variant='subtitle1'
+                    component='p'
+                    sx={{
+                      textAlign: 'center',
+                      px: 1,
+                    }}
+                  >{user.username}</Typography>
+                </Stack>
+                <Divider />
                 {settings.map((setting) => (
                   <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <MuiLink href={`/${setting.toLowerCase()}`} underline='none'>
+                    <MuiLink 
+                      href={`/${setting.toLowerCase()}`} 
+                      underline='none'
+                      sx={{
+                        width: '100%',
+                      }}
+                    >
                       <Typography 
                         variant='button'
                         component='p'
