@@ -18,7 +18,7 @@ const Contacts = () => {
         <Divider />
         <Stack direction='column' spacing={0}>
           {user.contacts && user.contacts.map((contact) => (
-            <ContactCard key={contact.id} name={contact.username} />
+            <ContactCard key={contact.id} contact={contact} />
           ))}
         </Stack>
       </Stack>
