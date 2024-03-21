@@ -35,7 +35,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const ContactCard = () => {
+const ContactCard = ({name}) => {
   return (
     <Paper elevation={0} sx={{ 
       p: 1,
@@ -56,11 +56,11 @@ const ContactCard = () => {
             sx={{
               bgcolor: '#3f51b5',
             }}
-          >BE</Avatar>
+          >T</Avatar>
         </StyledBadge>
         <Stack>
           <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
-            Contact
+            {name}
           </Typography>
           <Typography variant="body2" component="p" sx={{m: 0, p: 0}}>
             Online
