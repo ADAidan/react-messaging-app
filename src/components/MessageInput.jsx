@@ -9,10 +9,21 @@ import IconButton from '@mui/material/IconButton'
 import SendIcon from '@mui/icons-material/Send';
 import { Tooltip } from '@mui/material'
 
-const MessageInput = () => {
+const MessageInput = ({setDisplayedMessages, username}) => {
+	const [message, setMessage] = React.useState('');
 
 	const handleClickSendMessage = () => {
-		console.info('sent message');
+		if (!message) return;
+		setDisplayedMessages((prevMessages) => {
+			const newMessage = {
+				id: prevMessages.length + 1,
+				author: username,
+				text: message,
+				time: new Date().toLocaleTimeString(),
+			};
+			return [...prevMessages, newMessage];
+		});
+		setMessage('');
 	};
 
 	const handleMouseDownMessage = (e) => {
@@ -39,6 +50,8 @@ const MessageInput = () => {
 				<FormControl fullWidth sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="standard-adornment-message">Message</InputLabel>
           <Input
+						value={message}
+						onChange={(e) => setMessage(e.target.value)}
             id="standard-adornment-message"
             endAdornment={<InputAdornment position="end"
 					>

@@ -13,10 +13,22 @@ import { UserContext } from '../Context';
 const Messages = () => {
 	const user = React.useContext(UserContext);
 	const messageContainerRef = React.useRef(null);
+	const [displayedMessages, setDisplayedMessages] = React.useState([]);
 
 	React.useEffect(() => {
 		messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
 	}, []);
+
+	React.useEffect(() => {
+		if (!user.directMessages) return;
+		const getDisplayedMessages = () => {
+			const currentChat = user.directMessages.find((chat) => chat.id === 1);
+			if (!currentChat) return [];
+			return currentChat.messages;
+		};
+		const messagesData = getDisplayedMessages();
+		setDisplayedMessages(messagesData);
+	}, [user.directMessages]);
 
 	const handleClickAddChat = () => {
 		console.info('Added new Chat');
@@ -85,12 +97,12 @@ const Messages = () => {
 							}}
 						>
 							<Grid container spacing={2}>
-								{user.directMessages[0] && user.directMessages[0].messages.map((message) => (
+								{displayedMessages && displayedMessages.map((message) => (
 									<Message key={message.id} message={message} />
 								))}
 							</Grid>
 						</Box>
-						<MessageInput />
+						<MessageInput setDisplayedMessages={setDisplayedMessages} username={user.username}/>
 					</Paper>
 				</Grid>
 			</Grid>
