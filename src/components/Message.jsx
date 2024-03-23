@@ -7,7 +7,11 @@ import { AccessTime } from '@mui/icons-material';
 
 const Message = ({message}) => {
   return (
-    <Grid item xs={12}>
+    <Grid 
+			data-testid={`message-${message.id}`}
+			item 
+			xs={12}
+		>
 			<Paper elevation={3}>
 				<Box paddingX={1}>
 					<Typography variant="subtitle1" component="h3">

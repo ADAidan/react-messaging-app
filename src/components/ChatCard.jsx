@@ -35,15 +35,23 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const ChatCard = ({chat}) => {
+const ChatCard = ({chat, setSelectedChat}) => {
+  const handleClick = () => {
+    console.log('Selected Chat:', chat.id);
+    setSelectedChat(chat.id);
+  };
   return (
-    <Paper elevation={0} sx={{ 
-      p: 1,
-      '&:hover' : {
-        bgcolor: 'rgba(0, 0, 0, 0.1)',
-        cursor: 'pointer',
-      }
-      }}>
+    <Paper 
+      onClick={handleClick}
+      elevation={0} 
+      sx={{ 
+        p: 1,
+        '&:hover' : {
+          bgcolor: 'rgba(0, 0, 0, 0.1)',
+          cursor: 'pointer',
+        }
+      }}
+    >
       <Stack direction="row" spacing={2} sx={{
         alignItems: 'center',
       }}>
