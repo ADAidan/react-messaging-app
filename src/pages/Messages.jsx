@@ -41,10 +41,13 @@ const Messages = () => {
 	}
 
 	return (
-		<Container maxWidth="lg" sx={{
-			height: '100vh',
-			my: 0, 
-		}}>
+		<Container 
+			maxWidth="lg" 
+			sx={{
+				height: '100vh',
+				my: 0, 
+			}}
+		>
 			<Grid container spacing={2}>
 				<Grid item xs={4}>
 				<Paper elevation={3} sx={{
