@@ -6,6 +6,7 @@ import Paper from '@mui/material/Paper';
 import Message from '../components/Message';
 import MessageInput from '../components/MessageInput';
 import ChatCard from '../components/ChatCard';
+import NoMessages from '../components/NoMessages';
 import { Box, IconButton, Stack } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import { UserContext } from '../Context';
@@ -14,21 +15,22 @@ const Messages = () => {
 	const user = React.useContext(UserContext);
 	const messageContainerRef = React.useRef(null);
 	const [displayedMessages, setDisplayedMessages] = React.useState([]);
+	const [selectedChat, setSelectedChat] = React.useState(1);
 
 	React.useEffect(() => {
 		messageContainerRef.current.scrollTop = messageContainerRef.current.scrollHeight;
-	}, []);
+	}, [displayedMessages]);
 
 	React.useEffect(() => {
 		if (!user.directMessages) return;
 		const getDisplayedMessages = () => {
-			const currentChat = user.directMessages.find((chat) => chat.id === 1);
+			const currentChat = user.directMessages.find((chat) => chat.id === selectedChat);
 			if (!currentChat) return [];
 			return currentChat.messages;
 		};
 		const messagesData = getDisplayedMessages();
 		setDisplayedMessages(messagesData);
-	}, [user.directMessages]);
+	}, [user.directMessages, selectedChat]);
 
 	const handleClickAddChat = () => {
 		console.info('Added new Chat');
@@ -74,7 +76,7 @@ const Messages = () => {
 							</IconButton>
 						</Stack>
 						{user.directMessages.map((chat) => (
-							<ChatCard key={chat.id} chat={chat} />
+							<ChatCard key={chat.id} chat={chat} setSelectedChat={setSelectedChat} />
 						))}
 					</Paper>
 				</Grid>
@@ -97,9 +99,10 @@ const Messages = () => {
 							}}
 						>
 							<Grid container spacing={2}>
-								{displayedMessages && displayedMessages.map((message) => (
+								{displayedMessages ? displayedMessages.map((message) => (
 									<Message key={message.id} message={message} />
-								))}
+								)) : 
+								<NoMessages />}
 							</Grid>
 						</Box>
 						<MessageInput setDisplayedMessages={setDisplayedMessages} username={user.username}/>

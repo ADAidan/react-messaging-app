@@ -67,7 +67,15 @@ export default function App() {
       },
       {
         id: 2,
-        username: 'Kaiya Mccarthy'
+        username: 'Kaiya Mccarthy',
+        messages: [
+          {
+            id: 1,
+            author: 'Kaiya Mccarthy',
+            text: 'Hello!',
+            time: '10:00 AM'
+          },
+        ]
       },
       {
         id: 3,
