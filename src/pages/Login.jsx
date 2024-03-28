@@ -95,7 +95,7 @@ const Login = () => {
                 textAlign: 'left',
                 fontWeight: 700,
               }}
-            >Don't have an account?</Typography>
+            >Don&apos;t have an account?</Typography>
               <Button variant="text" href='/signup' >
                 Sign Up
               </Button>
