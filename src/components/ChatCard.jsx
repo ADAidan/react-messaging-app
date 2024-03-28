@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -74,5 +74,19 @@ const ChatCard = ({chat, setSelectedChat}) => {
     </Paper>
   );
 };
+
+ChatCard.propTypes = {
+  chat: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired,
+    messages: PropTypes.arrayOf(PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      author: PropTypes.string.isRequired,
+      text: PropTypes.string.isRequired,
+      time: PropTypes.string.isRequired,
+    })),
+  }),
+  setSelectedChat: PropTypes.func.isRequired,
+}
 
 export default ChatCard;
