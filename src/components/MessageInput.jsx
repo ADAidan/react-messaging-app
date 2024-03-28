@@ -1,4 +1,4 @@
-import React from 'react'
+import PropTypes from 'prop-types'
 import Paper from '@mui/material/Paper'
 import Box from '@mui/material/Box'
 import InputAdornment from '@mui/material/InputAdornment'
@@ -70,6 +70,10 @@ const MessageInput = ({setDisplayedMessages, username}) => {
 			</Box>
 		</Paper>
   );
+};
+
+MessageInput.propTypes = {
+	setDisplayedMessages: PropTypes.func.isRequired,	
 };
 
 export default MessageInput
