@@ -1,4 +1,4 @@
-import React from 'react'
+import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 
 function stringToColor(string) {
@@ -42,5 +42,9 @@ const DynamicAvatar = ({name}) => {
     <Avatar {...stringAvatar(name)} />
   )
 }
+
+DynamicAvatar.propTypes = {
+  name: PropTypes.string.isRequired,
+};
 
 export default DynamicAvatar
