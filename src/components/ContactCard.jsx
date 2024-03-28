@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
@@ -65,6 +65,13 @@ const ContactCard = ({contact}) => {
       </Stack>
     </Paper>
   );
+};
+
+ContactCard.propTypes = {
+  contact: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    username: PropTypes.string.isRequired,
+  }),
 };
 
 export default ContactCard;
