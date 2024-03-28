@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 
@@ -18,6 +18,6 @@ const EmailNotificationCheckbox = () => {
         inputProps={{ 'aria-label': 'receive email notifications' }}
       />} />
   );
-}
+};
 
-export default EmailNotificationCheckbox
+export default EmailNotificationCheckbox;

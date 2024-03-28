@@ -46,6 +46,6 @@ Message.propTypes = {
 		text: PropTypes.string.isRequired,
 		time: PropTypes.string.isRequired,
 	}),
-}
+};
 
 export default Message;

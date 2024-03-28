@@ -1,14 +1,14 @@
-import PropTypes from 'prop-types'
-import * as React from 'react'
-import Paper from '@mui/material/Paper'
-import Box from '@mui/material/Box'
-import InputAdornment from '@mui/material/InputAdornment'
-import FormControl from '@mui/material/FormControl'
-import InputLabel from '@mui/material/InputLabel'
-import Input from '@mui/material/Input'
-import IconButton from '@mui/material/IconButton'
+import PropTypes from 'prop-types';
+import * as React from 'react';
+import Paper from '@mui/material/Paper';
+import Box from '@mui/material/Box';
+import InputAdornment from '@mui/material/InputAdornment';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Input from '@mui/material/Input';
+import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
-import { Tooltip } from '@mui/material'
+import { Tooltip } from '@mui/material';
 
 const MessageInput = ({setDisplayedMessages, username}) => {
 	const [message, setMessage] = React.useState('');
@@ -78,4 +78,4 @@ MessageInput.propTypes = {
 	username: PropTypes.string.isRequired,
 };
 
-export default MessageInput
+export default MessageInput;

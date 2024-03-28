@@ -19,7 +19,7 @@ function stringToColor(string) {
   /* eslint-enable no-bitwise */
 
   return color;
-}
+};
 
 function stringAvatar(name) {
   let initials;
@@ -35,16 +35,16 @@ function stringAvatar(name) {
     },
     children: `${initials}`,
   };
-}
+};
 
 const DynamicAvatar = ({name}) => {
   return (
     <Avatar {...stringAvatar(name)} />
   )
-}
+};
 
 DynamicAvatar.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-export default DynamicAvatar
+export default DynamicAvatar;

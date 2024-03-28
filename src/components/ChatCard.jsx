@@ -87,6 +87,6 @@ ChatCard.propTypes = {
     })),
   }),
   setSelectedChat: PropTypes.func.isRequired,
-}
+};
 
 export default ChatCard;

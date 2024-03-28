@@ -1,5 +1,5 @@
-import Grid from '@mui/material/Grid'
-import Typography from '@mui/material/Typography'
+import Grid from '@mui/material/Grid';
+import Typography from '@mui/material/Typography';
 
 const NoMessages = () => {
   return (
@@ -9,6 +9,6 @@ const NoMessages = () => {
       </Typography>
     </Grid>
   )
-}
+};
 
-export default NoMessages
+export default NoMessages;

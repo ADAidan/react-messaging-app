@@ -18,4 +18,4 @@ export default function RememberUserCheckbox() {
         inputProps={{ 'aria-label': 'Remember user' }}
       />} />
   );
-}
+};
