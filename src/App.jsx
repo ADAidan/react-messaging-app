@@ -10,14 +10,17 @@ import Login from './pages/Login';
 import { UserContext } from './Context';
 
 export default function App() {
-  const [username, setUsername] = React.useState('AidanDyer');
+  const [username, setUsername] = React.useState('');
   const [profilePicture, setProfilePicture] = React.useState('');
   const [contacts, setContacts] = React.useState([]);
   const [directMessages, setDirectMessages] = React.useState([]);
-  const [status, setStatus] = React.useState('online');
+  const [status, setStatus] = React.useState('');
 
 
   React.useEffect(() => {
+    setUsername('AidanDyer');
+    setProfilePicture('https://avatars.githubusercontent.com/u/77445921');
+    setStatus('Online');
     setContacts([
       {
         id: 1,
@@ -117,4 +120,4 @@ export default function App() {
     </UserContext.Provider>
     </>
   );
-}
+};

@@ -1,4 +1,3 @@
-import * as React from 'react';
 import Copyright from '../Copyright';
 import Container from '@mui/material/Container';
 import Stack from '@mui/material/Stack';

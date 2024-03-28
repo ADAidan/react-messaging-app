@@ -1,4 +1,4 @@
-import React from 'react'
+import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 
 function stringToColor(string) {
@@ -19,7 +19,7 @@ function stringToColor(string) {
   /* eslint-enable no-bitwise */
 
   return color;
-}
+};
 
 function stringAvatar(name) {
   let initials;
@@ -35,12 +35,16 @@ function stringAvatar(name) {
     },
     children: `${initials}`,
   };
-}
+};
 
 const DynamicAvatar = ({name}) => {
   return (
     <Avatar {...stringAvatar(name)} />
   )
-}
+};
 
-export default DynamicAvatar
+DynamicAvatar.propTypes = {
+  name: PropTypes.string.isRequired,
+};
+
+export default DynamicAvatar;

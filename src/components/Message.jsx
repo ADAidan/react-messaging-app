@@ -1,4 +1,4 @@
-import React from 'react';
+import PropTypes from 'prop-types';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
@@ -37,6 +37,15 @@ const Message = ({message}) => {
 			</Paper>
     </Grid>
   )
+};
+
+Message.propTypes = {
+	message: PropTypes.shape({
+		id: PropTypes.number.isRequired,
+		author: PropTypes.string.isRequired,
+		text: PropTypes.string.isRequired,
+		time: PropTypes.string.isRequired,
+	}),
 };
 
 export default Message;

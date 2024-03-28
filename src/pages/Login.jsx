@@ -1,4 +1,4 @@
-import React from 'react'
+import * as React from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -95,7 +95,7 @@ const Login = () => {
                 textAlign: 'left',
                 fontWeight: 700,
               }}
-            >Don't have an account?</Typography>
+            >Don&apos;t have an account?</Typography>
               <Button variant="text" href='/signup' >
                 Sign Up
               </Button>
