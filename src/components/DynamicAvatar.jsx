@@ -23,6 +23,7 @@ function stringToColor(string) {
 
 function stringAvatar(name) {
   let initials;
+  if (!name) return null;
   try {
     initials = name.split(' ')[0][0] + name.split(' ')[1][0];
   } catch (error) {

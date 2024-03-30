@@ -11,7 +11,7 @@ const Contacts = () => {
   const user = React.useContext(UserContext);
 
   return (
-    <Container maxWidth='md'>
+    <Container data-testid='contact-page' maxWidth='md'>
       <Stack direction='column' spacing={2}>
         <Toolbar/>
         <SearchBar />

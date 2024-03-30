@@ -42,6 +42,7 @@ function ResponsiveAppBar() {
   return (
     <>
       <AppBar 
+        data-testid='app-bar'
         elevation={3}
         color='inherit' 
       >
