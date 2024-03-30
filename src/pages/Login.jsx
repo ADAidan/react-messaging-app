@@ -22,6 +22,8 @@ const Login = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  
+  // add forgot password link
 
   return (
     <Container maxWidth="md">
@@ -50,7 +52,7 @@ const Login = () => {
               aria-describedby="username-helper-text"
             />
             <FormHelperText id="username-helper-text">
-              Create a username
+              Enter your username
             </FormHelperText>
           </FormControl>
           <FormControl variant="standard" fullWidth>
@@ -72,7 +74,7 @@ const Login = () => {
               aria-describedby='password-helper-text'
             />
             <FormHelperText id="password-helper-text">
-              Create a password
+              Enter your password
             </FormHelperText>
           </FormControl>
           <RememberUserCheckbox />
