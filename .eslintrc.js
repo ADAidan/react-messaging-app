@@ -19,5 +19,12 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
+  plugins: ["vitest"],
+  globals: {
+    describe: "readonly",
+    it: "readonly",
+    expect: "readonly",
+    test: "readonly",
+  },
   rules: {},
 };
