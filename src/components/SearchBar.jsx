@@ -1,3 +1,4 @@
+import * as React from 'react';
 import Box from '@mui/material/Box';
 import { alpha, styled } from '@mui/material/styles';
 import InputBase from '@mui/material/InputBase';
@@ -46,18 +47,18 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-const SearchBar = () => {
+function SearchBar() {
   return (
-    <Search data-testid='search-bar'>
+    <Search data-testid="search-bar">
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
-        placeholder='Search…'
+        placeholder="Search…"
         inputProps={{ 'aria-label': 'search' }}
       />
     </Search>
   );
-};
+}
 
 export default SearchBar;

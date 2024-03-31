@@ -10,72 +10,77 @@ import IconButton from '@mui/material/IconButton';
 import SendIcon from '@mui/icons-material/Send';
 import { Tooltip } from '@mui/material';
 
-const MessageInput = ({setDisplayedMessages, username}) => {
-	const [message, setMessage] = React.useState('');
+function MessageInput({ setDisplayedMessages, username }) {
+  const [message, setMessage] = React.useState('');
 
-	const handleClickSendMessage = () => {
-		if (!message) return;
-		setDisplayedMessages((prevMessages) => {
-			const newMessage = {
-				id: prevMessages.length + 1,
-				author: username,
-				text: message,
-				time: new Date().toLocaleTimeString(),
-			};
-			return [...prevMessages, newMessage];
-		});
-		setMessage('');
-	};
+  const handleClickSendMessage = () => {
+    if (!message) return;
+    setDisplayedMessages((prevMessages) => {
+      const newMessage = {
+        id: prevMessages.length + 1,
+        author: username,
+        text: message,
+        time: new Date().toLocaleTimeString(),
+      };
+      return [...prevMessages, newMessage];
+    });
+    setMessage('');
+  };
 
-	const handleMouseDownMessage = (e) => {
-		e.preventDefault();
-	};
+  const handleMouseDownMessage = (e) => {
+    e.preventDefault();
+  };
 
   return (
-    <Paper elevation={0} sx={{
-			display: 'flex',
-			position: 'absolute',
-			width: '90%',
-			bottom: 0,
-			mb: 1,
-		}}>
-			<Box 
-				component='form'
-				sx={{
-					display: 'flex',
-					width: '100%',
-				}}
-				noValidate
-				autoComplete='off'
-			>
-				<FormControl fullWidth sx={{ m: 1 }} variant="standard">
+    <Paper
+      elevation={0}
+      sx={{
+        display: 'flex',
+        position: 'absolute',
+        width: '90%',
+        bottom: 0,
+        mb: 1,
+      }}
+    >
+      <Box
+        component="form"
+        sx={{
+          display: 'flex',
+          width: '100%',
+        }}
+        noValidate
+        autoComplete="off"
+      >
+        <FormControl fullWidth sx={{ m: 1 }} variant="standard">
           <InputLabel htmlFor="standard-adornment-message">Message</InputLabel>
           <Input
-						value={message}
-						onChange={(e) => setMessage(e.target.value)}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             id="standard-adornment-message"
-            endAdornment={<InputAdornment position="end"
-					>
-						<Tooltip title="Send Message">
-							<IconButton
-								aria-label="toggle password visibility"
-								onClick={handleClickSendMessage}
-								onMouseDown={handleMouseDownMessage}
-								edge="end"
-							>
-								<SendIcon />
-							</IconButton>
-						</Tooltip>
-					</InputAdornment>}/>
+            endAdornment={(
+              <InputAdornment position="end">
+                <Tooltip title="Send Message">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickSendMessage}
+                    onMouseDown={handleMouseDownMessage}
+                    edge="end"
+                  >
+                    <SendIcon />
+                  </IconButton>
+                </Tooltip>
+              </InputAdornment>
+)}
+          />
         </FormControl>
-			</Box>
-		</Paper>
+      </Box>
+    </Paper>
   );
-};
+}
 
 MessageInput.propTypes = {
-	setDisplayedMessages: PropTypes.func.isRequired, 
-	username: PropTypes.string.isRequired,
+  setDisplayedMessages: PropTypes.func.isRequired,
+  username: PropTypes.string.isRequired,
 };
 
 export default MessageInput;
