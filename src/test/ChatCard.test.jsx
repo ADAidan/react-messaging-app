@@ -1,5 +1,5 @@
 import * as React from "react";
-import { render, screen, describe, expect, it } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import ChatCard from "../components/ChatCard";
 
 describe("ChatCard", () => {
