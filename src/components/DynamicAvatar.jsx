@@ -1,3 +1,4 @@
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 
@@ -19,15 +20,20 @@ function stringToColor(string) {
   /* eslint-enable no-bitwise */
 
   return color;
-};
+}
 
 function stringAvatar(name) {
   let initials;
   if (!name) return null;
   try {
-    initials = name.split(' ')[0][0] + name.split(' ')[1][0];
+    const [firstName, lastName] = name.split(' ');
+    if (!lastName) {
+      initials = `${firstName?.[0] || ''}`;
+    }
+    initials = `${firstName?.[0] || ''}${lastName?.[0] || ''}`;
   } catch (error) {
-    initials = name[0][0];
+    const [firstName] = name;
+    initials = firstName?.[0] || '';
   }
 
   return {
@@ -36,13 +42,13 @@ function stringAvatar(name) {
     },
     children: `${initials}`,
   };
-};
+}
 
-const DynamicAvatar = ({name}) => {
-  return (
-    <Avatar {...stringAvatar(name)} />
-  )
-};
+function DynamicAvatar({ name }) {
+  if (!name) return null;
+  const avatarProps = stringAvatar(name);
+  return <Avatar sx={avatarProps.sx}>{avatarProps.children}</Avatar>;
+}
 
 DynamicAvatar.propTypes = {
   name: PropTypes.string.isRequired,

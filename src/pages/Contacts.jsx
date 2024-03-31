@@ -5,18 +5,18 @@ import Toolbar from '@mui/material/Toolbar';
 import Divider from '@mui/material/Divider';
 import SearchBar from '../components/SearchBar';
 import ContactCard from '../components/ContactCard';
-import { UserContext } from '../Context';
+import UserContext from '../Context';
 
-const Contacts = () => {
+function Contacts() {
   const user = React.useContext(UserContext);
 
   return (
-    <Container data-testid='contact-page' maxWidth='md'>
-      <Stack direction='column' spacing={2}>
-        <Toolbar/>
+    <Container data-testid="contact-page" maxWidth="md">
+      <Stack direction="column" spacing={2}>
+        <Toolbar />
         <SearchBar />
         <Divider />
-        <Stack direction='column' spacing={0}>
+        <Stack direction="column" spacing={0}>
           {user.contacts && user.contacts.map((contact) => (
             <ContactCard key={contact.id} contact={contact} />
           ))}
@@ -24,6 +24,6 @@ const Contacts = () => {
       </Stack>
     </Container>
   );
-};
+}
 
 export default Contacts;

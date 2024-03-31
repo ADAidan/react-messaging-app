@@ -14,7 +14,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { Button } from '@mui/material';
 import RememberUserCheckbox from '../components/RememberUserCheckbox';
 
-const Login = () => {
+function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -22,21 +22,27 @@ const Login = () => {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  
+
   // add forgot password link
 
   return (
     <Container maxWidth="md">
-      <Stack direction="column" sx={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-      }}>
-        <Paper elevation={3} sx={{
-          p: 2,
-          width: '100%',
-          maxWidth: 400,
-        }}>
+      <Stack
+        direction="column"
+        sx={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+        }}
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            p: 2,
+            width: '100%',
+            maxWidth: 400,
+          }}
+        >
           <Typography
             variant="h4"
             component="h1"
@@ -44,7 +50,9 @@ const Login = () => {
               textAlign: 'left',
               fontWeight: 700,
             }}
-          >Log in</Typography>
+          >
+            Log in
+          </Typography>
           <FormControl variant="standard" fullWidth>
             <InputLabel htmlFor="username-input">Username</InputLabel>
             <Input
@@ -60,7 +68,7 @@ const Login = () => {
             <Input
               id="password-input"
               type={showPassword ? 'text' : 'password'}
-              endAdornment={
+              endAdornment={(
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
@@ -70,26 +78,30 @@ const Login = () => {
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
-              }
-              aria-describedby='password-helper-text'
+              )}
+              aria-describedby="password-helper-text"
             />
             <FormHelperText id="password-helper-text">
               Enter your password
             </FormHelperText>
           </FormControl>
           <RememberUserCheckbox />
-          <Button 
-            variant="contained" 
-            fullWidth 
-            sx={{ 
-              my: 2, 
-            }}>
-              Log In
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{
+              my: 2,
+            }}
+          >
+            Log In
           </Button>
-          <Stack direction="row" sx={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+          <Stack
+            direction="row"
+            sx={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <Typography
               variant="body2"
               component="p"
@@ -97,15 +109,17 @@ const Login = () => {
                 textAlign: 'left',
                 fontWeight: 700,
               }}
-            >Don&apos;t have an account?</Typography>
-              <Button variant="text" href='/signup' >
-                Sign Up
-              </Button>
+            >
+              Don&apos;t have an account?
+            </Typography>
+            <Button variant="text" href="/signup">
+              Sign Up
+            </Button>
           </Stack>
         </Paper>
       </Stack>
     </Container>
   );
-};
+}
 
 export default Login;

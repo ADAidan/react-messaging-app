@@ -1,3 +1,4 @@
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -35,19 +36,26 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const ContactCard = ({contact}) => {
+function ContactCard({ contact }) {
   return (
-    <Paper elevation={0} sx={{ 
-      p: 1,
-      '&:hover' : {
-        bgcolor: 'rgba(0, 0, 0, 0.1)',
-        cursor: 'pointer',
-      }
-      }}>
-      <Stack direction="row" spacing={2} sx={{
-        alignItems: 'center',
-      }}>
-        <StyledBadge 
+    <Paper
+      elevation={0}
+      sx={{
+        p: 1,
+        '&:hover': {
+          bgcolor: 'rgba(0, 0, 0, 0.1)',
+          cursor: 'pointer',
+        },
+      }}
+    >
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          alignItems: 'center',
+        }}
+      >
+        <StyledBadge
           overlap="circular"
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           variant="dot"
@@ -58,20 +66,20 @@ const ContactCard = ({contact}) => {
           <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
             {contact.username}
           </Typography>
-          <Typography variant="body2" component="p" sx={{m: 0, p: 0}}>
+          <Typography variant="body2" component="p" sx={{ m: 0, p: 0 }}>
             Online
           </Typography>
         </Stack>
       </Stack>
     </Paper>
   );
-};
+}
 
 ContactCard.propTypes = {
   contact: PropTypes.shape({
     id: PropTypes.number.isRequired,
     username: PropTypes.string.isRequired,
-  }),
+  }).isRequired,
 };
 
 export default ContactCard;

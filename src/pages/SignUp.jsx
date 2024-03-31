@@ -1,4 +1,4 @@
-import * as React from 'react'
+import * as React from 'react';
 import Container from '@mui/material/Container';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -15,7 +15,7 @@ import { Button } from '@mui/material';
 import EmailNotificationCheckbox from '../components/EmailNotificationCheckbox';
 import TermsCheckbox from '../components/TermsCheckbox';
 
-const SignUp = () => {
+function SignUp() {
   const [showPassword, setShowPassword] = React.useState(false);
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -28,16 +28,22 @@ const SignUp = () => {
 
   return (
     <Container maxWidth="md">
-      <Stack direction="column" sx={{
-        alignItems: 'center',
-        justifyContent: 'center',
-        height: '100vh',
-      }}>
-        <Paper elevation={3} sx={{
-          p: 2,
-          width: '100%',
-          maxWidth: 400,
-        }}>
+      <Stack
+        direction="column"
+        sx={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          height: '100vh',
+        }}
+      >
+        <Paper
+          elevation={3}
+          sx={{
+            p: 2,
+            width: '100%',
+            maxWidth: 400,
+          }}
+        >
           <Typography
             variant="h4"
             component="h1"
@@ -45,7 +51,9 @@ const SignUp = () => {
               textAlign: 'left',
               fontWeight: 700,
             }}
-          >Sign Up</Typography>
+          >
+            Sign Up
+          </Typography>
           <FormControl variant="standard" fullWidth>
             <InputLabel htmlFor="email-input">Email</InputLabel>
             <Input
@@ -71,7 +79,7 @@ const SignUp = () => {
             <Input
               id="password-input"
               type={showPassword ? 'text' : 'password'}
-              endAdornment={
+              endAdornment={(
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
@@ -81,8 +89,8 @@ const SignUp = () => {
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
-              }
-              aria-describedby='password-helper-text'
+              )}
+              aria-describedby="password-helper-text"
             />
             <FormHelperText id="password-helper-text">
               Create a password
@@ -90,18 +98,22 @@ const SignUp = () => {
           </FormControl>
           <EmailNotificationCheckbox />
           <TermsCheckbox />
-          <Button 
-            variant="contained" 
-            fullWidth 
-            sx={{ 
-              my: 2, 
-            }}>
+          <Button
+            variant="contained"
+            fullWidth
+            sx={{
+              my: 2,
+            }}
+          >
             Sign Up
           </Button>
-          <Stack direction="row" sx={{
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
+          <Stack
+            direction="row"
+            sx={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+          >
             <Typography
               variant="body2"
               component="p"
@@ -109,15 +121,17 @@ const SignUp = () => {
                 textAlign: 'left',
                 fontWeight: 700,
               }}
-            >Already have an account?</Typography>
-              <Button variant="text" href='/login' >
-                Log In
-              </Button>
+            >
+              Already have an account?
+            </Typography>
+            <Button variant="text" href="/login">
+              Log In
+            </Button>
           </Stack>
         </Paper>
       </Stack>
     </Container>
   );
-};
+}
 
 export default SignUp;

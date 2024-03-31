@@ -12,10 +12,13 @@ export default function RememberUserCheckbox() {
   return (
     <FormControlLabel
       label="Remember me"
-      control={<Checkbox
-        checked={checked}
-        onChange={handleChange}
-        inputProps={{ 'aria-label': 'Remember user' }}
-      />} />
+      control={(
+        <Checkbox
+          checked={checked}
+          onChange={handleChange}
+          inputProps={{ 'aria-label': 'Remember user' }}
+        />
+      )}
+    />
   );
-};
+}

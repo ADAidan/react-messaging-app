@@ -1,3 +1,4 @@
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import Paper from '@mui/material/Paper';
 import Stack from '@mui/material/Stack';
@@ -35,45 +36,48 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-const ChatCard = ({chat, setSelectedChat}) => {
+function ChatCard({ chat, setSelectedChat }) {
   const handleClick = () => {
-    console.log('Selected Chat:', chat.id);
     setSelectedChat(chat.id);
   };
   return (
-    <Paper 
+    <Paper
       onClick={handleClick}
-      elevation={0} 
-      sx={{ 
+      elevation={0}
+      sx={{
         p: 1,
-        '&:hover' : {
+        '&:hover': {
           bgcolor: 'rgba(0, 0, 0, 0.1)',
           cursor: 'pointer',
-        }
+        },
       }}
     >
-      <Stack direction="row" spacing={2} sx={{
-        alignItems: 'center',
-      }}>
-        <StyledBadge 
+      <Stack
+        direction="row"
+        spacing={2}
+        sx={{
+          alignItems: 'center',
+        }}
+      >
+        <StyledBadge
           overlap="circular"
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           variant="dot"
         >
-          <DynamicAvatar name={chat.username} /> 
+          <DynamicAvatar name={chat.username} />
         </StyledBadge>
         <Stack>
           <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
             {chat.username}
           </Typography>
-          <Typography variant="body2" component="p" sx={{m: 0, p: 0}}>
+          <Typography variant="body2" component="p" sx={{ m: 0, p: 0 }}>
             Lorem ipsum dolor sit amet...
           </Typography>
         </Stack>
       </Stack>
     </Paper>
   );
-};
+}
 
 ChatCard.propTypes = {
   chat: PropTypes.shape({
@@ -85,7 +89,7 @@ ChatCard.propTypes = {
       text: PropTypes.string.isRequired,
       time: PropTypes.string.isRequired,
     })),
-  }),
+  }).isRequired,
   setSelectedChat: PropTypes.func.isRequired,
 };
 

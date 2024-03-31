@@ -1,11 +1,17 @@
-import { render, screen } from '@testing-library/react';
+import * as React from 'react';
+import {
+  render,
+  screen,
+  describe,
+  expect,
+  it,
+} from '@testing-library/react';
 import Login from '../pages/Login';
-import { it } from 'vitest';
 
 describe('Login', () => {
   it('should render the Log in header', () => {
     render(<Login />);
-    const headerElement = screen.getByRole('heading', { name: /Log in/i })
+    const headerElement = screen.getByRole('heading', { name: /Log in/i });
     expect(headerElement).toBeInTheDocument();
 
     const usernameInput = screen.getByLabelText(/Username/i);

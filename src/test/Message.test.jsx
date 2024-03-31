@@ -1,4 +1,10 @@
-import { render, screen } from '@testing-library/react';
+import * as React from 'react';
+import {
+  render,
+  screen,
+  test,
+  expect,
+} from '@testing-library/react';
 import Message from '../components/Message';
 
 test('renders Messages component', () => {
@@ -6,8 +12,8 @@ test('renders Messages component', () => {
     id: 1,
     author: 'John Doe',
     text: 'Hello, World!',
-    time: '10:00 AM'
-  }
+    time: '10:00 AM',
+  };
 
   render(<Message message={message} />);
   const authorElement = screen.getByText(message.author);

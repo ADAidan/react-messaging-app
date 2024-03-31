@@ -7,7 +7,7 @@ import Contacts from './pages/Contacts';
 import Profile from './pages/Profile';
 import SignUp from './pages/SignUp';
 import Login from './pages/Login';
-import { UserContext } from './Context';
+import UserContext from './Context';
 
 export default function App() {
   const [username, setUsername] = React.useState('');
@@ -16,7 +16,6 @@ export default function App() {
   const [directMessages, setDirectMessages] = React.useState([]);
   const [status, setStatus] = React.useState('');
 
-
   React.useEffect(() => {
     setUsername('AidanDyer');
     setProfilePicture('https://avatars.githubusercontent.com/u/77445921');
@@ -24,23 +23,23 @@ export default function App() {
     setContacts([
       {
         id: 1,
-        username: 'Seymour Wade'
+        username: 'Seymour Wade',
       },
       {
         id: 2,
-        username: 'Kaiya Mccarthy'
+        username: 'Kaiya Mccarthy',
       },
       {
         id: 3,
-        username: 'Brooks Sosa'
+        username: 'Brooks Sosa',
       },
       {
         id: 4,
-        username: 'Anton Boone'
+        username: 'Anton Boone',
       },
       {
         id: 5,
-        username: 'Hung Buchanan'
+        username: 'Hung Buchanan',
       },
     ]);
     setDirectMessages([
@@ -52,21 +51,21 @@ export default function App() {
             id: 1,
             author: 'Seymour Wade',
             text: 'What time are you available for a meeting?',
-            time: '10:57 PM'
+            time: '10:57 PM',
           },
           {
             id: 2,
             author: 'AidanDyer',
             text: 'I am available at 3:30 PM tomorrow.',
-            time: '10:57 PM'
+            time: '10:57 PM',
           },
           {
             id: 3,
             author: 'Seymour Wade',
             text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Tellus orci ac auctor augue mauris augue neque gravida in.',
-            time: '11:58 PM'
-          }
-        ]
+            time: '11:58 PM',
+          },
+        ],
       },
       {
         id: 2,
@@ -76,48 +75,46 @@ export default function App() {
             id: 1,
             author: 'Kaiya Mccarthy',
             text: 'Hello!',
-            time: '10:00 AM'
+            time: '10:00 AM',
           },
-        ]
+        ],
       },
       {
         id: 3,
-        username: 'Brooks Sosa'
+        username: 'Brooks Sosa',
       },
       {
         id: 4,
-        username: 'Anton Boone'
+        username: 'Anton Boone',
       },
       {
         id: 5,
-        username: 'Hung Buchanan'
+        username: 'Hung Buchanan',
       },
     ]);
   }, []);
 
-  const UserContextValue = {
+  const UserContextValue = React.useMemo(() => ({
     username,
     profilePicture,
     contacts,
     directMessages,
     status,
-  }
+  }), [username, profilePicture, contacts, directMessages, status]);
 
   return (
-    <>
-    <UserContext.Provider value={UserContextValue} >
+    <UserContext.Provider value={UserContextValue}>
       <BrowserRouter>
-          <ResponsiveAppBar />
-          <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/messages' element={<Messages />} />
-            <Route path='/contacts' element={<Contacts />} />
-            <Route path='/signup' element={<SignUp />} />
-            <Route path='/login' element={<Login />} />
-            <Route path='/profile' element={<Profile />} />
-          </Routes>
+        <ResponsiveAppBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/signup" element={<SignUp />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/profile" element={<Profile />} />
+        </Routes>
       </BrowserRouter>
     </UserContext.Provider>
-    </>
   );
-};
+}

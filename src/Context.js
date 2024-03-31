@@ -1,6 +1,6 @@
 import { createContext } from 'react';
 
-export const UserContext = createContext({
+const UserContext = createContext({
   username: '',
   profilePicture: null,
   contacts: [],
@@ -17,3 +17,5 @@ export const UserContext = createContext({
   setStatus: () => {},
   setSettings: () => {},
 });
+
+export default UserContext;
