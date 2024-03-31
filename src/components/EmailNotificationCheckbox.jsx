@@ -11,7 +11,7 @@ const EmailNotificationCheckbox = () => {
 
   return (
     <FormControlLabel
-      label="Recive email notifications"
+      label="Receive email notifications"
       control={<Checkbox
         checked={checked}
         onChange={handleChange}
