@@ -1,13 +1,13 @@
-import { createContext } from 'react';
+import { createContext } from "react";
 
 const UserContext = createContext({
-  username: '',
+  username: "",
   profilePicture: null,
   contacts: [],
   directMessages: [],
-  status: '',
+  status: "",
   settings: {
-    theme: 'light',
+    theme: "light",
     notifications: false,
   },
   setUsername: () => {},

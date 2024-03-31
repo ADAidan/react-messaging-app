@@ -1,5 +1,6 @@
 # Concord
-This is a messaging app built with React and Material-UI. 
+
+This is a messaging app built with React and Material-UI.
 
 ## How to use MUI
 

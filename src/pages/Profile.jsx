@@ -1,13 +1,19 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
-import TextField from '@mui/material/TextField';
-import Divider from '@mui/material/Divider';
+import * as React from "react";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
+import TextField from "@mui/material/TextField";
+import Divider from "@mui/material/Divider";
 import {
-  Stack, Toolbar, FormControl, FilledInput, InputLabel, InputAdornment, IconButton,
-} from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+  Stack,
+  Toolbar,
+  FormControl,
+  FilledInput,
+  InputLabel,
+  InputAdornment,
+  IconButton,
+} from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
 
 function Profile() {
   const handleClickEditPassword = () => {
@@ -35,13 +41,15 @@ function Profile() {
             />
           </Grid>
           <Grid item xs={12}>
-            <FormControl sx={{ m: 0, width: '25ch' }} variant="filled">
-              <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>
+            <FormControl sx={{ m: 0, width: "25ch" }} variant="filled">
+              <InputLabel htmlFor="filled-adornment-password">
+                Password
+              </InputLabel>
               <FilledInput
                 id="filled-adornment-password"
                 type="password"
                 defaultValue="password"
-                endAdornment={(
+                endAdornment={
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
@@ -52,7 +60,7 @@ function Profile() {
                       <EditIcon />
                     </IconButton>
                   </InputAdornment>
-       )}
+                }
               />
             </FormControl>
           </Grid>
