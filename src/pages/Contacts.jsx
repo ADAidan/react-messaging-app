@@ -1,11 +1,11 @@
-import * as React from 'react';
-import Container from '@mui/material/Container';
-import Stack from '@mui/material/Stack';
-import Toolbar from '@mui/material/Toolbar';
-import Divider from '@mui/material/Divider';
-import SearchBar from '../components/SearchBar';
-import ContactCard from '../components/ContactCard';
-import UserContext from '../Context';
+import * as React from "react";
+import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
+import Toolbar from "@mui/material/Toolbar";
+import Divider from "@mui/material/Divider";
+import SearchBar from "../components/SearchBar";
+import ContactCard from "../components/ContactCard";
+import UserContext from "../Context";
 
 function Contacts() {
   const user = React.useContext(UserContext);
@@ -17,9 +17,10 @@ function Contacts() {
         <SearchBar />
         <Divider />
         <Stack direction="column" spacing={0}>
-          {user.contacts && user.contacts.map((contact) => (
-            <ContactCard key={contact.id} contact={contact} />
-          ))}
+          {user.contacts &&
+            user.contacts.map((contact) => (
+              <ContactCard key={contact.id} contact={contact} />
+            ))}
         </Stack>
       </Stack>
     </Container>

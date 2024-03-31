@@ -1,16 +1,11 @@
-import * as React from 'react';
-import {
-  render,
-  screen,
-  test,
-  expect,
-} from '@testing-library/react';
-import ContactCard from '../components/ContactCard';
+import * as React from "react";
+import { render, screen, test, expect } from "@testing-library/react";
+import ContactCard from "../components/ContactCard";
 
-test('renders ContactCard component', () => {
+test("renders ContactCard component", () => {
   const contact = {
     id: 1,
-    username: 'John Doe',
+    username: "John Doe",
   };
 
   render(<ContactCard contact={contact} />);

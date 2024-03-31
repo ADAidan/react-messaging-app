@@ -1,17 +1,11 @@
-import * as React from 'react';
-import {
-  render,
-  screen,
-  describe,
-  expect,
-  it,
-} from '@testing-library/react';
-import SignUp from '../pages/SignUp';
+import * as React from "react";
+import { render, screen, describe, expect, it } from "@testing-library/react";
+import SignUp from "../pages/SignUp";
 
-describe('SignUp', () => {
-  it('should render the Sign Up header', () => {
+describe("SignUp", () => {
+  it("should render the Sign Up header", () => {
     render(<SignUp />);
-    const headerElement = screen.getByRole('heading', { name: /Sign Up/i });
+    const headerElement = screen.getByRole("heading", { name: /Sign Up/i });
     expect(headerElement).toBeInTheDocument();
 
     const emailInput = screen.getByText(/enter your email/i);
@@ -23,13 +17,13 @@ describe('SignUp', () => {
     const passwordInput = screen.getByText(/create a password/i);
     expect(passwordInput).toBeInTheDocument();
 
-    const signUpButton = screen.getByRole('button', { name: /Sign Up/i });
+    const signUpButton = screen.getByRole("button", { name: /Sign Up/i });
     expect(signUpButton).toBeInTheDocument();
 
     const signInText = screen.getByText(/Already have an account?/i);
     expect(signInText).toBeInTheDocument();
 
-    const signInLink = screen.getByRole('link', { name: /Log In/i });
+    const signInLink = screen.getByRole("link", { name: /Log In/i });
     expect(signInLink).toBeInTheDocument();
   });
 });

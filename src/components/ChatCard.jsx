@@ -1,36 +1,36 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Paper from '@mui/material/Paper';
-import Stack from '@mui/material/Stack';
-import Typography from '@mui/material/Typography';
-import Badge from '@mui/material/Badge';
-import styled from '@mui/material/styles/styled';
-import DynamicAvatar from './DynamicAvatar';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Paper from "@mui/material/Paper";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import Badge from "@mui/material/Badge";
+import styled from "@mui/material/styles/styled";
+import DynamicAvatar from "./DynamicAvatar";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
-  '& .MuiBadge-badge': {
-    backgroundColor: '#44b700',
-    color: '#44b700',
+  "& .MuiBadge-badge": {
+    backgroundColor: "#44b700",
+    color: "#44b700",
     boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
-    '&::after': {
-      position: 'absolute',
+    "&::after": {
+      position: "absolute",
       top: 0,
       left: 0,
-      width: '100%',
-      height: '100%',
-      borderRadius: '50%',
-      animation: 'ripple 1.2s infinite ease-in-out',
-      border: '1px solid currentColor',
+      width: "100%",
+      height: "100%",
+      borderRadius: "50%",
+      animation: "ripple 1.2s infinite ease-in-out",
+      border: "1px solid currentColor",
       content: '""',
     },
   },
-  '@keyframes ripple': {
-    '0%': {
-      transform: 'scale(.8)',
+  "@keyframes ripple": {
+    "0%": {
+      transform: "scale(.8)",
       opacity: 1,
     },
-    '100%': {
-      transform: 'scale(2.4)',
+    "100%": {
+      transform: "scale(2.4)",
       opacity: 0,
     },
   },
@@ -46,9 +46,9 @@ function ChatCard({ chat, setSelectedChat }) {
       elevation={0}
       sx={{
         p: 1,
-        '&:hover': {
-          bgcolor: 'rgba(0, 0, 0, 0.1)',
-          cursor: 'pointer',
+        "&:hover": {
+          bgcolor: "rgba(0, 0, 0, 0.1)",
+          cursor: "pointer",
         },
       }}
     >
@@ -56,12 +56,12 @@ function ChatCard({ chat, setSelectedChat }) {
         direction="row"
         spacing={2}
         sx={{
-          alignItems: 'center',
+          alignItems: "center",
         }}
       >
         <StyledBadge
           overlap="circular"
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           variant="dot"
         >
           <DynamicAvatar name={chat.username} />
@@ -83,12 +83,14 @@ ChatCard.propTypes = {
   chat: PropTypes.shape({
     id: PropTypes.number.isRequired,
     username: PropTypes.string.isRequired,
-    messages: PropTypes.arrayOf(PropTypes.shape({
-      id: PropTypes.number.isRequired,
-      author: PropTypes.string.isRequired,
-      text: PropTypes.string.isRequired,
-      time: PropTypes.string.isRequired,
-    })),
+    messages: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        author: PropTypes.string.isRequired,
+        text: PropTypes.string.isRequired,
+        time: PropTypes.string.isRequired,
+      }),
+    ),
   }).isRequired,
   setSelectedChat: PropTypes.func.isRequired,
 };

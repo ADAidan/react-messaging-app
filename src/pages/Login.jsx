@@ -1,18 +1,18 @@
-import * as React from 'react';
-import Container from '@mui/material/Container';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-import Paper from '@mui/material/Paper';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Input from '@mui/material/Input';
-import FormHelperText from '@mui/material/FormHelperText';
-import InputAdornment from '@mui/material/InputAdornment';
-import IconButton from '@mui/material/IconButton';
-import Visibility from '@mui/icons-material/Visibility';
-import VisibilityOff from '@mui/icons-material/VisibilityOff';
-import { Button } from '@mui/material';
-import RememberUserCheckbox from '../components/RememberUserCheckbox';
+import * as React from "react";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Stack from "@mui/material/Stack";
+import Paper from "@mui/material/Paper";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Input from "@mui/material/Input";
+import FormHelperText from "@mui/material/FormHelperText";
+import InputAdornment from "@mui/material/InputAdornment";
+import IconButton from "@mui/material/IconButton";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { Button } from "@mui/material";
+import RememberUserCheckbox from "../components/RememberUserCheckbox";
 
 function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
@@ -30,16 +30,16 @@ function Login() {
       <Stack
         direction="column"
         sx={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          height: '100vh',
+          alignItems: "center",
+          justifyContent: "center",
+          height: "100vh",
         }}
       >
         <Paper
           elevation={3}
           sx={{
             p: 2,
-            width: '100%',
+            width: "100%",
             maxWidth: 400,
           }}
         >
@@ -47,7 +47,7 @@ function Login() {
             variant="h4"
             component="h1"
             sx={{
-              textAlign: 'left',
+              textAlign: "left",
               fontWeight: 700,
             }}
           >
@@ -67,8 +67,8 @@ function Login() {
             <InputLabel htmlFor="password-input">Password</InputLabel>
             <Input
               id="password-input"
-              type={showPassword ? 'text' : 'password'}
-              endAdornment={(
+              type={showPassword ? "text" : "password"}
+              endAdornment={
                 <InputAdornment position="end">
                   <IconButton
                     aria-label="toggle password visibility"
@@ -78,7 +78,7 @@ function Login() {
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
-              )}
+              }
               aria-describedby="password-helper-text"
             />
             <FormHelperText id="password-helper-text">
@@ -98,15 +98,15 @@ function Login() {
           <Stack
             direction="row"
             sx={{
-              justifyContent: 'center',
-              alignItems: 'center',
+              justifyContent: "center",
+              alignItems: "center",
             }}
           >
             <Typography
               variant="body2"
               component="p"
               sx={{
-                textAlign: 'left',
+                textAlign: "left",
                 fontWeight: 700,
               }}
             >

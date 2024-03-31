@@ -1,14 +1,9 @@
-import * as React from 'react';
-import {
-  render,
-  screen,
-  test,
-  expect,
-} from '@testing-library/react';
-import Contacts from '../pages/Contacts';
+import * as React from "react";
+import { render, screen, test, expect } from "@testing-library/react";
+import Contacts from "../pages/Contacts";
 
-test('renders Contacts page', () => {
+test("renders Contacts page", () => {
   render(<Contacts />);
-  const contactPage = screen.getByTestId('contact-page');
+  const contactPage = screen.getByTestId("contact-page");
   expect(contactPage).toBeInTheDocument();
 });

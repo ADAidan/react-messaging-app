@@ -1,6 +1,6 @@
-import * as React from 'react';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import * as React from "react";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 function EmailNotificationCheckbox() {
   const [checked, setChecked] = React.useState(true);
@@ -12,13 +12,13 @@ function EmailNotificationCheckbox() {
   return (
     <FormControlLabel
       label="Receive email notifications"
-      control={(
+      control={
         <Checkbox
           checked={checked}
           onChange={handleChange}
-          inputProps={{ 'aria-label': 'receive email notifications' }}
+          inputProps={{ "aria-label": "receive email notifications" }}
         />
-)}
+      }
     />
   );
 }

@@ -1,18 +1,13 @@
-import * as React from 'react';
-import {
-  render,
-  screen,
-  test,
-  expect,
-} from '@testing-library/react';
-import Message from '../components/Message';
+import * as React from "react";
+import { render, screen, test, expect } from "@testing-library/react";
+import Message from "../components/Message";
 
-test('renders Messages component', () => {
+test("renders Messages component", () => {
   const message = {
     id: 1,
-    author: 'John Doe',
-    text: 'Hello, World!',
-    time: '10:00 AM',
+    author: "John Doe",
+    text: "Hello, World!",
+    time: "10:00 AM",
   };
 
   render(<Message message={message} />);

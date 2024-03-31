@@ -1,6 +1,6 @@
-import * as React from 'react';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
+import * as React from "react";
+import Checkbox from "@mui/material/Checkbox";
+import FormControlLabel from "@mui/material/FormControlLabel";
 
 export default function RememberUserCheckbox() {
   const [checked, setChecked] = React.useState(false);
@@ -12,13 +12,13 @@ export default function RememberUserCheckbox() {
   return (
     <FormControlLabel
       label="Remember me"
-      control={(
+      control={
         <Checkbox
           checked={checked}
           onChange={handleChange}
-          inputProps={{ 'aria-label': 'Remember user' }}
+          inputProps={{ "aria-label": "Remember user" }}
         />
-      )}
+      }
     />
   );
 }

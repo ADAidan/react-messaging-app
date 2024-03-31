@@ -1,17 +1,17 @@
-import PropTypes from 'prop-types';
-import * as React from 'react';
-import Paper from '@mui/material/Paper';
-import Box from '@mui/material/Box';
-import InputAdornment from '@mui/material/InputAdornment';
-import FormControl from '@mui/material/FormControl';
-import InputLabel from '@mui/material/InputLabel';
-import Input from '@mui/material/Input';
-import IconButton from '@mui/material/IconButton';
-import SendIcon from '@mui/icons-material/Send';
-import { Tooltip } from '@mui/material';
+import PropTypes from "prop-types";
+import * as React from "react";
+import Paper from "@mui/material/Paper";
+import Box from "@mui/material/Box";
+import InputAdornment from "@mui/material/InputAdornment";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Input from "@mui/material/Input";
+import IconButton from "@mui/material/IconButton";
+import SendIcon from "@mui/icons-material/Send";
+import { Tooltip } from "@mui/material";
 
 function MessageInput({ setDisplayedMessages, username }) {
-  const [message, setMessage] = React.useState('');
+  const [message, setMessage] = React.useState("");
 
   const handleClickSendMessage = () => {
     if (!message) return;
@@ -24,7 +24,7 @@ function MessageInput({ setDisplayedMessages, username }) {
       };
       return [...prevMessages, newMessage];
     });
-    setMessage('');
+    setMessage("");
   };
 
   const handleMouseDownMessage = (e) => {
@@ -35,9 +35,9 @@ function MessageInput({ setDisplayedMessages, username }) {
     <Paper
       elevation={0}
       sx={{
-        display: 'flex',
-        position: 'absolute',
-        width: '90%',
+        display: "flex",
+        position: "absolute",
+        width: "90%",
         bottom: 0,
         mb: 1,
       }}
@@ -45,8 +45,8 @@ function MessageInput({ setDisplayedMessages, username }) {
       <Box
         component="form"
         sx={{
-          display: 'flex',
-          width: '100%',
+          display: "flex",
+          width: "100%",
         }}
         noValidate
         autoComplete="off"
@@ -57,7 +57,7 @@ function MessageInput({ setDisplayedMessages, username }) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             id="standard-adornment-message"
-            endAdornment={(
+            endAdornment={
               <InputAdornment position="end">
                 <Tooltip title="Send Message">
                   <IconButton
@@ -70,7 +70,7 @@ function MessageInput({ setDisplayedMessages, username }) {
                   </IconButton>
                 </Tooltip>
               </InputAdornment>
-)}
+            }
           />
         </FormControl>
       </Box>

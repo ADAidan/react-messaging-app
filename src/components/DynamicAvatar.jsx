@@ -1,6 +1,6 @@
-import * as React from 'react';
-import PropTypes from 'prop-types';
-import Avatar from '@mui/material/Avatar';
+import * as React from "react";
+import PropTypes from "prop-types";
+import Avatar from "@mui/material/Avatar";
 
 function stringToColor(string) {
   let hash = 0;
@@ -11,7 +11,7 @@ function stringToColor(string) {
     hash = string.charCodeAt(i) + ((hash << 5) - hash);
   }
 
-  let color = '#';
+  let color = "#";
 
   for (i = 0; i < 3; i += 1) {
     const value = (hash >> (i * 8)) & 0xff;
@@ -26,14 +26,14 @@ function stringAvatar(name) {
   let initials;
   if (!name) return null;
   try {
-    const [firstName, lastName] = name.split(' ');
+    const [firstName, lastName] = name.split(" ");
     if (!lastName) {
-      initials = `${firstName?.[0] || ''}`;
+      initials = `${firstName?.[0] || ""}`;
     }
-    initials = `${firstName?.[0] || ''}${lastName?.[0] || ''}`;
+    initials = `${firstName?.[0] || ""}${lastName?.[0] || ""}`;
   } catch (error) {
     const [firstName] = name;
-    initials = firstName?.[0] || '';
+    initials = firstName?.[0] || "";
   }
 
   return {
