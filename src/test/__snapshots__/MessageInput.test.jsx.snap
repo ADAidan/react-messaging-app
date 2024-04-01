@@ -1,0 +1,64 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`should render correctly 1`] = `
+<div>
+  <div
+    class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation0 css-124p9b8-MuiPaper-root"
+  >
+    <form
+      autocomplete="off"
+      class="MuiBox-root css-hboir5"
+      novalidate=""
+    >
+      <div
+        class="MuiFormControl-root MuiFormControl-fullWidth css-1w4vsez-MuiFormControl-root"
+      >
+        <label
+          class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-standard MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-standard css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
+          data-shrink="false"
+          for="standard-adornment-message"
+        >
+          Message
+        </label>
+        <div
+          class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-1eed5fa-MuiInputBase-root-MuiInput-root"
+        >
+          <input
+            aria-invalid="false"
+            class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"
+            id="standard-adornment-message"
+            type="text"
+            value=""
+          />
+          <div
+            class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
+          >
+            <button
+              aria-label="toggle password visibility"
+              class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
+              data-mui-internal-clone-element="true"
+              tabindex="0"
+              type="button"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="SendIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M2.01 21 23 12 2.01 3 2 10l15 2-15 2z"
+                />
+              </svg>
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+`;

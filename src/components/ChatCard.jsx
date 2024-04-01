@@ -92,7 +92,11 @@ ChatCard.propTypes = {
       }),
     ),
   }).isRequired,
-  setSelectedChat: PropTypes.func.isRequired,
+  setSelectedChat: PropTypes.func,
+};
+
+ChatCard.defaultProps = {
+  setSelectedChat: () => {},
 };
 
 export default ChatCard;
