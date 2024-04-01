@@ -1,9 +1,8 @@
 import * as React from "react";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import Appbar from "../components/Appbar";
 
 test("renders Appbar component", () => {
-  render(<Appbar />);
-  const appBar = screen.getByTestId("app-bar");
-  expect(appBar).toBeInTheDocument();
+  const AppbarComponent = render(<Appbar />);
+  expect(AppbarComponent).toMatchSnapshot();
 });

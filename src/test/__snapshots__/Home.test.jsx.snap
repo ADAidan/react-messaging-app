@@ -1,0 +1,188 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Home > should render the Welcome to Concord header 1`] = `
+{
+  "asFragment": [Function],
+  "baseElement": <body>
+    <div>
+      <div
+        class="MuiContainer-root MuiContainer-maxWidthMd css-1dkqphj-MuiContainer-root"
+      >
+        <div
+          class="MuiBox-root css-18eihni"
+        />
+        <div
+          class="MuiBox-root css-htdz3k"
+        />
+        <div
+          class="MuiStack-root css-ykcu84-MuiStack-root"
+        >
+          <h1
+            class="MuiTypography-root MuiTypography-h3 css-1h1dv9q-MuiTypography-root"
+          >
+            Welcome to Concord
+          </h1>
+          <h2
+            class="MuiTypography-root MuiTypography-h4 css-13n8t4a-MuiTypography-root"
+          >
+            Connect with old friends or meet new ones. Create or join a thriving community.
+          </h2>
+          <div
+            class="MuiStack-root css-14w1sp1-MuiStack-root"
+          >
+            <a
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
+              href="/signup"
+              tabindex="0"
+            >
+              join for free
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </a>
+            <a
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
+              href="/messages"
+              tabindex="0"
+            >
+              messages
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </a>
+          </div>
+          <p
+            class="MuiTypography-root MuiTypography-body2 MuiTypography-alignCenter css-17hq7kd-MuiTypography-root"
+          >
+            Copyright © 
+            <a
+              class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-xdxgn1-MuiTypography-root-MuiLink-root"
+              href="/"
+            >
+              Aidan
+            </a>
+             
+            2024
+            .
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthMd css-1dkqphj-MuiContainer-root"
+    >
+      <div
+        class="MuiBox-root css-18eihni"
+      />
+      <div
+        class="MuiBox-root css-htdz3k"
+      />
+      <div
+        class="MuiStack-root css-ykcu84-MuiStack-root"
+      >
+        <h1
+          class="MuiTypography-root MuiTypography-h3 css-1h1dv9q-MuiTypography-root"
+        >
+          Welcome to Concord
+        </h1>
+        <h2
+          class="MuiTypography-root MuiTypography-h4 css-13n8t4a-MuiTypography-root"
+        >
+          Connect with old friends or meet new ones. Create or join a thriving community.
+        </h2>
+        <div
+          class="MuiStack-root css-14w1sp1-MuiStack-root"
+        >
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
+            href="/signup"
+            tabindex="0"
+          >
+            join for free
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </a>
+          <a
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary css-sghohy-MuiButtonBase-root-MuiButton-root"
+            href="/messages"
+            tabindex="0"
+          >
+            messages
+            <span
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+            />
+          </a>
+        </div>
+        <p
+          class="MuiTypography-root MuiTypography-body2 MuiTypography-alignCenter css-17hq7kd-MuiTypography-root"
+        >
+          Copyright © 
+          <a
+            class="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineAlways css-xdxgn1-MuiTypography-root-MuiLink-root"
+            href="/"
+          >
+            Aidan
+          </a>
+           
+          2024
+          .
+        </p>
+      </div>
+    </div>
+  </div>,
+  "debug": [Function],
+  "findAllByAltText": [Function],
+  "findAllByDisplayValue": [Function],
+  "findAllByLabelText": [Function],
+  "findAllByPlaceholderText": [Function],
+  "findAllByRole": [Function],
+  "findAllByTestId": [Function],
+  "findAllByText": [Function],
+  "findAllByTitle": [Function],
+  "findByAltText": [Function],
+  "findByDisplayValue": [Function],
+  "findByLabelText": [Function],
+  "findByPlaceholderText": [Function],
+  "findByRole": [Function],
+  "findByTestId": [Function],
+  "findByText": [Function],
+  "findByTitle": [Function],
+  "getAllByAltText": [Function],
+  "getAllByDisplayValue": [Function],
+  "getAllByLabelText": [Function],
+  "getAllByPlaceholderText": [Function],
+  "getAllByRole": [Function],
+  "getAllByTestId": [Function],
+  "getAllByText": [Function],
+  "getAllByTitle": [Function],
+  "getByAltText": [Function],
+  "getByDisplayValue": [Function],
+  "getByLabelText": [Function],
+  "getByPlaceholderText": [Function],
+  "getByRole": [Function],
+  "getByTestId": [Function],
+  "getByText": [Function],
+  "getByTitle": [Function],
+  "queryAllByAltText": [Function],
+  "queryAllByDisplayValue": [Function],
+  "queryAllByLabelText": [Function],
+  "queryAllByPlaceholderText": [Function],
+  "queryAllByRole": [Function],
+  "queryAllByTestId": [Function],
+  "queryAllByText": [Function],
+  "queryAllByTitle": [Function],
+  "queryByAltText": [Function],
+  "queryByDisplayValue": [Function],
+  "queryByLabelText": [Function],
+  "queryByPlaceholderText": [Function],
+  "queryByRole": [Function],
+  "queryByTestId": [Function],
+  "queryByText": [Function],
+  "queryByTitle": [Function],
+  "rerender": [Function],
+  "unmount": [Function],
+}
+`;
