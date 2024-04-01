@@ -1,9 +1,8 @@
 import * as React from "react";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import SearchBar from "../components/SearchBar";
 
 test("renders SearchBar component", () => {
-  render(<SearchBar />);
-  const searchBar = screen.getByTestId("search-bar");
-  expect(searchBar).toBeInTheDocument();
+  const SearchBarComponent = render(<SearchBar />);
+  expect(SearchBarComponent).toMatchSnapshot();
 });

@@ -1,9 +1,8 @@
 import * as React from "react";
-import { render, screen } from "@testing-library/react";
+import { render } from "@testing-library/react";
 import NoMessages from "../components/NoMessages";
 
 test("renders NoMessages component", () => {
-  render(<NoMessages />);
-  const titleElement = screen.getByRole("heading");
-  expect(titleElement).toBeInTheDocument();
+  const NoMessagesComponent = render(<NoMessages />);
+  expect(NoMessagesComponent).toMatchSnapshot();
 });
