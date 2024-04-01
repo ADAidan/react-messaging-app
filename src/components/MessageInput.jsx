@@ -79,8 +79,13 @@ function MessageInput({ setDisplayedMessages, username }) {
 }
 
 MessageInput.propTypes = {
-  setDisplayedMessages: PropTypes.func.isRequired,
-  username: PropTypes.string.isRequired,
+  setDisplayedMessages: PropTypes.func,
+  username: PropTypes.string,
+};
+
+MessageInput.defaultProps = {
+  setDisplayedMessages: () => {},
+  username: "",
 };
 
 export default MessageInput;
