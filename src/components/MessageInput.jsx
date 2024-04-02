@@ -57,11 +57,12 @@ function MessageInput({ setDisplayedMessages, username }) {
             value={message}
             onChange={(e) => setMessage(e.target.value)}
             id="standard-adornment-message"
+            aria-label="message-input"
             endAdornment={
               <InputAdornment position="end">
                 <Tooltip title="Send Message">
                   <IconButton
-                    aria-label="toggle password visibility"
+                    aria-label="send message"
                     onClick={handleClickSendMessage}
                     onMouseDown={handleMouseDownMessage}
                     edge="end"

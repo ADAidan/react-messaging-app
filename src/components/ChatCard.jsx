@@ -42,6 +42,7 @@ function ChatCard({ chat, setSelectedChat }) {
   };
   return (
     <Paper
+      test-dataid="chat-card"
       onClick={handleClick}
       elevation={0}
       sx={{
