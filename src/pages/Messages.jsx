@@ -14,6 +14,7 @@ import UserContext from "../Context";
 function Messages() {
   const user = React.useContext(UserContext);
   const messageContainerRef = React.useRef(null);
+  const [directMessages, setDirectMessages] = React.useState([]);
   const [displayedMessages, setDisplayedMessages] = React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState(1);
 
@@ -21,6 +22,10 @@ function Messages() {
     messageContainerRef.current.scrollTop =
       messageContainerRef.current.scrollHeight;
   }, [displayedMessages]);
+
+  React.useEffect(() => {
+    setDirectMessages(user.directMessages);
+  }, [user.directMessages]);
 
   React.useEffect(() => {
     if (!user.directMessages) return;
@@ -84,7 +89,7 @@ function Messages() {
                 <AddIcon />
               </IconButton>
             </Stack>
-            {user.directMessages.map((chat) => (
+            {directMessages.map((chat) => (
               <ChatCard
                 key={chat.id}
                 chat={chat}
