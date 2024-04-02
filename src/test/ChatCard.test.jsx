@@ -25,18 +25,21 @@ describe("ChatCard", () => {
   });
 
   it("should change the selected chat when clicked", () => {
-    const [selectedChat, setSelectedChat] = React.useState(3);
+    const initialSelectedChat = 1;
+
+    const setSelectedChat = vi.fn();
 
     const chat = {
-      id: 3,
+      id: initialSelectedChat,
       username: "testuser",
     };
 
-    const { user } = setup(
+    const { user, ...renderedComponent } = setup(
       <ChatCard chat={chat} setSelectedChat={setSelectedChat} />,
     );
 
-    user.click(screen.getByTestId("chat-card"));
-    expect(selectedChat).toBe(3);
+    const ChatCardElement = renderedComponent.findByTestId("chat-card");
+    user.click(ChatCardElement);
+    expect(setSelectedChat).toHaveBeenCalledWith(initialSelectedChat);
   });
 });
