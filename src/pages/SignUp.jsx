@@ -15,8 +15,47 @@ import { Button } from "@mui/material";
 import EmailNotificationCheckbox from "../components/EmailNotificationCheckbox";
 import TermsCheckbox from "../components/TermsCheckbox";
 
+export const usernameValidate = (username) => {
+  switch (true) {
+    case username.length < 2:
+      throw new Error("Username must be at least 2 characters");
+    case username.length > 20:
+      throw new Error("Username must be less than 20 characters");
+    case !/^[a-zA-Z0-9_]*$/.test(username):
+      throw new Error("Username must contain only letters, numbers, and _");
+    default:
+      return true;
+  }
+};
+
+export const emailValidate = (email) => {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  switch (true) {
+    case !emailRegex.test(email):
+      throw new Error("Invalid email format");
+    case email.length > 50:
+      throw new Error("Email must be less than 50 characters");
+    default:
+      return true;
+  }
+};
+
+export const passwordValidate = (password) => {
+  switch (true) {
+    case password.length < 8:
+      throw new Error("Password must be at least 8 characters");
+    case password.length > 20:
+      throw new Error("Password must be less than 20 characters");
+    default:
+      return true;
+  }
+};
+
 function SignUp() {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [emailValue, setEmailValue] = React.useState("");
+  const [usernameValue, setUsernameValue] = React.useState("");
+  const [passwordValue, setPasswordValue] = React.useState("");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -24,7 +63,22 @@ function SignUp() {
     event.preventDefault();
   };
 
-  // add confirm password field
+  const handleSubmit = () => {
+    try {
+      usernameValidate(usernameValue);
+      emailValidate(emailValue);
+      passwordValidate(passwordValue);
+    } catch (error) {
+      return;
+    }
+    setEmailValue("");
+    setUsernameValue("");
+    setPasswordValue("");
+  };
+
+  const handleChangeEmail = (event) => setEmailValue(event.target.value);
+  const handleChangeUsername = (event) => setUsernameValue(event.target.value);
+  const handleChangePassword = (event) => setPasswordValue(event.target.value);
 
   return (
     <Container maxWidth="md">
@@ -56,7 +110,12 @@ function SignUp() {
           </Typography>
           <FormControl variant="standard" fullWidth>
             <InputLabel htmlFor="email-input">Email</InputLabel>
-            <Input id="email-input" aria-describedby="email-helper-text" />
+            <Input
+              id="email-input"
+              aria-describedby="email-helper-text"
+              value={emailValue}
+              onChange={handleChangeEmail}
+            />
             <FormHelperText id="email-helper-text">
               Enter your email
             </FormHelperText>
@@ -66,6 +125,8 @@ function SignUp() {
             <Input
               id="username-input"
               aria-describedby="username-helper-text"
+              value={usernameValue}
+              onChange={handleChangeUsername}
             />
             <FormHelperText id="username-helper-text">
               Create a username
@@ -75,6 +136,8 @@ function SignUp() {
             <InputLabel htmlFor="password-input">Password</InputLabel>
             <Input
               id="password-input"
+              slotProps={{ input: { "aria-label": "password-input" } }}
+              data-testid="password-input"
               type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
@@ -88,6 +151,8 @@ function SignUp() {
                 </InputAdornment>
               }
               aria-describedby="password-helper-text"
+              value={passwordValue}
+              onChange={handleChangePassword}
             />
             <FormHelperText id="password-helper-text">
               Create a password
@@ -96,6 +161,7 @@ function SignUp() {
           <EmailNotificationCheckbox />
           <TermsCheckbox />
           <Button
+            onClick={handleSubmit}
             variant="contained"
             fullWidth
             sx={{
