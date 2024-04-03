@@ -43,6 +43,7 @@ function ChatCard({ chat, setSelectedChat }) {
   return (
     <Paper
       test-dataid="chat-card"
+      aria-label={chat.username}
       onClick={handleClick}
       elevation={0}
       sx={{
