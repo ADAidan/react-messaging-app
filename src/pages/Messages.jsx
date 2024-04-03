@@ -112,6 +112,7 @@ function Messages() {
             }}
           >
             <Box
+              data-testid="messages-container"
               ref={messageContainerRef}
               sx={{
                 overflowY: "auto",
@@ -119,7 +120,7 @@ function Messages() {
                 height: "calc(100vh - 150px)",
               }}
             >
-              <Grid container spacing={2}>
+              <Grid data-testid={`chat-${selectedChat}`} container spacing={2}>
                 {displayedMessages ? (
                   displayedMessages.map((message) => (
                     <Message key={message.id} message={message} />
