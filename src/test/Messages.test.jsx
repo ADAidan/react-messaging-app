@@ -78,4 +78,19 @@ describe("Messages", () => {
     chat = renderedComponent.queryByTestId("chat-2");
     expect(chat).toBeInTheDocument();
   });
+  it("should display a message when there are no messages", async () => {
+    const renderedComponent = render(
+      <UserContext.Provider value={UserContextValue}>
+        <Messages />
+      </UserContext.Provider>,
+    );
+    const chatButton =
+      await renderedComponent.findByLabelText(/Kaiya Mccarthy/i);
+    await user.click(chatButton);
+
+    const noMessages = await renderedComponent.findByText(
+      /Looks like there are no messages yet! How about starting with hello/i,
+    );
+    expect(noMessages).toBeInTheDocument();
+  });
 });
