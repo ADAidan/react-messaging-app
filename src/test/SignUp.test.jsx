@@ -88,4 +88,25 @@ describe("SignUp", () => {
     await user.click(showPasswordButton);
     expect(passwordInput).toHaveAttribute("type", "password");
   });
+  it("should check the receive email notifications checkbox", async () => {
+    const renderedComponent = render(<SignUp />);
+
+    const receiveEmailNotificationsCheckbox =
+      await renderedComponent.findByLabelText(/receive email notifications/i);
+    expect(receiveEmailNotificationsCheckbox).toBeChecked();
+
+    await user.click(receiveEmailNotificationsCheckbox);
+    expect(receiveEmailNotificationsCheckbox).not.toBeChecked();
+  });
+  it("should check the terms and conditions checkbox", async () => {
+    const renderedComponent = render(<SignUp />);
+
+    const termsAndConditionsCheckbox = await renderedComponent.findByLabelText(
+      /agree to terms of service/i,
+    );
+    expect(termsAndConditionsCheckbox).not.toBeChecked();
+
+    await user.click(termsAndConditionsCheckbox);
+    expect(termsAndConditionsCheckbox).toBeChecked();
+  });
 });
