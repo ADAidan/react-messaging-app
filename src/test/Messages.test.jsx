@@ -89,7 +89,7 @@ describe("Messages", () => {
     await user.click(chatButton);
 
     const noMessages = await renderedComponent.findByText(
-      /Looks like there are no messages yet! How about starting with hello/i,
+      /Looks like there are no messages yet! How about starting with hello\?/i,
     );
     expect(noMessages).toBeInTheDocument();
   });
