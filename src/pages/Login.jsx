@@ -16,6 +16,8 @@ import RememberUserCheckbox from "../components/RememberUserCheckbox";
 
 function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
+  const [emailValue, setEmailValue] = React.useState("");
+  const [passwordValue, setPasswordValue] = React.useState("");
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -23,7 +25,12 @@ function Login() {
     event.preventDefault();
   };
 
-  // add forgot password link
+  const handleSubmit = () => {
+    setEmailValue("");
+    setPasswordValue("");
+  };
+
+  const handleForgotPassword = () => {};
 
   return (
     <Container maxWidth="md">
@@ -40,7 +47,7 @@ function Login() {
           sx={{
             p: 2,
             width: "100%",
-            maxWidth: 400,
+            maxWidth: 450,
           }}
         >
           <Typography
@@ -54,19 +61,24 @@ function Login() {
             Log in
           </Typography>
           <FormControl variant="standard" fullWidth>
-            <InputLabel htmlFor="username-input">Username</InputLabel>
+            <InputLabel htmlFor="email-input">Email</InputLabel>
             <Input
-              id="username-input"
-              aria-describedby="username-helper-text"
+              id="email-input"
+              aria-describedby="email-helper-text"
+              value={emailValue}
+              onChange={(e) => setEmailValue(e.target.value)}
             />
-            <FormHelperText id="username-helper-text">
-              Enter your username
+            <FormHelperText id="email-helper-text">
+              Enter your email
             </FormHelperText>
           </FormControl>
           <FormControl variant="standard" fullWidth>
             <InputLabel htmlFor="password-input">Password</InputLabel>
             <Input
               id="password-input"
+              value={passwordValue}
+              onChange={(e) => setPasswordValue(e.target.value)}
+              slotProps={{ input: { "aria-label": "password-input" } }}
               type={showPassword ? "text" : "password"}
               endAdornment={
                 <InputAdornment position="end">
@@ -85,8 +97,20 @@ function Login() {
               Enter your password
             </FormHelperText>
           </FormControl>
-          <RememberUserCheckbox />
+          <Stack
+            direction="row"
+            sx={{
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <RememberUserCheckbox />
+            <Button variant="text" onClick={handleForgotPassword}>
+              Forgot password?
+            </Button>
+          </Stack>
           <Button
+            onClick={handleSubmit}
             variant="contained"
             fullWidth
             sx={{

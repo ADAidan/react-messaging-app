@@ -95,7 +95,7 @@ function SignUp() {
           sx={{
             p: 2,
             width: "100%",
-            maxWidth: 400,
+            maxWidth: 450,
           }}
         >
           <Typography
