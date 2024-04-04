@@ -16,7 +16,7 @@ function TermsCheckbox() {
         <Checkbox
           checked={checked}
           onChange={handleChange}
-          inputProps={{ "aria-label": "Agree to terms of service" }}
+          inputProps={{ "aria-label": "agree to terms of service" }}
         />
       }
     />
