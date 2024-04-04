@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`renders Contacts page 1`] = `
+exports[`Contacts > should render the Contacts page 1`] = `
 {
   "asFragment": [Function],
   "baseElement": <body>

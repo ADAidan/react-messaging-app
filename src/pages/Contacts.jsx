@@ -9,16 +9,38 @@ import UserContext from "../Context";
 
 function Contacts() {
   const user = React.useContext(UserContext);
+  const [searchValue, setSearchValue] = React.useState("");
+  const [filteredContacts, setFilteredContacts] = React.useState([]);
+
+  React.useEffect(() => {
+    if (!searchValue && user.contacts) {
+      setFilteredContacts(user.contacts);
+      return;
+    }
+    if (searchValue) {
+      const displayedFilteredContacts = user.contacts.filter((contact) =>
+        contact.username.toLowerCase().includes(searchValue.toLowerCase()),
+      );
+      setFilteredContacts(displayedFilteredContacts);
+    }
+  }, [searchValue]);
+
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
 
   return (
     <Container data-testid="contact-page" maxWidth="md">
       <Stack direction="column" spacing={2}>
         <Toolbar />
-        <SearchBar />
+        <SearchBar
+          searchValue={searchValue}
+          handleSearchChange={handleSearchChange}
+        />
         <Divider />
         <Stack direction="column" spacing={0}>
           {user.contacts &&
-            user.contacts.map((contact) => (
+            filteredContacts.map((contact) => (
               <ContactCard key={contact.id} contact={contact} />
             ))}
         </Stack>

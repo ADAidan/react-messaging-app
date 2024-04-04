@@ -39,6 +39,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 function ContactCard({ contact }) {
   return (
     <Paper
+      data-testid="contact-card"
       elevation={0}
       sx={{
         p: 1,
