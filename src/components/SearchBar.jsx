@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import { alpha, styled } from "@mui/material/styles";
 import InputBase from "@mui/material/InputBase";
 import SearchIcon from "@mui/icons-material/Search";
+import PropTypes from "prop-types";
 
 const Search = styled(Box)(({ theme }) => ({
   position: "relative",
@@ -47,18 +48,25 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function SearchBar() {
+function SearchBar({ searchValue, handleSearchChange }) {
   return (
     <Search data-testid="search-bar">
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>
       <StyledInputBase
+        value={searchValue}
+        onChange={handleSearchChange}
         placeholder="Search…"
         inputProps={{ "aria-label": "search" }}
       />
     </Search>
   );
 }
+
+SearchBar.propTypes = {
+  searchValue: PropTypes.string.isRequired,
+  handleSearchChange: PropTypes.func.isRequired,
+};
 
 export default SearchBar;

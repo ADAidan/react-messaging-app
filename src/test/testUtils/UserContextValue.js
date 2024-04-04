@@ -1,4 +1,26 @@
 const UserContextValue = {
+  contacts: [
+      {
+        id: 1,
+        username: "Seymour Wade",
+      },
+      {
+        id: 2,
+        username: "Kaiya Mccarthy",
+      },
+      {
+        id: 3,
+        username: "Brooks Sosa",
+      },
+      {
+        id: 4,
+        username: "Anton Boone",
+      },
+      {
+        id: 5,
+        username: "Hung Buchanan",
+      },
+    ],
   directMessages: [
     {
       id: 1,
