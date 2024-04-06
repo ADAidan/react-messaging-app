@@ -36,6 +36,14 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
+const StyledOfflineBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    backgroundColor: "#9e9e9e",
+    color: "#9e9e9e",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+  },
+}));
+
 function ContactCard({ contact }) {
   return (
     <Paper
@@ -56,19 +64,29 @@ function ContactCard({ contact }) {
           alignItems: "center",
         }}
       >
-        <StyledBadge
-          overlap="circular"
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          variant="dot"
-        >
-          <DynamicAvatar name={contact.username} />
-        </StyledBadge>
+        {contact.status === "Online" ? (
+          <StyledBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+          >
+            <DynamicAvatar name={contact.username} />
+          </StyledBadge>
+        ) : (
+          <StyledOfflineBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+          >
+            <DynamicAvatar name={contact.username} />
+          </StyledOfflineBadge>
+        )}
         <Stack>
           <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
             {contact.username}
           </Typography>
           <Typography variant="body2" component="p" sx={{ m: 0, p: 0 }}>
-            Online
+            {contact.status}
           </Typography>
         </Stack>
       </Stack>
@@ -80,6 +98,7 @@ ContactCard.propTypes = {
   contact: PropTypes.shape({
     id: PropTypes.number.isRequired,
     username: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
   }).isRequired,
 };
 
