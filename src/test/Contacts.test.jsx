@@ -18,14 +18,14 @@ describe("Contacts", () => {
     await user.type(searchInput, "test");
     expect(searchInput).toHaveValue("test");
   });
-  it("should render a list of contacts", async () => {
+  it("should render a list of online contacts", async () => {
     const renderedComponent = render(
       <UserContext.Provider value={UserContextValue}>
         <Contacts />
       </UserContext.Provider>,
     );
     const contacts = renderedComponent.queryAllByTestId("contact-card");
-    expect(contacts).toHaveLength(5);
+    expect(contacts).toHaveLength(3);
   });
   it("should render a list of contacts that match the search when the user types in the search bar", async () => {
     const renderedComponent = render(
@@ -37,6 +37,38 @@ describe("Contacts", () => {
       name: /search/i,
     });
     await user.type(searchInput, "Seymour");
+    const contacts = renderedComponent.queryAllByTestId("contact-card");
+    expect(contacts).toHaveLength(1);
+  });
+  it("should render all contacts when the user clicks the 'All' tab", async () => {
+    const renderedComponent = render(
+      <UserContext.Provider value={UserContextValue}>
+        <Contacts />
+      </UserContext.Provider>,
+    );
+    const allTab = await renderedComponent.findByRole("tab", {
+      name: /All contacts/i,
+    });
+    await user.click(allTab);
+    const contacts = renderedComponent.queryAllByTestId("contact-card");
+    expect(contacts).toHaveLength(6);
+  });
+  it("should render a list of contacts that match the search when the user types in the search bar and clicks the 'All' tab", async () => {
+    const renderedComponent = render(
+      <UserContext.Provider value={UserContextValue}>
+        <Contacts />
+      </UserContext.Provider>,
+    );
+    const allTab = await renderedComponent.findByRole("tab", {
+      name: /All contacts/i,
+    });
+    await user.click(allTab);
+
+    const searchInput = await renderedComponent.findByRole("textbox", {
+      name: /search/i,
+    });
+    await user.type(searchInput, "Brooks");
+
     const contacts = renderedComponent.queryAllByTestId("contact-card");
     expect(contacts).toHaveLength(1);
   });
