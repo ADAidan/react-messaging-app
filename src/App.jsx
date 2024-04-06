@@ -51,6 +51,16 @@ export default function App() {
         username: "Johnathan Sheppard",
         status: "Offline",
       },
+      {
+        id: 7,
+        username: "Ella-Rose Cabrera",
+        status: "Away",
+      },
+      {
+        id: 8,
+        username: "Kaitlyn Delacruz",
+        status: "Away",
+      },
     ]);
     setDirectMessages([
       {

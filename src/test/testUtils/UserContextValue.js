@@ -13,7 +13,7 @@ const UserContextValue = {
       {
         id: 3,
         username: "Brooks Sosa",
-        status: "Offline",
+        status: "Away",
       },
       {
         id: 4,
