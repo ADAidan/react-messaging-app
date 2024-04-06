@@ -24,22 +24,32 @@ export default function App() {
       {
         id: 1,
         username: "Seymour Wade",
+        status: "Online",
       },
       {
         id: 2,
         username: "Kaiya Mccarthy",
+        status: "Offline",
       },
       {
         id: 3,
         username: "Brooks Sosa",
+        status: "Online",
       },
       {
         id: 4,
         username: "Anton Boone",
+        status: "Offline",
       },
       {
         id: 5,
         username: "Hung Buchanan",
+        status: "Online",
+      },
+      {
+        id: 6,
+        username: "Johnathan Sheppard",
+        status: "Offline",
       },
     ]);
     setDirectMessages([
