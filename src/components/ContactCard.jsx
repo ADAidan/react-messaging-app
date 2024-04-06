@@ -44,6 +44,14 @@ const StyledOfflineBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
+const StyledAwayBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    backgroundColor: "#ff9800",
+    color: "#ff9800",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+  },
+}));
+
 function ContactCard({ contact }) {
   return (
     <Paper
@@ -64,22 +72,41 @@ function ContactCard({ contact }) {
           alignItems: "center",
         }}
       >
-        {contact.status === "Online" ? (
+        {contact.status === "Online" && (
           <StyledBadge
             overlap="circular"
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
             variant="dot"
           >
             <DynamicAvatar name={contact.username} />
           </StyledBadge>
-        ) : (
+        )}
+        {contact.status === "Offline" && (
           <StyledOfflineBadge
             overlap="circular"
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
             variant="dot"
           >
             <DynamicAvatar name={contact.username} />
           </StyledOfflineBadge>
+        )}
+        {contact.status === "Away" && (
+          <StyledAwayBadge
+            overlap="circular"
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            variant="dot"
+          >
+            <DynamicAvatar name={contact.username} />
+          </StyledAwayBadge>
         )}
         <Stack>
           <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
