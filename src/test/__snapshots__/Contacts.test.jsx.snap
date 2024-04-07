@@ -13,7 +13,142 @@ exports[`Contacts > should render the Contacts page 1`] = `
           class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-hyum1k-MuiToolbar-root"
         />
         <div
-          class="MuiBox-root css-1aq40h0"
+          class="MuiBox-root css-1cip7rb"
+        >
+          <div
+            class="MuiStack-root css-3y1137-MuiStack-root"
+          >
+            <div
+              class="MuiTabs-root css-1ujnqem-MuiTabs-root"
+            >
+              <div
+                class="MuiTabs-scrollableX MuiTabs-hideScrollbar css-oqr85h"
+                style="width: 99px; height: 99px; position: absolute; top: -9999px; overflow: scroll;"
+              />
+              <div
+                class="MuiTabs-scroller MuiTabs-hideScrollbar MuiTabs-scrollableX css-69z67c-MuiTabs-scroller"
+                style="margin-bottom: 0px;"
+              >
+                <div
+                  aria-label="contact tabs"
+                  class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
+                  role="tablist"
+                >
+                  <button
+                    aria-label="Online contacts"
+                    aria-selected="true"
+                    class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+                    role="tab"
+                    tabindex="0"
+                    type="button"
+                  >
+                    Online
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </button>
+                  <button
+                    aria-label="All contacts"
+                    aria-selected="false"
+                    class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+                    role="tab"
+                    tabindex="-1"
+                    type="button"
+                  >
+                    All
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </button>
+                  <button
+                    aria-label="Pending contacts"
+                    aria-selected="false"
+                    class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
+                    role="tab"
+                    tabindex="-1"
+                    type="button"
+                  >
+                    Pending
+                    <span
+                      class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+                    />
+                  </button>
+                </div>
+                <span
+                  class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
+                  style="left: 0px; width: 0px;"
+                />
+              </div>
+            </div>
+            <button
+              class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSuccess MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSuccess MuiButton-root MuiButton-contained MuiButton-containedSuccess MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSuccess css-ke5b6m-MuiButtonBase-root-MuiButton-root"
+              tabindex="0"
+              type="button"
+            >
+              Add Contact
+              <span
+                class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
+              />
+            </button>
+          </div>
+        </div>
+        <div
+          class="MuiStack-root css-1sazv7p-MuiStack-root"
+        >
+          <div
+            class="MuiBox-root css-pppzjk"
+            data-testid="search-bar"
+          >
+            <div
+              class="MuiBox-root css-1i1gqge"
+            >
+              <svg
+                aria-hidden="true"
+                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
+                data-testid="SearchIcon"
+                focusable="false"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
+                />
+              </svg>
+            </div>
+            <div
+              class="MuiInputBase-root MuiInputBase-colorPrimary css-1776fzg-MuiInputBase-root"
+            >
+              <input
+                aria-label="search"
+                class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
+                placeholder="Search…"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+          <hr
+            class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
+          />
+          <div
+            class="MuiStack-root css-1kdmtr3-MuiStack-root"
+          />
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div
+      class="MuiContainer-root MuiContainer-maxWidthMd css-xdmu94-MuiContainer-root"
+      data-testid="contact-page"
+    >
+      <div
+        class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-hyum1k-MuiToolbar-root"
+      />
+      <div
+        class="MuiBox-root css-1cip7rb"
+      >
+        <div
+          class="MuiStack-root css-3y1137-MuiStack-root"
         >
           <div
             class="MuiTabs-root css-1ujnqem-MuiTabs-root"
@@ -58,14 +193,14 @@ exports[`Contacts > should render the Contacts page 1`] = `
                   />
                 </button>
                 <button
-                  aria-label="Add contact"
+                  aria-label="Pending contacts"
                   aria-selected="false"
                   class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
                   role="tab"
                   tabindex="-1"
                   type="button"
                 >
-                  Add
+                  Pending
                   <span
                     class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                   />
@@ -77,123 +212,16 @@ exports[`Contacts > should render the Contacts page 1`] = `
               />
             </div>
           </div>
-        </div>
-        <div
-          class="MuiStack-root css-1sazv7p-MuiStack-root"
-        >
-          <div
-            class="MuiBox-root css-pppzjk"
-            data-testid="search-bar"
+          <button
+            class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedSuccess MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSuccess MuiButton-root MuiButton-contained MuiButton-containedSuccess MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorSuccess css-ke5b6m-MuiButtonBase-root-MuiButton-root"
+            tabindex="0"
+            type="button"
           >
-            <div
-              class="MuiBox-root css-1i1gqge"
-            >
-              <svg
-                aria-hidden="true"
-                class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-i4bv87-MuiSvgIcon-root"
-                data-testid="SearchIcon"
-                focusable="false"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14"
-                />
-              </svg>
-            </div>
-            <div
-              class="MuiInputBase-root MuiInputBase-colorPrimary css-1776fzg-MuiInputBase-root"
-            >
-              <input
-                aria-label="search"
-                class="MuiInputBase-input css-yz9k0d-MuiInputBase-input"
-                placeholder="Search…"
-                type="text"
-                value=""
-              />
-            </div>
-          </div>
-          <hr
-            class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
-          />
-          <div
-            class="MuiStack-root css-nen11g-MuiStack-root"
-          />
-        </div>
-      </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      class="MuiContainer-root MuiContainer-maxWidthMd css-xdmu94-MuiContainer-root"
-      data-testid="contact-page"
-    >
-      <div
-        class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-hyum1k-MuiToolbar-root"
-      />
-      <div
-        class="MuiBox-root css-1aq40h0"
-      >
-        <div
-          class="MuiTabs-root css-1ujnqem-MuiTabs-root"
-        >
-          <div
-            class="MuiTabs-scrollableX MuiTabs-hideScrollbar css-oqr85h"
-            style="width: 99px; height: 99px; position: absolute; top: -9999px; overflow: scroll;"
-          />
-          <div
-            class="MuiTabs-scroller MuiTabs-hideScrollbar MuiTabs-scrollableX css-69z67c-MuiTabs-scroller"
-            style="margin-bottom: 0px;"
-          >
-            <div
-              aria-label="contact tabs"
-              class="MuiTabs-flexContainer css-heg063-MuiTabs-flexContainer"
-              role="tablist"
-            >
-              <button
-                aria-label="Online contacts"
-                aria-selected="true"
-                class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
-                role="tab"
-                tabindex="0"
-                type="button"
-              >
-                Online
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
-              <button
-                aria-label="All contacts"
-                aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
-                role="tab"
-                tabindex="-1"
-                type="button"
-              >
-                All
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
-              <button
-                aria-label="Add contact"
-                aria-selected="false"
-                class="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1h9z7r5-MuiButtonBase-root-MuiTab-root"
-                role="tab"
-                tabindex="-1"
-                type="button"
-              >
-                Add
-                <span
-                  class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
-                />
-              </button>
-            </div>
+            Add Contact
             <span
-              class="MuiTabs-indicator css-1aquho2-MuiTabs-indicator"
-              style="left: 0px; width: 0px;"
+              class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
             />
-          </div>
+          </button>
         </div>
       </div>
       <div
@@ -234,7 +262,7 @@ exports[`Contacts > should render the Contacts page 1`] = `
           class="MuiDivider-root MuiDivider-fullWidth css-9mgopn-MuiDivider-root"
         />
         <div
-          class="MuiStack-root css-nen11g-MuiStack-root"
+          class="MuiStack-root css-1kdmtr3-MuiStack-root"
         />
       </div>
     </div>

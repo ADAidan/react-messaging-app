@@ -1,36 +1,36 @@
 const UserContextValue = {
   contacts: [
-      {
-        id: 1,
-        username: "Seymour Wade",
-        status: "Online",
-      },
-      {
-        id: 2,
-        username: "Kaiya Mccarthy",
-        status: "Offline",
-      },
-      {
-        id: 3,
-        username: "Brooks Sosa",
-        status: "Away",
-      },
-      {
-        id: 4,
-        username: "Anton Boone",
-        status: "Offline",
-      },
-      {
-        id: 5,
-        username: "Hung Buchanan",
-        status: "Online",
-      },
-      {
-        id: 6,
-        username: "Johnathan Sheppard",
-        status: "Online",
-      },
-    ],
+    {
+      id: 1,
+      username: "Seymour Wade",
+      status: "Online",
+    },
+    {
+      id: 2,
+      username: "Kaiya Mccarthy",
+      status: "Offline",
+    },
+    {
+      id: 3,
+      username: "Brooks Sosa",
+      status: "Away",
+    },
+    {
+      id: 4,
+      username: "Anton Boone",
+      status: "Offline",
+    },
+    {
+      id: 5,
+      username: "Hung Buchanan",
+      status: "Online",
+    },
+    {
+      id: 6,
+      username: "Johnathan Sheppard",
+      status: "Online",
+    },
+  ],
   directMessages: [
     {
       id: 1,
@@ -59,6 +59,23 @@ const UserContextValue = {
     {
       id: 2,
       username: "Kaiya Mccarthy",
+    },
+  ],
+  pending: [
+    {
+      id: 1,
+      username: "Sophia Gonzalez",
+      status: "outgoing contact request",
+    },
+    {
+      id: 2,
+      username: "Isabella Morales",
+      status: "outgoing contact request",
+    },
+    {
+      id: 3,
+      username: "Olivia Castillo",
+      status: "incoming contact request",
     },
   ],
 };

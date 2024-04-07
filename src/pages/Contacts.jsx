@@ -68,7 +68,7 @@ function Contacts() {
           direction="column"
           spacing={0}
           sx={{
-            maxHeight: "calc(100vh - 190px)",
+            maxHeight: "calc(100vh - 210px)",
             overflowY: "scroll",
           }}
         >
