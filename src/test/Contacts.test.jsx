@@ -72,4 +72,36 @@ describe("Contacts", () => {
     const contacts = renderedComponent.queryAllByTestId("contact-card");
     expect(contacts).toHaveLength(1);
   });
+  it("should render a list of pending contacts when the user clicks the 'Pending' tab", async () => {
+    const renderedComponent = render(
+      <UserContext.Provider value={UserContextValue}>
+        <Contacts />
+      </UserContext.Provider>,
+    );
+    const pendingTab = await renderedComponent.findByRole("tab", {
+      name: /Pending contacts/i,
+    });
+    await user.click(pendingTab);
+    const contacts = renderedComponent.queryAllByTestId("contact-card");
+    expect(contacts).toHaveLength(3);
+  });
+  it("should render a list of contacts that match the search when the user types in the search bar and clicks the 'Pending' tab", async () => {
+    const renderedComponent = render(
+      <UserContext.Provider value={UserContextValue}>
+        <Contacts />
+      </UserContext.Provider>,
+    );
+    const pendingTab = await renderedComponent.findByRole("tab", {
+      name: /Pending contacts/i,
+    });
+    await user.click(pendingTab);
+
+    const searchInput = await renderedComponent.findByRole("textbox", {
+      name: /search/i,
+    });
+    await user.type(searchInput, "Sophia");
+
+    const contacts = renderedComponent.queryAllByTestId("contact-card");
+    expect(contacts).toHaveLength(1);
+  });
 });
