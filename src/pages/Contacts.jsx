@@ -18,13 +18,19 @@ function Contacts() {
   React.useEffect(() => {
     user.contacts.sort((a, b) => a.username.localeCompare(b.username));
     switch (selectedTab) {
+      // Online tab selected
       case 0:
         setFilteredContacts(
           user.contacts.filter((contact) => contact.status === "Online"),
         );
         break;
+      // All tab selected
       case 1:
         setFilteredContacts(user.contacts);
+        break;
+      // Pending tab selected
+      case 2:
+        setFilteredContacts(user.pending);
         break;
       default:
         setFilteredContacts([]);
@@ -58,11 +64,17 @@ function Contacts() {
           handleSearchChange={handleSearchChange}
         />
         <Divider />
-        <Stack direction="column" spacing={0}>
-          {user.contacts &&
-            searchedContacts.map((contact) => (
-              <ContactCard key={contact.id} contact={contact} />
-            ))}
+        <Stack
+          direction="column"
+          spacing={0}
+          sx={{
+            maxHeight: "calc(100vh - 190px)",
+            overflowY: "scroll",
+          }}
+        >
+          {searchedContacts.map((contact) => (
+            <ContactCard key={contact.id} contact={contact} />
+          ))}
         </Stack>
       </Stack>
     </Container>

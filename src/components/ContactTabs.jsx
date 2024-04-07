@@ -31,7 +31,7 @@ export default function ContactTabs({ setSelectedTab }) {
       >
         <Tab label="Online" aria-label="Online contacts" />
         <Tab label="All" aria-label="All contacts" />
-        <Tab label="Add" aria-label="Add contact" />
+        <Tab label="Pending" aria-label="Pending contacts" />
       </Tabs>
     </Box>
   );
