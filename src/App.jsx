@@ -14,6 +14,7 @@ export default function App() {
   const [profilePicture, setProfilePicture] = React.useState("");
   const [contacts, setContacts] = React.useState([]);
   const [directMessages, setDirectMessages] = React.useState([]);
+  const [pending, setPending] = React.useState([]);
   const [status, setStatus] = React.useState("");
 
   React.useEffect(() => {
@@ -112,6 +113,23 @@ export default function App() {
         username: "Hung Buchanan",
       },
     ]);
+    setPending([
+      {
+        id: 1,
+        username: "Sophia Gonzalez",
+        status: "outgoing contact request",
+      },
+      {
+        id: 2,
+        username: "Isabella Morales",
+        status: "outgoing contact request",
+      },
+      {
+        id: 3,
+        username: "Olivia Castillo",
+        status: "incoming contact request",
+      },
+    ]);
   }, []);
 
   const UserContextValue = React.useMemo(
@@ -120,6 +138,7 @@ export default function App() {
       profilePicture,
       contacts,
       directMessages,
+      pending,
       status,
     }),
     [username, profilePicture, contacts, directMessages, status],

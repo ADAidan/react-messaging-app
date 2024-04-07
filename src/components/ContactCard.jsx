@@ -108,6 +108,12 @@ function ContactCard({ contact }) {
             <DynamicAvatar name={contact.username} />
           </StyledAwayBadge>
         )}
+        {contact.status === "incoming contact request" && (
+          <DynamicAvatar name={contact.username} />
+        )}
+        {contact.status === "outgoing contact request" && (
+          <DynamicAvatar name={contact.username} />
+        )}
         <Stack>
           <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
             {contact.username}

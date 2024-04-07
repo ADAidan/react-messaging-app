@@ -5,6 +5,7 @@ const UserContext = createContext({
   profilePicture: null,
   contacts: [],
   directMessages: [],
+  pending: [],
   status: "",
   settings: {
     theme: "light",
@@ -14,6 +15,7 @@ const UserContext = createContext({
   setProfilePicture: () => {},
   setContacts: () => {},
   setDirectMessages: () => {},
+  setPending: () => {},
   setStatus: () => {},
   setSettings: () => {},
 });
