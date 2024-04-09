@@ -4,11 +4,14 @@ const mongoose = require('mongoose');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const cors = require('cors');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 
 const app = express();
+
+app.use(cors());
 
 // eslint-disable-next-line no-use-before-define, no-console
 main().catch(err => console.log(err));
