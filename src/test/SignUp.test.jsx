@@ -49,7 +49,7 @@ describe("SignUp", () => {
       "Username must be less than 20 characters",
     );
     expect(() => usernameValidate("a!")).toThrowError(
-      "Username must contain only letters, numbers, and _",
+      "Username must contain only letters, numbers, spaces, and _",
     );
     expect(usernameValidate("testuser")).toBe(true);
   });

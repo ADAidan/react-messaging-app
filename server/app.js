@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+// eslint-disable-next-line import/no-extraneous-dependencies
 const cors = require('cors');
 
 const indexRouter = require('./routes/index');
