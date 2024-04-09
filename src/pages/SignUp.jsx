@@ -1,6 +1,6 @@
 import * as React from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+/* import { useNavigate } from "react-router-dom"; */
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -60,7 +60,7 @@ function SignUp() {
   const [emailValue, setEmailValue] = React.useState("");
   const [usernameValue, setUsernameValue] = React.useState("");
   const [passwordValue, setPasswordValue] = React.useState("");
-  const Navigate = useNavigate();
+  /* const navigate = useNavigate(); */
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -90,7 +90,7 @@ function SignUp() {
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response);
-        Navigate("/");
+        /* navigate("/"); */
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
