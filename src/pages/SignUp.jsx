@@ -162,6 +162,7 @@ function SignUp() {
             <InputLabel htmlFor="password-input">Password</InputLabel>
             <Input
               id="password-input"
+              autoComplete="new-password"
               slotProps={{ input: { "aria-label": "password-input" } }}
               data-testid="password-input"
               type={showPassword ? "text" : "password"}
