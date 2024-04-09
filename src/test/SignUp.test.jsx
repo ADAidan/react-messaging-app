@@ -1,4 +1,5 @@
 import * as React from "react";
+import { MemoryRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
 import user from "@testing-library/user-event";
 import SignUp, {
@@ -9,11 +10,19 @@ import SignUp, {
 
 describe("SignUp", () => {
   it("should render the Sign Up header", () => {
-    const renderedComponent = render(<SignUp />);
+    const renderedComponent = render(
+      <MemoryRouter>
+        <SignUp />
+      </MemoryRouter>,
+    );
     expect(renderedComponent).toMatchSnapshot();
   });
   it("should clear the input fields when the user submits the form", async () => {
-    const renderedComponent = render(<SignUp />);
+    const renderedComponent = render(
+      <MemoryRouter>
+        <SignUp />
+      </MemoryRouter>,
+    );
 
     const emailInput = await renderedComponent.findByRole("textbox", {
       name: /Email/i,
@@ -72,7 +81,11 @@ describe("SignUp", () => {
     expect(passwordValidate("password")).toBe(true);
   });
   it("should toggle show password when the user clicks the show password button", async () => {
-    const renderedComponent = render(<SignUp />);
+    const renderedComponent = render(
+      <MemoryRouter>
+        <SignUp />
+      </MemoryRouter>,
+    );
 
     const passwordInput =
       await renderedComponent.findByLabelText(/password-input/i);
@@ -89,7 +102,11 @@ describe("SignUp", () => {
     expect(passwordInput).toHaveAttribute("type", "password");
   });
   it("should check the receive email notifications checkbox", async () => {
-    const renderedComponent = render(<SignUp />);
+    const renderedComponent = render(
+      <MemoryRouter>
+        <SignUp />
+      </MemoryRouter>,
+    );
 
     const receiveEmailNotificationsCheckbox =
       await renderedComponent.findByLabelText(/receive email notifications/i);
@@ -99,7 +116,11 @@ describe("SignUp", () => {
     expect(receiveEmailNotificationsCheckbox).not.toBeChecked();
   });
   it("should check the terms and conditions checkbox", async () => {
-    const renderedComponent = render(<SignUp />);
+    const renderedComponent = render(
+      <MemoryRouter>
+        <SignUp />
+      </MemoryRouter>,
+    );
 
     const termsAndConditionsCheckbox = await renderedComponent.findByLabelText(
       /agree to terms of service/i,
