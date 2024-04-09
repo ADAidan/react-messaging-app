@@ -1,4 +1,6 @@
 import * as React from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -21,8 +23,10 @@ export const usernameValidate = (username) => {
       throw new Error("Username must be at least 2 characters");
     case username.length > 20:
       throw new Error("Username must be less than 20 characters");
-    case !/^[a-zA-Z0-9_]*$/.test(username):
-      throw new Error("Username must contain only letters, numbers, and _");
+    case !/^[a-zA-Z0-9_ ]*$/.test(username):
+      throw new Error(
+        "Username must contain only letters, numbers, spaces, and _",
+      );
     default:
       return true;
   }
@@ -56,6 +60,7 @@ function SignUp() {
   const [emailValue, setEmailValue] = React.useState("");
   const [usernameValue, setUsernameValue] = React.useState("");
   const [passwordValue, setPasswordValue] = React.useState("");
+  const Navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -69,8 +74,29 @@ function SignUp() {
       emailValidate(emailValue);
       passwordValidate(passwordValue);
     } catch (error) {
+      // eslint-disable-next-line no-console
+      console.error(error);
       return;
     }
+
+    const data = {
+      username: usernameValue,
+      email: emailValue,
+      password: passwordValue,
+    };
+
+    axios
+      .post("http://localhost:3000/users/signup", data)
+      .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log(response);
+        Navigate("/");
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("Error:", error);
+      });
+
     setEmailValue("");
     setUsernameValue("");
     setPasswordValue("");

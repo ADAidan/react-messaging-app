@@ -15,6 +15,7 @@ main().catch(err => console.log(err));
 
 async function main() { 
   await mongoose.connect(`mongodb+srv://ADyer4201:bzAo29ZAYXHKhP5t@messagesdb.wosk06l.mongodb.net/?retryWrites=true&w=majority&appName=MessagesDB`);
+  // eslint-disable-next-line no-console
   console.log('Connected to MongoDB');
 };
 
