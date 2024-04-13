@@ -1,4 +1,6 @@
 import * as React from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
@@ -19,13 +21,32 @@ function Login() {
   const [emailValue, setEmailValue] = React.useState("");
   const [passwordValue, setPasswordValue] = React.useState("");
 
+  const navigate = useNavigate();
+
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
 
+  const data = {
+    email: emailValue,
+    password: passwordValue,
+  };
+
   const handleSubmit = () => {
+    axios
+      .post("http://localhost:3000/users/login", data)
+      .then((response) => {
+        // eslint-disable-next-line no-console
+        console.log(response);
+        sessionStorage.setItem("user", response.data.id);
+        navigate("/");
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.error("Error:", error);
+      });
     setEmailValue("");
     setPasswordValue("");
   };
