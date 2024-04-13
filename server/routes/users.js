@@ -9,6 +9,12 @@ router.get('/', async (req, res) => {
   return res.json(users);
 });
 
+// GET user settings
+router.get('/:id', async (req, res) => {
+  const user = await User.findById(req.params.id);
+  return res.json(user);
+});
+
 // POST request to create a new user
 router.post('/signup', async (req, res) => {
   const user = new User(req.body);
@@ -30,10 +36,6 @@ router.post('/login', async (req, res) => {
   }
 
   return res.json({ message: 'Login successful', id: user.id });
-});
-
-router.get('/user/:id', async (req, res) => { 
-
 });
 
 module.exports = router;

@@ -89,13 +89,14 @@ function Messages() {
                 <AddIcon />
               </IconButton>
             </Stack>
-            {directMessages.map((chat) => (
-              <ChatCard
-                key={chat.id}
-                chat={chat}
-                setSelectedChat={setSelectedChat}
-              />
-            ))}
+            {directMessages &&
+              directMessages.map((chat) => (
+                <ChatCard
+                  key={chat.id}
+                  chat={chat}
+                  setSelectedChat={setSelectedChat}
+                />
+              ))}
           </Paper>
         </Grid>
         <Grid item xs={8}>

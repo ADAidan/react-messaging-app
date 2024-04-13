@@ -16,6 +16,7 @@ function Contacts() {
   const [selectedTab, setSelectedTab] = React.useState(0);
 
   React.useEffect(() => {
+    if (!user.contacts) return;
     user.contacts.sort((a, b) => a.username.localeCompare(b.username));
     switch (selectedTab) {
       // Online tab selected
