@@ -23,9 +23,9 @@ export const usernameValidate = (username) => {
       throw new Error("Username must be at least 2 characters");
     case username.length > 20:
       throw new Error("Username must be less than 20 characters");
-    case !/^[a-zA-Z0-9_ ]*$/.test(username):
+    case !/^[a-zA-Z0-9_\- ]*$/.test(username):
       throw new Error(
-        "Username must contain only letters, numbers, spaces, and _",
+        "Username must contain only letters, numbers, spaces, _ and -",
       );
     default:
       return true;
