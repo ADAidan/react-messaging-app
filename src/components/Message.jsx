@@ -11,10 +11,14 @@ function Message({ message }) {
     <Grid data-testid="message" item xs={12}>
       <Paper elevation={3}>
         <Box paddingX={1}>
-          <Typography variant="subtitle1" component="h3">
+          <Typography
+            variant="subtitle1"
+            component="h3"
+            data-testid="message-author"
+          >
             {message.author}
           </Typography>
-          <Typography variant="body2" component="p">
+          <Typography variant="body2" component="p" data-testid="message-text">
             {message.text}
           </Typography>
           <Box
@@ -30,7 +34,11 @@ function Message({ message }) {
                 height: 15,
               }}
             />
-            <Typography variant="caption" component="p">
+            <Typography
+              variant="caption"
+              component="p"
+              data-testid="message-time"
+            >
               {message.time}
             </Typography>
           </Box>
