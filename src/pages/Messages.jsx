@@ -17,7 +17,7 @@ function Messages() {
   const user = React.useContext(UserContext);
   const messageContainerRef = React.useRef(null);
   const [directMessages, setDirectMessages] = React.useState([]);
-  const [displayedMessages, setDisplayedMessages] = React.useState(null);
+  const [displayedMessages, setDisplayedMessages] = React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState(null);
 
   React.useEffect(() => {
@@ -45,7 +45,10 @@ function Messages() {
 
   React.useEffect(() => {
     if (!directMessages.length) return;
-    setSelectedChat(1);
+    if (!selectedChat) {
+      setSelectedChat(directMessages[0].id);
+      return;
+    }
     const getDisplayedMessages = () => {
       const currentChat = directMessages.find(
         (chat) => chat.id === selectedChat,
@@ -144,7 +147,7 @@ function Messages() {
                   container
                   spacing={2}
                 >
-                  {displayedMessages ? (
+                  {displayedMessages.length > 0 ? (
                     displayedMessages.map((message) => (
                       <Message key={message.id} message={message} />
                     ))
