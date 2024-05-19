@@ -15,6 +15,19 @@ router.get('/:id', async (req, res) => {
   return res.json(user);
 });
 
+router.get('/:id/contacts', async (req, res) => {
+  const user = await User.findById(req.params.id);
+  return res.json(user.contacts);
+});
+
+router.get('/:id/direct-messages', async (req, res) => { 
+  const user = await User.findById(req.params.id);
+  if (!user.conversations.length) {
+    return res.json([]);
+  }
+  return res.json(user.directMessages);
+});
+
 // POST request to create a new user
 router.post('/signup', async (req, res) => {
   const user = new User(req.body);

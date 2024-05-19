@@ -6,18 +6,9 @@ import UserContext from "../Context";
 import UserContextValue from "./testUtils/UserContextValue";
 
 describe("Messages", () => {
-  it("should render the Direct Message container", () => {
+  it("should render the Direct Message Component", () => {
     const renderedComponent = render(<Messages />);
-    const headerElement = renderedComponent.getByRole("heading", {
-      name: /Direct Message/i,
-    });
-    expect(headerElement).toBeInTheDocument();
-  });
-  it("should render the messages container", () => {
-    const renderedComponent = render(<Messages />);
-    const messagesContainer =
-      renderedComponent.getByTestId("messages-container");
-    expect(messagesContainer).toBeInTheDocument();
+    expect(renderedComponent).toMatchSnapshot();
   });
   it("should add a new message", async () => {
     const renderedComponent = render(<Messages />);
