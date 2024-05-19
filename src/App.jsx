@@ -28,6 +28,7 @@ export default function App() {
         setStatus(userData.status);
         return response.data;
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error("Axios Error:", error);
         return null;
       }

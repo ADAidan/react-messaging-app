@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
@@ -9,28 +10,44 @@ import Message from "../components/Message";
 import MessageInput from "../components/MessageInput";
 import ChatCard from "../components/ChatCard";
 import NoMessages from "../components/NoMessages";
+import NoDirectMessages from "../components/NoDirectMessages";
 import UserContext from "../Context";
 
 function Messages() {
   const user = React.useContext(UserContext);
   const messageContainerRef = React.useRef(null);
   const [directMessages, setDirectMessages] = React.useState([]);
-  const [displayedMessages, setDisplayedMessages] = React.useState([]);
-  const [selectedChat, setSelectedChat] = React.useState(1);
+  const [displayedMessages, setDisplayedMessages] = React.useState(null);
+  const [selectedChat, setSelectedChat] = React.useState(null);
 
   React.useEffect(() => {
+    if (!messageContainerRef.current) return;
     messageContainerRef.current.scrollTop =
       messageContainerRef.current.scrollHeight;
   }, [displayedMessages]);
 
   React.useEffect(() => {
-    setDirectMessages(user.directMessages);
-  }, [user.directMessages]);
+    const getDirectMessages = async () => {
+      try {
+        const userID = sessionStorage.getItem("user");
+        const response = await axios.get(
+          `http://localhost:3000/users/${userID}/direct-messages`,
+        );
+        const directMessagesData = response.data;
+        setDirectMessages(directMessagesData);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Axios Error:", error);
+      }
+    };
+    getDirectMessages();
+  }, []);
 
   React.useEffect(() => {
-    if (!user.directMessages) return;
+    if (!directMessages.length) return;
+    setSelectedChat(1);
     const getDisplayedMessages = () => {
-      const currentChat = user.directMessages.find(
+      const currentChat = directMessages.find(
         (chat) => chat.id === selectedChat,
       );
       if (!currentChat) return [];
@@ -38,7 +55,7 @@ function Messages() {
     };
     const messagesData = getDisplayedMessages();
     setDisplayedMessages(messagesData);
-  }, [user.directMessages, selectedChat]);
+  }, [directMessages, selectedChat]);
 
   const handleClickAddChat = () => {
     // push a new chat to the user's directMessages
@@ -89,7 +106,7 @@ function Messages() {
                 <AddIcon />
               </IconButton>
             </Stack>
-            {directMessages &&
+            {directMessages.length > 0 &&
               directMessages.map((chat) => (
                 <ChatCard
                   key={chat.id}
@@ -100,42 +117,50 @@ function Messages() {
           </Paper>
         </Grid>
         <Grid item xs={8}>
-          <Paper
-            elevation={3}
-            sx={{
-              position: "relative",
-              pt: 10,
-              pb: 1,
-              px: 3,
-              my: 0,
-              height: "100vh",
-              borderRadius: 0,
-            }}
-          >
-            <Box
-              data-testid="messages-container"
-              ref={messageContainerRef}
+          {selectedChat ? (
+            <Paper
+              elevation={3}
               sx={{
-                overflowY: "auto",
-                p: 1,
-                height: "calc(100vh - 150px)",
+                position: "relative",
+                pt: 10,
+                pb: 1,
+                px: 3,
+                my: 0,
+                height: "100vh",
+                borderRadius: 0,
               }}
             >
-              <Grid data-testid={`chat-${selectedChat}`} container spacing={2}>
-                {displayedMessages ? (
-                  displayedMessages.map((message) => (
-                    <Message key={message.id} message={message} />
-                  ))
-                ) : (
-                  <NoMessages />
-                )}
-              </Grid>
-            </Box>
-            <MessageInput
-              setDisplayedMessages={setDisplayedMessages}
-              username={user.username}
-            />
-          </Paper>
+              <Box
+                data-testid="messages-container"
+                ref={messageContainerRef}
+                sx={{
+                  overflowY: "auto",
+                  p: 1,
+                  height: "calc(100vh - 150px)",
+                }}
+              >
+                <Grid
+                  data-testid={`chat-${selectedChat}`}
+                  container
+                  spacing={2}
+                >
+                  {displayedMessages ? (
+                    displayedMessages.map((message) => (
+                      <Message key={message.id} message={message} />
+                    ))
+                  ) : (
+                    <NoMessages />
+                  )}
+                </Grid>
+              </Box>
+              <MessageInput
+                setDisplayedMessages={setDisplayedMessages}
+                username={user.username}
+              />
+            </Paper>
+          ) : (
+            <NoDirectMessages />
+          )}
         </Grid>
       </Grid>
     </Container>

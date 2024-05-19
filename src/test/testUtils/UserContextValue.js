@@ -59,6 +59,7 @@ const UserContextValue = {
     {
       id: 2,
       username: "Kaiya Mccarthy",
+      messages: []
     },
   ],
   pending: [
