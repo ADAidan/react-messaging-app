@@ -11,4 +11,19 @@ const mockData = [
   },
 ];
 
+export const mockContacts = [
+  {
+    _id: '1',
+    username: "John",
+    status: "Online",
+    profilePicture: "",
+  },
+  {
+    _id: '2',
+    username: "Jane",
+    status: "Offline",
+    profilePicture: "",
+  },
+]
+
 export default mockData;

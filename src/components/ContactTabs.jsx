@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
@@ -9,6 +10,28 @@ import Stack from "@mui/material/Stack";
 export default function ContactTabs({ setSelectedTab }) {
   const [value, setValue] = React.useState(0);
 
+  const addContact = async (userId, contactId) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/users/${userId}/add-contact`,
+        { contactId },
+      );
+
+      if (!response) {
+        throw new Error("Failed to add contact");
+      }
+    } catch (error) {
+      switch (error.response.status) {
+        case 400:
+          throw new Error("Invalid contact ID");
+        case 404:
+          throw new Error("User not found");
+        default:
+          throw new Error("Error adding contact:", error);
+      }
+    }
+  };
+
   React.useEffect(() => {
     setSelectedTab(value);
   }, [value]);
@@ -17,7 +40,13 @@ export default function ContactTabs({ setSelectedTab }) {
     setValue(newValue);
   };
 
-  const handleClick = () => {};
+  const handleClick = () => {
+    // Usage example
+    const userId = sessionStorage.getItem("user"); // The ID of the user to update
+    const contactId = "661a2609af2bc0bd77b6786c"; // The ID of the user to add to contacts 661a2609af2bc0bd77b6786c
+
+    addContact(userId, contactId);
+  };
 
   return (
     <Box

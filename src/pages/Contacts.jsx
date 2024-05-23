@@ -1,4 +1,5 @@
 import * as React from "react";
+import axios from "axios";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
@@ -6,40 +7,63 @@ import Divider from "@mui/material/Divider";
 import ContactTabs from "../components/ContactTabs";
 import SearchBar from "../components/SearchBar";
 import ContactCard from "../components/ContactCard";
-import UserContext from "../Context";
 
 function Contacts() {
-  const user = React.useContext(UserContext);
+  const [userContacts, setUserContacts] = React.useState([]);
   const [filteredContacts, setFilteredContacts] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState("");
   const [searchedContacts, setSearchedContacts] = React.useState([]);
   const [selectedTab, setSelectedTab] = React.useState(0);
 
+  // get user data
   React.useEffect(() => {
-    if (!user.contacts) return;
-    user.contacts.sort((a, b) => a.username.localeCompare(b.username));
+    const getContactData = async () => {
+      try {
+        const userID = sessionStorage.getItem("user");
+        const response = await axios.get(
+          `http://localhost:3000/users/${userID}/contacts`,
+        );
+        const contactData = response.data;
+        setUserContacts(contactData);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Axios Error:", error);
+      }
+    };
+    getContactData();
+  }, []);
+
+  React.useEffect(() => {
+    if (!userContacts) return;
+    userContacts.sort((a, b) => a.username.localeCompare(b.username));
+
+    const pendingStatuses = ["pendingIncoming", "pendingOutgoing"];
     switch (selectedTab) {
       // Online tab selected
       case 0:
         setFilteredContacts(
-          user.contacts.filter((contact) => contact.status === "Online"),
+          userContacts.filter((contact) => contact.status === "Online"),
         );
         break;
       // All tab selected
       case 1:
-        setFilteredContacts(user.contacts);
+        setFilteredContacts(userContacts);
         break;
       // Pending tab selected
       case 2:
-        setFilteredContacts(user.pending);
+        setFilteredContacts(
+          userContacts.filter((contact) =>
+            pendingStatuses.includes(contact.status),
+          ),
+        );
         break;
       default:
         setFilteredContacts([]);
     }
-  }, [user.contacts, selectedTab]);
+  }, [userContacts, selectedTab]);
 
   React.useEffect(() => {
-    if (!searchValue && filteredContacts.length > 0) {
+    if (!searchValue && filteredContacts) {
       setSearchedContacts(filteredContacts);
       return;
     }
@@ -74,7 +98,8 @@ function Contacts() {
           }}
         >
           {searchedContacts.map((contact) => (
-            <ContactCard key={contact.id} contact={contact} />
+            // eslint-disable-next-line no-underscore-dangle
+            <ContactCard key={contact._id} contact={contact} />
           ))}
         </Stack>
       </Stack>
