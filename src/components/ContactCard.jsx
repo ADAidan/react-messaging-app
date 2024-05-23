@@ -129,7 +129,7 @@ function ContactCard({ contact }) {
 
 ContactCard.propTypes = {
   contact: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
   }).isRequired,
