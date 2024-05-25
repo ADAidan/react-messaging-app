@@ -4,8 +4,9 @@ import ContactCard from "../components/ContactCard";
 
 test("renders ContactCard component", () => {
   const contact = {
-    id: 1,
+    _id: "1",
     username: "John Doe",
+    status: "Online",
   };
 
   render(<ContactCard contact={contact} />);

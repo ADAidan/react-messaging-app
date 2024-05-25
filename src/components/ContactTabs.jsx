@@ -13,7 +13,7 @@ export default function ContactTabs({ setSelectedTab }) {
   const addContact = async (userId, contactId) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/users/${userId}/add-contact`,
+        `http://localhost:3000/users/${userId}/send-contact-request`,
         { contactId },
       );
 
@@ -41,9 +41,8 @@ export default function ContactTabs({ setSelectedTab }) {
   };
 
   const handleClick = () => {
-    // Usage example
     const userId = sessionStorage.getItem("user"); // The ID of the user to update
-    const contactId = "661a2609af2bc0bd77b6786c"; // The ID of the user to add to contacts 661a2609af2bc0bd77b6786c
+    const contactId = "661a25f1af2bc0bd77b67867"; // The ID of the user to add to contacts
 
     addContact(userId, contactId);
   };

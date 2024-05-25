@@ -33,6 +33,15 @@ router.get('/:id/contacts', async (req, res) => {
   return res.json(user.contacts);
 });
 
+// GET a user's pending contacts
+router.get('/:id/pending', async (req, res) => {
+  const user = await User.findById(req.params.id).populate({
+    path: 'pending.user',
+    select: 'username status profilePicture',
+  });
+  return res.json(user.pending);
+});
+
 // GET a user's conversations
 router.get('/:id/direct-messages', async (req, res) => { 
   const user = await User.findById(req.params.id);
@@ -81,45 +90,48 @@ router.put('/:userId/add-contact', async (req, res) => {
   }
 
   res.status(200).send({ message: 'Contact added' });
+});
 
-  /* try {
-    // Add the contact to the user's contacts
-    const updatedUser = await User.findByIdAndUpdate(
-      userId,
-      { $push: { contacts: contactId } },
-      { new: true } // Return the updated document
-    );
+// PUT request to send a contact request
+router.put('/:userId/send-contact-request', async (req, res) => {
+  const { userId } = req.params;
+  const { contactId } = req.body;
 
-    if (!updatedUser) {
+  try {
+    const user = await User.findById(userId);
+    const contact = await User.findById(contactId);
+    
+    if (!user || !contact) {
       return res.status(404).send({ message: 'User not found' });
     }
-
-    // Add the user to the receiving user's contacts
-    const receivingUser = await User.findByIdAndUpdate(
-      contactId,
-      { $push: { contacts: userId }},
-      { new: true } // Return the updated document
-    );
-
-    // If the receiving user is not found, remove the contact from the user's contacts
-    if (!receivingUser) {
-      await User.findByIdAndUpdate(
-        userId,
-        { $pull: { contacts: contactId }},
-        { new: true }
-      );
-      await User.findByIdAndUpdate(
-        contactId,
-        { $pull: { contacts: userId }},
-        { new: true }
-      );
-      return res.status(404).send({ message: 'Error receiving request' });
+    if (user.pending.some((pending) => pending.user.toString() === contactId)) {
+      return res.status(400).send({ message: 'Request already sent' });
+    }
+    if (user.contacts.includes(contactId)) {
+      return res.status(400).send({ message: 'User already added' });
+    }
+    if (userId === contactId) {
+      return res.status(400).send({ message: 'Cannot add self as contact' });
     }
 
-    res.status(200).send({ updatedUser, receivingUser });
+    if (!user.pending) {
+      user.pending = [];
+    }
+    if (!contact.pending) {
+      contact.pending = [];
+    }
+
+    user.pending.push({ user: contactId, pendingStatus: 'outgoing' });
+    contact.pending.push({ user: userId, pendingStatus: 'incoming' });
+
+    await user.save();
+    await contact.save();
+
+    res.status(200).send({ message: 'Request sent' });
   } catch (error) {
-    res.status(500).send({ message: 'Error adding contact', error });
-  } */
+    res.status(500).send({ message: 'Error sending request', error });
+  }
+  return null;
 });
 
 // POST request to create a new user
