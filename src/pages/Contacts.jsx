@@ -10,12 +10,13 @@ import ContactCard from "../components/ContactCard";
 
 function Contacts() {
   const [userContacts, setUserContacts] = React.useState([]);
+  const [userPending, setUserPending] = React.useState([]);
   const [filteredContacts, setFilteredContacts] = React.useState([]);
   const [searchValue, setSearchValue] = React.useState("");
   const [searchedContacts, setSearchedContacts] = React.useState([]);
   const [selectedTab, setSelectedTab] = React.useState(0);
 
-  // get user data
+  // get user contacts
   React.useEffect(() => {
     const getContactData = async () => {
       try {
@@ -33,11 +34,34 @@ function Contacts() {
     getContactData();
   }, []);
 
+  // get user pending contacts
+  React.useEffect(() => {
+    const getPendingData = async () => {
+      const pendingContacts = [];
+      try {
+        const userID = sessionStorage.getItem("user");
+        const response = await axios.get(
+          `http://localhost:3000/users/${userID}/pending`,
+        );
+        const pendingData = response.data;
+        for (let i = 0; i < pendingData.length; i += 1) {
+          pendingContacts.push(pendingData[i].user);
+          pendingContacts[i].status =
+            `${pendingData[i].pendingStatus} contact request`;
+        }
+        setUserPending(pendingContacts);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Axios Error:", error);
+      }
+    };
+    getPendingData();
+  }, []);
+
   React.useEffect(() => {
     if (!userContacts) return;
     userContacts.sort((a, b) => a.username.localeCompare(b.username));
 
-    const pendingStatuses = ["pendingIncoming", "pendingOutgoing"];
     switch (selectedTab) {
       // Online tab selected
       case 0:
@@ -51,11 +75,7 @@ function Contacts() {
         break;
       // Pending tab selected
       case 2:
-        setFilteredContacts(
-          userContacts.filter((contact) =>
-            pendingStatuses.includes(contact.status),
-          ),
-        );
+        setFilteredContacts(userPending);
         break;
       default:
         setFilteredContacts([]);

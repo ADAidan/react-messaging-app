@@ -6,7 +6,7 @@ import "@testing-library/jest-dom";
 import MockAdapter from "axios-mock-adapter";
 import user from "@testing-library/user-event";
 import Contacts from "../pages/Contacts";
-import { mockContacts } from "./testUtils/MockData";
+import { mockContacts, mockPending } from "./testUtils/MockData";
 
 const mockAxios = new MockAdapter(axios);
 
@@ -17,6 +17,9 @@ describe("Contacts", () => {
     mockAxios
       .onGet("http://localhost:3000/users/1/contacts")
       .reply(200, mockContacts);
+    mockAxios
+      .onGet("http://localhost:3000/users/1/pending")
+      .reply(200, mockPending);
   });
 
   afterEach(() => {
@@ -81,7 +84,8 @@ describe("Contacts", () => {
     });
     await user.click(pendingTab);
     const contacts = renderedComponent.queryAllByTestId("contact-card");
-    expect(contacts).toHaveLength(0);
+    renderedComponent.debug();
+    expect(contacts).toHaveLength(3);
   });
   it("should render a list of contacts that match the search when the user types in the search bar and clicks the 'Pending' tab", async () => {
     const renderedComponent = render(<Contacts />);

@@ -119,7 +119,7 @@ function ContactCard({ contact }) {
             {contact.username}
           </Typography>
           <Typography variant="body2" component="p" sx={{ m: 0, p: 0 }}>
-            {contact.status}
+            {contact.status[0].toUpperCase() + contact.status.slice(1)}
           </Typography>
         </Stack>
       </Stack>

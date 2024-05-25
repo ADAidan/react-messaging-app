@@ -26,4 +26,34 @@ export const mockContacts = [
   },
 ]
 
+export const mockPending = [
+  {
+    user: {
+      _id: '1',
+      username: "John",
+      status: "Online",
+      profilePicture: "",
+    },
+    pendingStatus: "outgoing"
+  },
+  {
+    user: {
+      _id: '2',
+      username: "Jane",
+      status: "Offline",
+      profilePicture: "",
+    },
+    pendingStatus: "incoming"
+  },
+  {
+    user: {
+      _id: '3',
+      username: "Jeffery",
+      status: "Online",
+      profilePicture: "",
+    },
+    pendingStatus: "outgoing"
+  },
+]
+
 export default mockData;

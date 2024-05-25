@@ -21,6 +21,16 @@ const UserSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   }],
+  pending: [{
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
+    pendingStatus: {
+      type: String,
+      enum: ['outgoing', 'incoming'],
+    }
+  }],
   conversations: [{
     type: Schema.Types.ObjectId,
     ref: 'Conversation'
