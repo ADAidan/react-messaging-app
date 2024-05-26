@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import * as React from "react";
 import axios from "axios";
 import Container from "@mui/material/Container";
@@ -20,6 +21,43 @@ function Messages() {
   const [displayedMessages, setDisplayedMessages] = React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState(null);
 
+  // PUT request to add a chat
+  const createConversation = async (userId, contactId) => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/users/${userId}/create-conversation`,
+        { contactId },
+      );
+
+      if (!response) {
+        throw new Error("Failed to create conversation");
+      }
+    } catch (error) {
+      switch (error.response.status) {
+        case 400:
+          throw new Error("Invalid contact ID");
+        case 404:
+          throw new Error("User not found");
+        default:
+          throw new Error("Error creating conversation:", error);
+      }
+    }
+  };
+
+  const getContactName = (participants) => {
+    const contact = participants.find(
+      (participant) => participant._id !== sessionStorage.getItem("user"),
+    );
+    return contact.username;
+  };
+
+  const getContactProfilePicture = (participants) => {
+    const contact = participants.find(
+      (participant) => participant._id !== sessionStorage.getItem("user"),
+    );
+    return contact.profilePicture;
+  };
+
   React.useEffect(() => {
     if (!messageContainerRef.current) return;
     messageContainerRef.current.scrollTop =
@@ -33,8 +71,15 @@ function Messages() {
         const response = await axios.get(
           `http://localhost:3000/users/${userID}/direct-messages`,
         );
-        const directMessagesData = response.data;
-        setDirectMessages(directMessagesData);
+        const conversationData = response.data;
+        const conversations = conversationData.map((conversation) => ({
+          _id: conversation._id,
+          username: getContactName(conversation.participants),
+          profilePicture: getContactProfilePicture(conversation.participants),
+          messages: conversation.messages,
+        }));
+        // conversationData needs to be an array of objects with username, status and profilePicture properties
+        setDirectMessages(conversations);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Axios Error:", error);
@@ -46,7 +91,7 @@ function Messages() {
   React.useEffect(() => {
     if (!directMessages.length) return;
     if (!selectedChat) {
-      setSelectedChat(directMessages[0].id);
+      setSelectedChat(directMessages[0]._id);
       return;
     }
     const getDisplayedMessages = () => {
@@ -61,7 +106,10 @@ function Messages() {
   }, [directMessages, selectedChat]);
 
   const handleClickAddChat = () => {
-    // push a new chat to the user's directMessages
+    const userId = sessionStorage.getItem("user");
+    const contactId = "661a2609af2bc0bd77b6786c";
+
+    createConversation(userId, contactId);
   };
 
   const handleMouseDownAdd = (e) => {
@@ -112,7 +160,7 @@ function Messages() {
             {directMessages.length > 0 &&
               directMessages.map((chat) => (
                 <ChatCard
-                  key={chat.id}
+                  key={chat._id}
                   chat={chat}
                   setSelectedChat={setSelectedChat}
                 />

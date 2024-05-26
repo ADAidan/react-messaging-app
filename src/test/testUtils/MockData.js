@@ -1,15 +1,35 @@
-const mockData = [
+const mockData = [{
+  _id: '1',
+  participants: [{
+    _id: '1',
+    username: "testUser",
+    profilePicture: "",
+    status: "Online",
+  },
   {
-    id: 1,
-    messages: [{ id: 1, author: "John", text: "Hello", time: "12:00" }],
+    _id: '2',
     username: "John",
+    profilePicture: "",
+    status: "Offline",
+  }],
+  messages: [{ id: 1, author: "John", text: "Hello", time: "12:00" }],
+},
+{
+  _id: '2',
+  participants: [{
+    _id: '1',
+    username: "testUser",
+    profilePicture: "",
+    status: "Online",
   },
   {
-    id: 2,
-    messages: [],
+    _id: '3',
     username: "Jane",
-  },
-];
+    profilePicture: "",
+    status: "Online",
+  }],
+  messages: [],
+}];
 
 export const mockContacts = [
   {

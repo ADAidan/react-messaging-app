@@ -1,5 +1,7 @@
+/* eslint-disable no-underscore-dangle */
 const express = require('express');
 const User = require('../models/User');
+const Conversation = require('../models/Conversation');
 
 const router = express.Router();
 
@@ -70,6 +72,53 @@ router.get('/:id/contacts', async (req, res) => {
   return res.json(user.contacts);
 });
 
+// GET a user's conversations
+router.get('/:id/direct-messages', async (req, res) => { 
+  const user = await User.findById(req.params.id).populate({
+    path: 'conversations',
+    populate: {
+      path: 'participants',
+      select: 'username status profilePicture',
+    },
+  });
+  return res.json(user.conversations);
+});
+
+// PUT request to create a conversation
+router.put('/:userId/create-conversation', async (req, res) => { 
+  const { userId } = req.params;
+  const { contactId } = req.body;
+
+  const user = await User.findById(userId);
+  const contact = await User.findById(contactId);
+
+  if (!user || !contact) {
+    return res.status(404).send({ message: 'User not found' });
+  }
+
+  if (!user.conversations) {
+    user.conversations = [];
+  }
+
+  if (!contact.conversations) {
+    contact.conversations = [];
+  }
+
+  const conversation = new Conversation({
+    participants: [userId, contactId],
+  });
+
+  await conversation.save();
+
+  user.conversations.push(conversation._id);
+  contact.conversations.push(conversation._id);
+
+  await user.save();
+  await contact.save();
+
+  return res.status(200).send({ message: 'Conversation created' });
+});
+
 // GET a user's pending contacts
 router.get('/:id/pending', async (req, res) => {
   const user = await User.findById(req.params.id).populate({
@@ -77,15 +126,6 @@ router.get('/:id/pending', async (req, res) => {
     select: 'username status profilePicture',
   });
   return res.json(user.pending);
-});
-
-// GET a user's conversations
-router.get('/:id/direct-messages', async (req, res) => { 
-  const user = await User.findById(req.params.id);
-  if (!user.conversations.length) {
-    return res.json([]);
-  }
-  return res.json(user.directMessages);
 });
 
 // PUT request to add a contact
