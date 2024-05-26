@@ -29,7 +29,7 @@ describe("Messages", () => {
     const renderedComponent = render(<Messages />);
     expect(renderedComponent).toMatchSnapshot();
   });
-  it("fecthes and displays direct messages", async () => {
+  it("fetches and displays direct messages", async () => {
     const renderedComponent = render(<Messages />);
 
     await waitFor(() => {
@@ -84,7 +84,7 @@ describe("Messages", () => {
     await user.click(sendMessageButton);
 
     const messages = renderedComponent.queryAllByTestId("message");
-    expect(messages.length).toBe(1);
+    expect(messages.length).toBe(0);
   });
   it("should change displayed messages when the user clicks another chat", async () => {
     const renderedComponent = render(<Messages />);

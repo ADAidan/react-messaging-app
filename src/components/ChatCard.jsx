@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import * as React from "react";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
@@ -38,7 +39,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 function ChatCard({ chat, setSelectedChat }) {
   const handleClick = () => {
-    setSelectedChat(chat.id);
+    setSelectedChat(chat._id);
   };
   return (
     <Paper
@@ -83,7 +84,7 @@ function ChatCard({ chat, setSelectedChat }) {
 
 ChatCard.propTypes = {
   chat: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
     messages: PropTypes.arrayOf(
       PropTypes.shape({
