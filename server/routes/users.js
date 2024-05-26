@@ -2,6 +2,7 @@
 const express = require('express');
 const User = require('../models/User');
 const Conversation = require('../models/Conversation');
+const Message = require('../models/Message');
 
 const router = express.Router();
 
@@ -76,10 +77,17 @@ router.get('/:id/contacts', async (req, res) => {
 router.get('/:id/direct-messages', async (req, res) => { 
   const user = await User.findById(req.params.id).populate({
     path: 'conversations',
-    populate: {
+    populate: [{
       path: 'participants',
       select: 'username status profilePicture',
     },
+    {
+      path: 'messages',
+      populate: {
+        path: 'author',
+        select: 'username profilePicture',
+      },
+    }],
   });
   return res.json(user.conversations);
 });
@@ -117,6 +125,31 @@ router.put('/:userId/create-conversation', async (req, res) => {
   await contact.save();
 
   return res.status(200).send({ message: 'Conversation created' });
+});
+
+// PUT request to send a message
+router.put('/send-message', async (req, res) => {
+  const { userId, conversationId, messageContent } = req.body;
+
+  const user = await User.findById(userId);
+  const conversation = await Conversation.findById(conversationId);
+
+  if (!user || !conversation) {
+    return res.status(404).send({ message: 'User or conversation not found' });
+  }
+
+  const message = new Message({
+    author: userId,
+    content: messageContent,
+  });
+
+  await message.save();
+
+  conversation.messages.push(message._id);
+
+  await conversation.save();
+
+  return res.status(200).send({ success: 'true' });
 });
 
 // GET a user's pending contacts

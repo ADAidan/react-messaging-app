@@ -18,6 +18,9 @@ describe("Messages", () => {
     mockAxios
       .onGet("http://localhost:3000/users/1/direct-messages")
       .reply(200, mockData);
+    mockAxios
+      .onPut("http://localhost:3000/users/send-message")
+      .reply(200, { success: true });
   });
 
   afterEach(() => {
@@ -40,11 +43,12 @@ describe("Messages", () => {
         "Hello",
       );
       expect(renderedComponent.getByTestId("message-time")).toHaveTextContent(
-        "12:00",
+        "12:00 PM",
       );
     });
   });
   it("should add a new message", async () => {
+    const mockSpy = vi.spyOn(axios, "put");
     const renderedComponent = render(<Messages />);
 
     const messageInput = await renderedComponent.findByRole("textbox", {
@@ -57,8 +61,16 @@ describe("Messages", () => {
     });
     await user.click(sendMessageButton);
 
-    const messages = renderedComponent.queryAllByTestId("message");
-    expect(messages.length).toBe(2);
+    await waitFor(() => {
+      expect(mockSpy).toHaveBeenCalledWith(
+        "http://localhost:3000/users/send-message",
+        {
+          userId: "1",
+          conversationId: "1",
+          messageContent: "Hello, World!",
+        },
+      );
+    });
   });
   it("should clear the message input when the user submits message", async () => {
     const renderedComponent = render(<Messages />);
@@ -84,7 +96,7 @@ describe("Messages", () => {
     await user.click(sendMessageButton);
 
     const messages = renderedComponent.queryAllByTestId("message");
-    expect(messages.length).toBe(0);
+    expect(messages.length).toBe(1);
   });
   it("should change displayed messages when the user clicks another chat", async () => {
     const renderedComponent = render(<Messages />);

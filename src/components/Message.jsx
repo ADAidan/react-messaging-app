@@ -16,10 +16,10 @@ function Message({ message }) {
             component="h3"
             data-testid="message-author"
           >
-            {message.author}
+            {message.author.username}
           </Typography>
           <Typography variant="body2" component="p" data-testid="message-text">
-            {message.text}
+            {message.content}
           </Typography>
           <Box
             sx={{
@@ -39,7 +39,7 @@ function Message({ message }) {
               component="p"
               data-testid="message-time"
             >
-              {message.time}
+              {message.formattedTime}
             </Typography>
           </Box>
         </Box>
@@ -50,10 +50,12 @@ function Message({ message }) {
 
 Message.propTypes = {
   message: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    author: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    time: PropTypes.string.isRequired,
+    _id: PropTypes.string.isRequired,
+    author: PropTypes.shape({
+      username: PropTypes.string.isRequired,
+    }).isRequired,
+    content: PropTypes.string.isRequired,
+    formattedTime: PropTypes.string.isRequired,
   }).isRequired,
 };
 

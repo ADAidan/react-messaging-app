@@ -88,10 +88,12 @@ ChatCard.propTypes = {
     username: PropTypes.string.isRequired,
     messages: PropTypes.arrayOf(
       PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        author: PropTypes.string.isRequired,
-        text: PropTypes.string.isRequired,
-        time: PropTypes.string.isRequired,
+        _id: PropTypes.string.isRequired,
+        author: PropTypes.shape({
+          username: PropTypes.string.isRequired,
+        }).isRequired,
+        content: PropTypes.string.isRequired,
+        createdAt: PropTypes.string.isRequired,
       }),
     ),
   }).isRequired,
