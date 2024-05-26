@@ -1,8 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 import * as React from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
 import Badge from "@mui/material/Badge";
 import styled from "@mui/material/styles/styled";
 import DynamicAvatar from "./DynamicAvatar";
@@ -53,6 +56,52 @@ const StyledAwayBadge = styled(Badge)(({ theme }) => ({
 }));
 
 function ContactCard({ contact }) {
+  const userId = sessionStorage.getItem("user");
+
+  const handleAccept = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/users/accept-contact-request`,
+        { userId, contactId: contact._id },
+      );
+
+      if (!response) {
+        throw new Error("Failed to accept contact request");
+      }
+    } catch (error) {
+      switch (error.response.status) {
+        case 400:
+          throw new Error("Invalid contact ID");
+        case 404:
+          throw new Error("User not found");
+        default:
+          throw new Error("Error accepting contact request:", error);
+      }
+    }
+  };
+
+  const handleReject = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/users/reject-contact-request`,
+        { userId, contactId: contact._id },
+      );
+
+      if (!response) {
+        throw new Error("Failed to reject contact request");
+      }
+    } catch (error) {
+      switch (error.response.status) {
+        case 400:
+          throw new Error("Invalid contact ID");
+        case 404:
+          throw new Error("User not found");
+        default:
+          throw new Error("Error rejecting contact request:", error);
+      }
+    }
+  };
+
   return (
     <Paper
       data-testid="contact-card"
@@ -122,6 +171,12 @@ function ContactCard({ contact }) {
             {contact.status[0].toUpperCase() + contact.status.slice(1)}
           </Typography>
         </Stack>
+        {contact.status === "incoming contact request" && (
+          <Stack direction="row">
+            <Button onClick={handleAccept}>Accept</Button>
+            <Button onClick={handleReject}>Reject</Button>
+          </Stack>
+        )}
       </Stack>
     </Paper>
   );

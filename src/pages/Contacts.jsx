@@ -49,7 +49,21 @@ function Contacts() {
           pendingContacts[i].status =
             `${pendingData[i].pendingStatus} contact request`;
         }
-        setUserPending(pendingContacts);
+        const incomingRequests = pendingContacts.filter(
+          (user) => user.status === "incoming contact request",
+        );
+        const outgoingRequests = pendingContacts.filter(
+          (user) => user.status === "outgoing contact request",
+        );
+
+        if (incomingRequests.length) {
+          incomingRequests.sort((a, b) => a.username.localeCompare(b.username));
+        }
+        if (outgoingRequests.length) {
+          outgoingRequests.sort((a, b) => a.username.localeCompare(b.username));
+        }
+        const pendingRequests = incomingRequests.concat(outgoingRequests);
+        setUserPending(pendingRequests);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Axios Error:", error);
