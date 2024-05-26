@@ -25,8 +25,8 @@ function Messages() {
   const createConversation = async (userId, contactId) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/users/${userId}/create-conversation`,
-        { contactId },
+        `http://localhost:3000/users/create-conversation`,
+        { userId, contactId },
       );
 
       if (!response) {

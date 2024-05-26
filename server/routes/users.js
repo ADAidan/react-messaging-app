@@ -45,57 +45,34 @@ router.get('/list', async (req, res) => {
   }
 });
 
-// GET user settings
-router.get('/:id', async (req, res) => {
-  try {
-    const user = await User.findById(req.params.id);
-    return res.json(user);
-  } catch (error) {
-    return res.status(500).send({ message: 'Error finding user', error });
+// PUT request to send a message
+router.put('/send-message', async (req, res) => {
+  const { userId, conversationId, messageContent } = req.body;
+
+  const user = await User.findById(userId);
+  const conversation = await Conversation.findById(conversationId);
+
+  if (!user || !conversation) {
+    return res.status(404).send({ message: 'User or conversation not found' });
   }
-});
 
-// GET user contact -- not used
-router.get('/:id/contact', async (req, res) => {
-  const user = await User.findById(req.params.id);
-
-  const { username, status, profilePicture } = user;
-
-  return res.json({ username, status, profilePicture });
-});
-
-// GET a user's contacts
-router.get('/:id/contacts', async (req, res) => {
-  const user = await User.findById(req.params.id).populate({
-    path: 'contacts',
-    select: 'username status profilePicture',
+  const message = new Message({
+    author: userId,
+    content: messageContent,
   });
-  return res.json(user.contacts);
-});
 
-// GET a user's conversations
-router.get('/:id/direct-messages', async (req, res) => { 
-  const user = await User.findById(req.params.id).populate({
-    path: 'conversations',
-    populate: [{
-      path: 'participants',
-      select: 'username status profilePicture',
-    },
-    {
-      path: 'messages',
-      populate: {
-        path: 'author',
-        select: 'username profilePicture',
-      },
-    }],
-  });
-  return res.json(user.conversations);
+  await message.save();
+
+  conversation.messages.push(message._id);
+
+  await conversation.save();
+
+  return res.status(200).send({ success: 'true' });
 });
 
 // PUT request to create a conversation
-router.put('/:userId/create-conversation', async (req, res) => { 
-  const { userId } = req.params;
-  const { contactId } = req.body;
+router.put('/create-conversation', async (req, res) => { 
+  const { userId, contactId } = req.body;
 
   const user = await User.findById(userId);
   const contact = await User.findById(contactId);
@@ -127,44 +104,73 @@ router.put('/:userId/create-conversation', async (req, res) => {
   return res.status(200).send({ message: 'Conversation created' });
 });
 
-// PUT request to send a message
-router.put('/send-message', async (req, res) => {
-  const { userId, conversationId, messageContent } = req.body;
+// PUT request to accept a contact request
+router.put('/accept-contact-request', async (req, res) => {
+  const { userId, contactId } = req.body;
 
-  const user = await User.findById(userId);
-  const conversation = await Conversation.findById(conversationId);
+  try {
+    const user = await User.findById(userId);
+    const contact = await User.findById(contactId);
 
-  if (!user || !conversation) {
-    return res.status(404).send({ message: 'User or conversation not found' });
+    if (!user || !contact) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+
+    const pendingIndex = user.pending.findIndex((pending) => pending.user.toString() === contactId);
+    if (pendingIndex === -1) {
+      return res.status(400).send({ message: 'Request not found' });
+    }
+
+    user.pending.splice(pendingIndex, 1);
+    user.contacts.push(contactId);
+
+    const contactPendingIndex = contact.pending.findIndex((pending) => pending.user.toString() === userId);
+    contact.pending.splice(contactPendingIndex, 1);
+    contact.contacts.push(userId);
+
+    await user.save();
+    await contact.save();
+
+    return res.status(200).send({ message: 'Request accepted' });
+  } catch (error) {
+    return res.status(500).send({ message: 'Error accepting request', error });
   }
-
-  const message = new Message({
-    author: userId,
-    content: messageContent,
-  });
-
-  await message.save();
-
-  conversation.messages.push(message._id);
-
-  await conversation.save();
-
-  return res.status(200).send({ success: 'true' });
 });
 
-// GET a user's pending contacts
-router.get('/:id/pending', async (req, res) => {
-  const user = await User.findById(req.params.id).populate({
-    path: 'pending.user',
-    select: 'username status profilePicture',
-  });
-  return res.json(user.pending);
+// PUT request to reject a contact request
+router.put('/reject-contact-request', async (req, res) => { 
+  const { userId, contactId } = req.body;
+
+  try {
+    const user = await User.findById(userId);
+    const contact = await User.findById(contactId);
+
+    if (!user || !contact) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+
+    const pendingIndex = user.pending.findIndex((pending) => pending.user.toString() === contactId);
+    if (pendingIndex === -1) {
+      return res.status(400).send({ message: 'Request not found' });
+    }
+
+    user.pending.splice(pendingIndex, 1);
+
+    const contactPendingIndex = contact.pending.findIndex((pending) => pending.user.toString() === userId);
+    contact.pending.splice(contactPendingIndex, 1);
+
+    await user.save();
+    await contact.save();
+
+    return res.status(200).send({ message: 'Request rejected' });
+  } catch (error) {
+    return res.status(500).send({ message: 'Error rejecting request', error });
+  }
 });
 
 // PUT request to add a contact
-router.put('/:userId/add-contact', async (req, res) => {
-  const { userId } = req.params;
-  const { contactId } = req.body;
+router.put('/add-contact', async (req, res) => {
+  const { userId, contactId } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -203,9 +209,8 @@ router.put('/:userId/add-contact', async (req, res) => {
 });
 
 // PUT request to send a contact request
-router.put('/:userId/send-contact-request', async (req, res) => {
-  const { userId } = req.params;
-  const { contactId } = req.body;
+router.put('/send-contact-request', async (req, res) => {
+  const { userId, contactId } = req.body;
 
   try {
     const user = await User.findById(userId);
@@ -242,6 +247,53 @@ router.put('/:userId/send-contact-request', async (req, res) => {
     res.status(500).send({ message: 'Error sending request', error });
   }
   return null;
+});
+
+// GET user settings
+router.get('/:id', async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    return res.json(user);
+  } catch (error) {
+    return res.status(500).send({ message: 'Error finding user', error });
+  }
+});
+
+// GET a user's contacts
+router.get('/:id/contacts', async (req, res) => {
+  const user = await User.findById(req.params.id).populate({
+    path: 'contacts',
+    select: 'username status profilePicture',
+  });
+  return res.json(user.contacts);
+});
+
+// GET a user's conversations
+router.get('/:id/direct-messages', async (req, res) => { 
+  const user = await User.findById(req.params.id).populate({
+    path: 'conversations',
+    populate: [{
+      path: 'participants',
+      select: 'username status profilePicture',
+    },
+    {
+      path: 'messages',
+      populate: {
+        path: 'author',
+        select: 'username profilePicture',
+      },
+    }],
+  });
+  return res.json(user.conversations);
+});
+
+// GET a user's pending contacts
+router.get('/:id/pending', async (req, res) => {
+  const user = await User.findById(req.params.id).populate({
+    path: 'pending.user',
+    select: 'username status profilePicture',
+  });
+  return res.json(user.pending);
 });
 
 module.exports = router;

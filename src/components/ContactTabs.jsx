@@ -13,8 +13,8 @@ export default function ContactTabs({ setSelectedTab }) {
   const addContact = async (userId, contactId) => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/users/${userId}/send-contact-request`,
-        { contactId },
+        `http://localhost:3000/users/send-contact-request`,
+        { userId, contactId },
       );
 
       if (!response) {
