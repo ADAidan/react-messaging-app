@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import * as React from "react";
+import axios from "axios";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import InputAdornment from "@mui/material/InputAdornment";
@@ -10,11 +11,38 @@ import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import { Tooltip } from "@mui/material";
 
-function MessageInput({ setDisplayedMessages, username }) {
+function MessageInput({ setDisplayedMessages, username, selectedChat }) {
   const [message, setMessage] = React.useState("");
+
+  const userId = sessionStorage.getItem("user");
+
+  const sendMessage = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/users/send-message`,
+        { userId, conversationId: selectedChat, messageContent: message },
+      );
+
+      if (!response) {
+        throw new Error("Failed to send message");
+      }
+    } catch (error) {
+      switch (error.response.status) {
+        case 400:
+          throw new Error("Invalid contact ID");
+        case 404:
+          throw new Error("User not found");
+        default:
+          throw new Error("Error sending message:", error);
+      }
+    }
+  };
 
   const handleClickSendMessage = () => {
     if (!message) return;
+
+    sendMessage();
+
     setDisplayedMessages((prevMessages) => {
       const newMessage = {
         id: prevMessages.length + 1,
@@ -82,6 +110,7 @@ function MessageInput({ setDisplayedMessages, username }) {
 MessageInput.propTypes = {
   setDisplayedMessages: PropTypes.func,
   username: PropTypes.string,
+  selectedChat: PropTypes.string.isRequired,
 };
 
 MessageInput.defaultProps = {

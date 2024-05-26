@@ -4,16 +4,18 @@ import Message from "../components/Message";
 
 test("renders Messages component", () => {
   const message = {
-    id: 1,
-    author: "John Doe",
-    text: "Hello, World!",
-    time: "10:00 AM",
+    _id: "1",
+    author: {
+      username: "John",
+    },
+    content: "Hello, World!",
+    formattedTime: "12:00 PM",
   };
 
   render(<Message message={message} />);
-  const authorElement = screen.getByText(message.author);
-  const messageElement = screen.getByText(message.text);
-  const timeElement = screen.getByText(message.time);
+  const authorElement = screen.getByText(message.author.username);
+  const messageElement = screen.getByText(message.content);
+  const timeElement = screen.getByText(message.formattedTime);
   expect(authorElement).toBeInTheDocument();
   expect(messageElement).toBeInTheDocument();
   expect(timeElement).toBeInTheDocument();

@@ -12,7 +12,11 @@ const mockData = [{
     profilePicture: "",
     status: "Offline",
   }],
-  messages: [{ id: 1, author: "John", text: "Hello", time: "12:00" }],
+  messages: [{
+    id: 1, author: {
+      username: "John",
+      profilePicture: "",
+  }, content: "Hello", createdAt: "2024-05-26T10:00:00-06:00" }],
 },
 {
   _id: '2',

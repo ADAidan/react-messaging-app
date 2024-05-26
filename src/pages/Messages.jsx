@@ -44,18 +44,26 @@ function Messages() {
     }
   };
 
-  const getContactName = (participants) => {
+  const getContactData = (participants) => {
     const contact = participants.find(
       (participant) => participant._id !== sessionStorage.getItem("user"),
     );
-    return contact.username;
+    return {
+      contactName: contact.username,
+      contactProfilePicture: contact.profilePicture,
+    };
   };
 
-  const getContactProfilePicture = (participants) => {
-    const contact = participants.find(
-      (participant) => participant._id !== sessionStorage.getItem("user"),
-    );
-    return contact.profilePicture;
+  const formatTime = (isoString) => {
+    const date = new Date(isoString);
+
+    const options = {
+      hour: "numeric",
+      minute: "numeric",
+      hour12: true,
+    };
+
+    return date.toLocaleTimeString("en-US", options);
   };
 
   React.useEffect(() => {
@@ -72,12 +80,17 @@ function Messages() {
           `http://localhost:3000/users/${userID}/direct-messages`,
         );
         const conversationData = response.data;
-        const conversations = conversationData.map((conversation) => ({
-          _id: conversation._id,
-          username: getContactName(conversation.participants),
-          profilePicture: getContactProfilePicture(conversation.participants),
-          messages: conversation.messages,
-        }));
+        const conversations = conversationData.map((conversation) => {
+          const { contactName, contactProfilePicture } = getContactData(
+            conversation.participants,
+          );
+          return {
+            _id: conversation._id,
+            username: contactName,
+            profilePicture: contactProfilePicture,
+            messages: conversation.messages,
+          };
+        });
         // conversationData needs to be an array of objects with username, status and profilePicture properties
         setDirectMessages(conversations);
       } catch (error) {
@@ -96,13 +109,24 @@ function Messages() {
     }
     const getDisplayedMessages = () => {
       const currentChat = directMessages.find(
-        (chat) => chat.id === selectedChat,
+        (chat) => chat._id === selectedChat,
       );
       if (!currentChat) return [];
       return currentChat.messages;
     };
     const messagesData = getDisplayedMessages();
-    setDisplayedMessages(messagesData);
+
+    const formattedMessages = messagesData.map((message) => ({
+      _id: message._id,
+      author: {
+        username: message.author.username,
+        profilePicture: message.author.profilePicture,
+      },
+      content: message.content,
+      formattedTime: formatTime(message.createdAt),
+    }));
+
+    setDisplayedMessages(formattedMessages);
   }, [directMessages, selectedChat]);
 
   const handleClickAddChat = () => {
@@ -197,7 +221,7 @@ function Messages() {
                 >
                   {displayedMessages.length > 0 ? (
                     displayedMessages.map((message) => (
-                      <Message key={message.id} message={message} />
+                      <Message key={message._id} message={message} />
                     ))
                   ) : (
                     <NoMessages />
@@ -207,6 +231,7 @@ function Messages() {
               <MessageInput
                 setDisplayedMessages={setDisplayedMessages}
                 username={user.username}
+                selectedChat={selectedChat}
               />
             </Paper>
           ) : (
