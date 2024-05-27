@@ -38,7 +38,7 @@ router.post('/login', async (req, res) => {
 // GET request to get a list of all users
 router.get('/list', async (req, res) => {
   try {
-    const users = await User.find().select('username profilePicture');
+    const users = await User.find().select('username profilePicture status');
     return res.json(users);
   } catch (error) {
     return res.status(500).send({ message: 'Error finding users', error });

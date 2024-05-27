@@ -186,7 +186,7 @@ ContactCard.propTypes = {
   contact: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
-    status: PropTypes.string.isRequired,
+    status: PropTypes.string,
   }).isRequired,
 };
 
