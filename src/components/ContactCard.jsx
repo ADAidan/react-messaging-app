@@ -241,7 +241,7 @@ function ContactCard({ contact }) {
         )}
         {contactStatuses.includes(contact.status) && (
           <Box sx={{ flexGrow: 0, ml: "auto" }}>
-            <Tooltip title="Open settings">
+            <Tooltip title="Options">
               <IconButton
                 id="basic-button"
                 aria-controls={open ? "basic-menu" : undefined}

@@ -236,6 +236,28 @@ router.put('/delete-contact', async (req, res) => {
   }
 });
 
+// PUT request to delete a conversation
+router.put('/remove-conversation', async (req, res) => {
+  const { userId, conversationId } = req.body;
+
+  try {
+    const userUpdate = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { conversations: conversationId } },
+      { new: true }
+    );
+
+    if (!userUpdate) {
+      res.status(404).send({ message: 'User not found' });
+      return;
+    }
+
+    res.send({ message: 'Conversation removed' });
+  } catch (error) {
+    res.status(500).send({ message: 'Error removing conversation', error });
+  }
+});
+
 // PUT request to send a contact request
 router.put('/send-contact-request', async (req, res) => {
   const { userId, contactId } = req.body;

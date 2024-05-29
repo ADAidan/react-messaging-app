@@ -1,11 +1,18 @@
 /* eslint-disable no-underscore-dangle */
 import * as React from "react";
+import axios from "axios";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
 import styled from "@mui/material/styles/styled";
+import Box from "@mui/material/Box";
+import IconButton from "@mui/material/IconButton";
+import Tooltip from "@mui/material/Tooltip";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DynamicAvatar from "./DynamicAvatar";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -38,14 +45,66 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 }));
 
 function ChatCard({ chat, setSelectedChat }) {
-  const handleClick = () => {
+  const userId = sessionStorage.getItem("user");
+  const [anchorElOptions, setAnchorElOptions] = React.useState(null);
+  const open = Boolean(anchorElOptions);
+  const options = ["Remove", "Leave", "Archive"];
+
+  const removeChat = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/users/remove-conversation`,
+        { userId, conversationId: chat._id },
+      );
+
+      if (!response) {
+        throw new Error("Failed to remove conversation");
+      }
+
+      setSelectedChat(null);
+    } catch (error) {
+      switch (error.response.status) {
+        case 400:
+          throw new Error("Invalid conversation ID");
+        case 404:
+          throw new Error("Conversation not found");
+        default:
+          throw new Error("Error removing conversation:", error);
+      }
+    }
+  };
+
+  const handleOpenOptionsMenu = (event) => {
+    setAnchorElOptions(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElOptions(null);
+  };
+
+  const handleClickOption = (event) => {
+    handleCloseUserMenu();
+
+    switch (event.currentTarget.textContent) {
+      case "Remove":
+        removeChat();
+        break;
+      case "Leave":
+        break;
+      case "Archive":
+        break;
+      default:
+    }
+  };
+
+  const handleClickChat = () => {
     setSelectedChat(chat._id);
   };
   return (
     <Paper
       test-dataid="chat-card"
       aria-label={chat.username}
-      onClick={handleClick}
+      onClick={handleClickChat}
       elevation={0}
       sx={{
         p: 1,
@@ -73,10 +132,56 @@ function ChatCard({ chat, setSelectedChat }) {
           <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
             {chat.username}
           </Typography>
-          <Typography variant="body2" component="p" sx={{ m: 0, p: 0 }}>
+          <Typography variant="inherit" component="p" sx={{ m: 0, p: 0 }}>
             Lorem ipsum dolor sit amet...
           </Typography>
         </Stack>
+        <Box sx={{ flexGrow: 0, ml: "auto" }}>
+          <Tooltip title="Options">
+            <IconButton
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleOpenOptionsMenu}
+            >
+              <MoreVertIcon />
+            </IconButton>
+          </Tooltip>
+          <Menu
+            sx={{
+              mt: "45px",
+            }}
+            slotProps={{
+              paper: {
+                sx: {
+                  width: "25ch",
+                },
+              },
+            }}
+            id="menu-appbar"
+            anchorEl={anchorElOptions}
+            anchorOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={open}
+            onClose={handleCloseUserMenu}
+          >
+            {options.map((option) => (
+              <MenuItem key={option} onClick={handleClickOption}>
+                <Typography variant="button" component="p">
+                  {option}
+                </Typography>
+              </MenuItem>
+            ))}
+          </Menu>
+        </Box>
       </Stack>
     </Paper>
   );
