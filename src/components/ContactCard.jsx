@@ -61,7 +61,7 @@ const StyledAwayBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-function ContactCard({ contact }) {
+function ContactCard({ contact, basicCard }) {
   const userId = sessionStorage.getItem("user");
   const contactStatuses = ["Online", "Offline", "Away"];
   const options = ["delete", "block", "message"];
@@ -136,6 +136,29 @@ function ContactCard({ contact }) {
     }
   };
 
+  // PUT request to add a chat
+  const handleCreateConversation = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/users/create-conversation`,
+        { userId, contactId: contact._id },
+      );
+
+      if (!response) {
+        throw new Error("Failed to create conversation");
+      }
+    } catch (error) {
+      switch (error.response.status) {
+        case 400:
+          throw new Error("Invalid contact ID");
+        case 404:
+          throw new Error("User not found");
+        default:
+          throw new Error("Error creating conversation:", error);
+      }
+    }
+  };
+
   const handleOpenOptionsMenu = (event) => {
     setAnchorElOptions(event.currentTarget);
   };
@@ -154,6 +177,7 @@ function ContactCard({ contact }) {
       case "block":
         break;
       case "message":
+        handleCreateConversation();
         break;
       default:
     }
@@ -239,53 +263,63 @@ function ContactCard({ contact }) {
             <Button onClick={handleReject}>cancel</Button>
           </Stack>
         )}
-        {contactStatuses.includes(contact.status) && (
-          <Box sx={{ flexGrow: 0, ml: "auto" }}>
-            <Tooltip title="Options">
-              <IconButton
-                id="basic-button"
-                aria-controls={open ? "basic-menu" : undefined}
-                aria-haspopup="true"
-                aria-expanded={open ? "true" : undefined}
-                onClick={handleOpenOptionsMenu}
-              >
-                <MoreVertIcon />
-              </IconButton>
-            </Tooltip>
-            <Menu
-              sx={{
-                mt: "45px",
-              }}
-              slotProps={{
-                paper: {
-                  sx: {
-                    width: "25ch",
+        {basicCard ? (
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCreateConversation}
+          >
+            Message
+          </Button>
+        ) : (
+          contactStatuses.includes(contact.status) && (
+            <Box sx={{ flexGrow: 0, ml: "auto" }}>
+              <Tooltip title="Options">
+                <IconButton
+                  id="basic-button"
+                  aria-controls={open ? "basic-menu" : undefined}
+                  aria-haspopup="true"
+                  aria-expanded={open ? "true" : undefined}
+                  onClick={handleOpenOptionsMenu}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+              </Tooltip>
+              <Menu
+                sx={{
+                  mt: "45px",
+                }}
+                slotProps={{
+                  paper: {
+                    sx: {
+                      width: "25ch",
+                    },
                   },
-                },
-              }}
-              id="menu-appbar"
-              anchorEl={anchorElOptions}
-              anchorOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: "top",
-                horizontal: "right",
-              }}
-              open={open}
-              onClose={handleCloseUserMenu}
-            >
-              {options.map((option) => (
-                <MenuItem key={option} onClick={handleClickOption}>
-                  <Typography variant="button" component="p">
-                    {option}
-                  </Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+                }}
+                id="menu-appbar"
+                anchorEl={anchorElOptions}
+                anchorOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: "top",
+                  horizontal: "right",
+                }}
+                open={open}
+                onClose={handleCloseUserMenu}
+              >
+                {options.map((option) => (
+                  <MenuItem key={option} onClick={handleClickOption}>
+                    <Typography variant="button" component="p">
+                      {option}
+                    </Typography>
+                  </MenuItem>
+                ))}
+              </Menu>
+            </Box>
+          )
         )}
       </Stack>
     </Paper>
@@ -298,6 +332,11 @@ ContactCard.propTypes = {
     username: PropTypes.string.isRequired,
     status: PropTypes.string,
   }).isRequired,
+  basicCard: PropTypes.bool,
+};
+
+ContactCard.defaultProps = {
+  basicCard: false,
 };
 
 export default ContactCard;

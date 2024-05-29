@@ -12,41 +12,39 @@ import MessageInput from "../components/MessageInput";
 import ChatCard from "../components/ChatCard";
 import NoMessages from "../components/NoMessages";
 import NoDirectMessages from "../components/NoDirectMessages";
-import UserContext from "../Context";
+import AddModal from "../components/AddModal";
 
 function Messages() {
-  const user = React.useContext(UserContext);
+  const userId = sessionStorage.getItem("user");
   const messageContainerRef = React.useRef(null);
   const [directMessages, setDirectMessages] = React.useState([]);
   const [displayedMessages, setDisplayedMessages] = React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState(null);
+  const [open, setOpen] = React.useState(false); // AddModal open state
+  const [userContacts, setUserContacts] = React.useState([]); // contacts to display on the AddModal
 
-  // PUT request to add a chat
-  const createConversation = async (userId, contactId) => {
-    try {
-      const response = await axios.put(
-        `http://localhost:3000/users/create-conversation`,
-        { userId, contactId },
-      );
-
-      if (!response) {
-        throw new Error("Failed to create conversation");
+  React.useEffect(() => {
+    const fetchUserContacts = async () => {
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/users/${userId}/contacts`,
+        );
+        const updatedContacts = response.data.map((contact) => ({
+          ...contact,
+          isContact: true,
+        }));
+        setUserContacts(updatedContacts);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Axios Error:", error);
       }
-    } catch (error) {
-      switch (error.response.status) {
-        case 400:
-          throw new Error("Invalid contact ID");
-        case 404:
-          throw new Error("User not found");
-        default:
-          throw new Error("Error creating conversation:", error);
-      }
-    }
-  };
+    };
+    fetchUserContacts();
+  }, [userId]);
 
   const getContactData = (participants) => {
     const contact = participants.find(
-      (participant) => participant._id !== sessionStorage.getItem("user"),
+      (participant) => participant._id !== userId,
     );
     return {
       contactName: contact.username,
@@ -75,9 +73,8 @@ function Messages() {
   React.useEffect(() => {
     const getDirectMessages = async () => {
       try {
-        const userID = sessionStorage.getItem("user");
         const response = await axios.get(
-          `http://localhost:3000/users/${userID}/direct-messages`,
+          `http://localhost:3000/users/${userId}/direct-messages`,
         );
         const conversationData = response.data;
         const conversations = conversationData.map((conversation) => {
@@ -129,15 +126,17 @@ function Messages() {
     setDisplayedMessages(formattedMessages);
   }, [directMessages, selectedChat]);
 
-  const handleClickAddChat = () => {
+  /* const handleAddChat = (contactId) => {
     const userId = sessionStorage.getItem("user");
-    const contactId = "661a2609af2bc0bd77b6786c";
-
     createConversation(userId, contactId);
-  };
+  }; */
 
   const handleMouseDownAdd = (e) => {
     e.preventDefault();
+  };
+
+  const handleClickAddChat = () => {
+    setOpen(true);
   };
 
   return (
@@ -180,6 +179,7 @@ function Messages() {
               >
                 <AddIcon />
               </IconButton>
+              <AddModal open={open} setOpen={setOpen} allUsers={userContacts} />
             </Stack>
             {directMessages.length > 0 &&
               directMessages.map((chat) => (
@@ -230,7 +230,7 @@ function Messages() {
               </Box>
               <MessageInput
                 setDisplayedMessages={setDisplayedMessages}
-                username={user.username}
+                // username={user.username}
                 selectedChat={selectedChat}
               />
             </Paper>
