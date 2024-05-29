@@ -6,8 +6,14 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import Tooltip from "@mui/material/Tooltip";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
 import Badge from "@mui/material/Badge";
 import styled from "@mui/material/styles/styled";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DynamicAvatar from "./DynamicAvatar";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -57,6 +63,34 @@ const StyledAwayBadge = styled(Badge)(({ theme }) => ({
 
 function ContactCard({ contact }) {
   const userId = sessionStorage.getItem("user");
+  const contactStatuses = ["Online", "Offline", "Away"];
+  const options = ["delete", "block", "message"];
+
+  const [anchorElOptions, setAnchorElOptions] = React.useState(null);
+
+  const open = Boolean(anchorElOptions);
+
+  const handleDeleteContact = async () => {
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/users/delete-contact`,
+        { userId, contactId: contact._id },
+      );
+
+      if (!response) {
+        throw new Error("Failed to delete contact");
+      }
+    } catch (error) {
+      switch (error.response.status) {
+        case 400:
+          throw new Error("Invalid contact ID");
+        case 404:
+          throw new Error("User not found");
+        default:
+          throw new Error("Error deleting contact:", error);
+      }
+    }
+  };
 
   const handleAccept = async () => {
     try {
@@ -99,6 +133,29 @@ function ContactCard({ contact }) {
         default:
           throw new Error("Error rejecting contact request:", error);
       }
+    }
+  };
+
+  const handleOpenOptionsMenu = (event) => {
+    setAnchorElOptions(event.currentTarget);
+  };
+
+  const handleCloseUserMenu = () => {
+    setAnchorElOptions(null);
+  };
+
+  const handleClickOption = (event) => {
+    handleCloseUserMenu();
+
+    switch (event.target.textContent) {
+      case "delete":
+        handleDeleteContact();
+        break;
+      case "block":
+        break;
+      case "message":
+        break;
+      default:
     }
   };
 
@@ -176,6 +233,59 @@ function ContactCard({ contact }) {
             <Button onClick={handleAccept}>Accept</Button>
             <Button onClick={handleReject}>Reject</Button>
           </Stack>
+        )}
+        {contact.status === "outgoing contact request" && (
+          <Stack direction="row">
+            <Button onClick={handleReject}>cancel</Button>
+          </Stack>
+        )}
+        {contactStatuses.includes(contact.status) && (
+          <Box sx={{ flexGrow: 0, ml: "auto" }}>
+            <Tooltip title="Open settings">
+              <IconButton
+                id="basic-button"
+                aria-controls={open ? "basic-menu" : undefined}
+                aria-haspopup="true"
+                aria-expanded={open ? "true" : undefined}
+                onClick={handleOpenOptionsMenu}
+              >
+                <MoreVertIcon />
+              </IconButton>
+            </Tooltip>
+            <Menu
+              sx={{
+                mt: "45px",
+              }}
+              slotProps={{
+                paper: {
+                  sx: {
+                    width: "25ch",
+                  },
+                },
+              }}
+              id="menu-appbar"
+              anchorEl={anchorElOptions}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={open}
+              onClose={handleCloseUserMenu}
+            >
+              {options.map((option) => (
+                <MenuItem key={option} onClick={handleClickOption}>
+                  <Typography variant="button" component="p">
+                    {option}
+                  </Typography>
+                </MenuItem>
+              ))}
+            </Menu>
+          </Box>
         )}
       </Stack>
     </Paper>

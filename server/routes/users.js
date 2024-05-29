@@ -208,6 +208,34 @@ router.put('/add-contact', async (req, res) => {
   res.status(200).send({ message: 'Contact added' });
 });
 
+// PUT request to delete a contact
+router.put('/delete-contact', async (req, res) => { 
+  const { userId, contactId } = req.body;
+
+  try {
+    const userUpdate = await User.findByIdAndUpdate(
+      userId,
+      { $pull: { contacts: contactId } },
+      { new: true }
+    );
+
+    const contactUpdate = await User.findByIdAndUpdate(
+      contactId,
+      { $pull: { contacts: userId } },
+      { new: true }
+    );
+
+    if (!userUpdate || !contactUpdate) {
+      res.status(404).send({ message: 'User not found' });
+      return;
+    }
+
+    res.status(200).send({ message: 'Contact removed' });
+  } catch (error) {
+    res.status(500).send({ message: 'Error removing contact', error });
+  }
+});
+
 // PUT request to send a contact request
 router.put('/send-contact-request', async (req, res) => {
   const { userId, contactId } = req.body;
