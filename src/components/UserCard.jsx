@@ -11,6 +11,7 @@ import DynamicAvatar from "./DynamicAvatar";
 function UserCard({ user }) {
   const userId = sessionStorage.getItem("user");
 
+  // Sends a contact request to the user when the add button is clicked
   const handleAdd = async () => {
     try {
       const response = await axios.put(
