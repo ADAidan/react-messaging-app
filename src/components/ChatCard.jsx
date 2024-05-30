@@ -44,6 +44,16 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
+const EllipsisTypography = styled(Typography)({
+  m: 0,
+  p: 0,
+  whiteSpace: "nowrap",
+  overflow: "hidden",
+  textOverflow: "ellipsis",
+  display: "block",
+  maxWidth: "100%",
+});
+
 function ChatCard({ chat, setSelectedChat }) {
   const userId = sessionStorage.getItem("user");
   const [anchorElOptions, setAnchorElOptions] = React.useState(null);
@@ -100,6 +110,7 @@ function ChatCard({ chat, setSelectedChat }) {
   const handleClickChat = () => {
     setSelectedChat(chat._id);
   };
+
   return (
     <Paper
       test-dataid="chat-card"
@@ -132,9 +143,9 @@ function ChatCard({ chat, setSelectedChat }) {
           <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
             {chat.username}
           </Typography>
-          <Typography variant="inherit" component="p" sx={{ m: 0, p: 0 }}>
+          <EllipsisTypography variant="inherit" component="p">
             Lorem ipsum dolor sit amet...
-          </Typography>
+          </EllipsisTypography>
         </Stack>
         <Box sx={{ flexGrow: 0, ml: "auto" }}>
           <Tooltip title="Options">

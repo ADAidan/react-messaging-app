@@ -5,7 +5,7 @@ const UserContext = createContext({
   profilePicture: null,
   status: "",
   setUsername: () => {},
-  setProfilePicture: () => { },
+  setProfilePicture: () => {},
   setStatus: () => {},
 });
 
