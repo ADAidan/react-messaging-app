@@ -10,8 +10,9 @@ import Input from "@mui/material/Input";
 import IconButton from "@mui/material/IconButton";
 import SendIcon from "@mui/icons-material/Send";
 import { Tooltip } from "@mui/material";
+import socket from "../socket";
 
-function MessageInput({ setDisplayedMessages, username, selectedChat }) {
+function MessageInput({ selectedChat }) {
   const [message, setMessage] = React.useState("");
 
   const userId = sessionStorage.getItem("user");
@@ -26,6 +27,8 @@ function MessageInput({ setDisplayedMessages, username, selectedChat }) {
       if (!response) {
         throw new Error("Failed to send message");
       }
+
+      socket.emit("newMessage", response.data);
     } catch (error) {
       switch (error.response.status) {
         case 400:
@@ -40,18 +43,7 @@ function MessageInput({ setDisplayedMessages, username, selectedChat }) {
 
   const handleClickSendMessage = () => {
     if (!message) return;
-
     sendMessage();
-
-    setDisplayedMessages((prevMessages) => {
-      const newMessage = {
-        id: prevMessages.length + 1,
-        author: username,
-        text: message,
-        time: new Date().toLocaleTimeString(),
-      };
-      return [...prevMessages, newMessage];
-    });
     setMessage("");
   };
 
@@ -108,14 +100,7 @@ function MessageInput({ setDisplayedMessages, username, selectedChat }) {
 }
 
 MessageInput.propTypes = {
-  setDisplayedMessages: PropTypes.func,
-  username: PropTypes.string,
   selectedChat: PropTypes.string.isRequired,
-};
-
-MessageInput.defaultProps = {
-  setDisplayedMessages: () => {},
-  username: "",
 };
 
 export default MessageInput;

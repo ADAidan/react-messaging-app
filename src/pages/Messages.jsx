@@ -7,12 +7,25 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { Box, IconButton, Stack } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import socket from "../socket";
 import Message from "../components/Message";
 import MessageInput from "../components/MessageInput";
 import ChatCard from "../components/ChatCard";
 import NoMessages from "../components/NoMessages";
 import NoDirectMessages from "../components/NoDirectMessages";
 import AddModal from "../components/AddModal";
+
+const formatTime = (isoString) => {
+  const date = new Date(isoString);
+
+  const options = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+
+  return date.toLocaleTimeString("en-US", options);
+};
 
 function Messages() {
   const userId = sessionStorage.getItem("user");
@@ -22,6 +35,27 @@ function Messages() {
   const [selectedChat, setSelectedChat] = React.useState(null);
   const [open, setOpen] = React.useState(false); // AddModal open state
   const [userContacts, setUserContacts] = React.useState([]); // contacts to display on the AddModal
+
+  React.useEffect(() => {
+    socket.on("newMessage", (message) => {
+      axios.get(`http://localhost:3000/users/${userId}`).then((response) => {
+        const user = response.data;
+        const newMessage = {
+          _id: message._id,
+          author: {
+            username: user.username,
+            profilePicture: user.profilePicture,
+          },
+          content: message.content,
+          formattedTime: formatTime(message.createdAt),
+        };
+        setDisplayedMessages((prevMessages) => [...prevMessages, newMessage]);
+      });
+    });
+    return () => {
+      socket.off("newMessage");
+    };
+  }, []);
 
   React.useEffect(() => {
     const fetchUserContacts = async () => {
@@ -52,18 +86,6 @@ function Messages() {
     };
   };
 
-  const formatTime = (isoString) => {
-    const date = new Date(isoString);
-
-    const options = {
-      hour: "numeric",
-      minute: "numeric",
-      hour12: true,
-    };
-
-    return date.toLocaleTimeString("en-US", options);
-  };
-
   React.useEffect(() => {
     if (!messageContainerRef.current) return;
     messageContainerRef.current.scrollTop =
@@ -71,6 +93,7 @@ function Messages() {
   }, [displayedMessages]);
 
   React.useEffect(() => {
+    // eslint-disable-next-line consistent-return
     const getDirectMessages = async () => {
       try {
         const response = await axios.get(
