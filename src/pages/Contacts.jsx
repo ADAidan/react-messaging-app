@@ -1,9 +1,11 @@
+/* eslint-disable no-underscore-dangle */
 import * as React from "react";
 import axios from "axios";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
+import socket from "../socket";
 import ContactTabs from "../components/ContactTabs";
 import SearchBar from "../components/SearchBar";
 import ContactCard from "../components/ContactCard";
@@ -15,6 +17,16 @@ function Contacts() {
   const [searchValue, setSearchValue] = React.useState("");
   const [searchedContacts, setSearchedContacts] = React.useState([]);
   const [selectedTab, setSelectedTab] = React.useState(0);
+
+  React.useEffect(() => {
+    socket.on("ChangeUserStatus", (data) => {
+      const user = userContacts.find((contact) => contact._id === data.id);
+      if (user) {
+        user.status = data.status;
+        setUserContacts([...userContacts]);
+      }
+    });
+  }, []);
 
   // get user contacts
   React.useEffect(() => {
