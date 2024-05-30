@@ -41,10 +41,10 @@ io.on('connection', (socket) => {
   // eslint-disable-next-line no-console
   console.log('a user connected');
 
-  socket.on('logIn', (user) => { 
+  socket.on('ChangeUserStatus', (user) => { 
     // eslint-disable-next-line no-console
-    console.log('user logged in:', user.username); // only update user status when user logs in
-    io.emit('logIn', user.status);
+    console.log('user logged in:', user); // only update user status when user logs in
+    io.emit('ChangeUserStatus', user);
   });
 
   socket.on('newMessage', (message) => { 

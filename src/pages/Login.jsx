@@ -42,6 +42,10 @@ function Login() {
         // eslint-disable-next-line no-console
         console.log(response);
         sessionStorage.setItem("user", response.data.id);
+        socket.emit("ChangeUserStatus", {
+          status: "online",
+          id: response.data.id,
+        });
         navigate("/");
       })
       .catch((error) => {
@@ -50,8 +54,6 @@ function Login() {
       });
     setEmailValue("");
     setPasswordValue("");
-
-    socket.emit("logIn", data);
   };
 
   const handleForgotPassword = () => {};
