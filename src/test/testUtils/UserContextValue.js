@@ -59,7 +59,7 @@ const UserContextValue = {
     {
       id: 2,
       username: "Kaiya Mccarthy",
-      messages: []
+      messages: [],
     },
   ],
   pending: [
@@ -80,5 +80,5 @@ const UserContextValue = {
     },
   ],
 };
-    
+
 export default UserContextValue;

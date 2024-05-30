@@ -126,11 +126,6 @@ function Messages() {
     setDisplayedMessages(formattedMessages);
   }, [directMessages, selectedChat]);
 
-  /* const handleAddChat = (contactId) => {
-    const userId = sessionStorage.getItem("user");
-    createConversation(userId, contactId);
-  }; */
-
   const handleMouseDownAdd = (e) => {
     e.preventDefault();
   };
@@ -148,7 +143,7 @@ function Messages() {
       }}
     >
       <Grid container spacing={2}>
-        <Grid item xs={4}>
+        <Grid item xs={4} sm={6} md={4}>
           <Paper
             elevation={3}
             sx={{
