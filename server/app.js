@@ -1,5 +1,6 @@
-const createError = require("http-errors");
 const express = require("express");
+const { Server } = require("socket.io");
+const createError = require("http-errors");
 const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
@@ -13,7 +14,17 @@ const conversationsRouter = require("./routes/conversations");
 
 const app = express();
 
-app.use(cors());
+const io = new Server({
+  cors: {
+    origin: "http://localhost:5173",
+  }
+});
+
+io.listen(4000);
+
+app.use(cors({
+  origin: "http://localhost:5173",
+}));
 
 // eslint-disable-next-line no-use-before-define, no-console
 main().catch((err) => console.log(err));
@@ -25,6 +36,28 @@ async function main() {
   // eslint-disable-next-line no-console
   console.log("Connected to MongoDB");
 }
+
+io.on('connection', (socket) => {
+  // eslint-disable-next-line no-console
+  console.log('a user connected');
+
+  socket.on('logIn', (user) => { 
+    // eslint-disable-next-line no-console
+    console.log('user logged in:', user.username); // only update user status when user logs in
+    io.emit('logIn', user.status);
+  });
+
+  socket.on('newMessage', (message) => { 
+    // eslint-disable-next-line no-console
+    console.log('new message:', message);
+    io.emit('newMessage', message);
+  });
+
+  socket.on('disconnect', () => {
+    // eslint-disable-next-line no-console
+    console.log('user disconnected');
+  });
+});
 
 // view engine setup
 app.set("views", path.join(__dirname, "views"));

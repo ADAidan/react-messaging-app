@@ -67,7 +67,7 @@ router.put("/send-message", async (req, res) => {
 
   await conversation.save();
 
-  return res.status(200).send({ success: "true" });
+  return res.status(200).send(message);
 });
 
 // PUT request to create a conversation
