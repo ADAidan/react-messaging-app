@@ -18,16 +18,6 @@ function Contacts() {
   const [searchedContacts, setSearchedContacts] = React.useState([]);
   const [selectedTab, setSelectedTab] = React.useState(0);
 
-  React.useEffect(() => {
-    socket.on("ChangeUserStatus", (data) => {
-      const user = userContacts.find((contact) => contact._id === data.id);
-      if (user) {
-        user.status = data.status;
-        setUserContacts([...userContacts]);
-      }
-    });
-  }, []);
-
   // get user contacts
   React.useEffect(() => {
     const getContactData = async () => {
@@ -45,6 +35,24 @@ function Contacts() {
     };
     getContactData();
   }, []);
+
+  // Socket event listener for changing user status
+  React.useEffect(() => {
+    const handleChangeUserStatus = (data) => {
+      setUserContacts((prevContacts) => {
+        const updatedContacts = prevContacts.map((contact) =>
+          contact._id === data.id
+            ? { ...contact, status: data.status }
+            : contact,
+        );
+        return updatedContacts;
+      });
+    };
+    socket.on("ChangeUserStatus", handleChangeUserStatus);
+    return () => {
+      socket.off("ChangeUserStatus", handleChangeUserStatus);
+    };
+  }, [userContacts]);
 
   // get user pending contacts
   React.useEffect(() => {
