@@ -19,8 +19,8 @@ router.post("/signup", async (req, res) => {
   return res.json(user);
 });
 
-// POST request to login
-router.post("/login", async (req, res) => {
+// PUT request to login
+router.put("/login", async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });
 
@@ -32,7 +32,31 @@ router.post("/login", async (req, res) => {
     return res.status(401).json({ message: "Invalid password" });
   }
 
+  user.status = "Online";
+
+  await user.save();
+
   return res.json({ message: "Login successful", id: user.id });
+});
+
+// PUT request to logout
+router.put("/logout", async (req, res) => {
+  const { userId } = req.body;
+  try {
+    const user = await User.findById(userId);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    user.status = "Offline";
+
+    await user.save();
+
+    return res.status(200).json({ message: "Logout successful", id: user.id });
+  } catch (error) {
+    return res.status(500).send({ message: "Error logging out", error });
+  }
 });
 
 // GET request to get a list of all users

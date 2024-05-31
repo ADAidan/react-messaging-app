@@ -8,6 +8,7 @@ import Contacts from "./pages/Contacts";
 import Profile from "./pages/Profile";
 import SignUp from "./pages/SignUp";
 import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 import UserContext from "./Context";
 
 export default function App() {
@@ -17,8 +18,12 @@ export default function App() {
 
   React.useEffect(() => {
     const getUserData = async () => {
+      const userID = sessionStorage.getItem("user");
+      if (!userID) {
+        return;
+      }
+
       try {
-        const userID = sessionStorage.getItem("user");
         const response = await axios.get(
           `http://localhost:3000/users/${userID}`,
         );
@@ -26,11 +31,9 @@ export default function App() {
         setUsername(userData.username);
         setProfilePicture(userData.profilePicture);
         setStatus(userData.status);
-        return response.data;
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Axios Error:", error);
-        return null;
       }
     };
     getUserData();
@@ -55,6 +58,7 @@ export default function App() {
           <Route path="/contacts" element={<Contacts />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/logout" element={<Logout />} />
           <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>

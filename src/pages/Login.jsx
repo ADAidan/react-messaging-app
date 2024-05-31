@@ -37,13 +37,13 @@ function Login() {
 
   const handleSubmit = () => {
     axios
-      .post("http://localhost:3000/users/login", data)
+      .put("http://localhost:3000/users/login", data)
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response);
         sessionStorage.setItem("user", response.data.id);
         socket.emit("ChangeUserStatus", {
-          status: "online",
+          status: "Online",
           id: response.data.id,
         });
         navigate("/");
