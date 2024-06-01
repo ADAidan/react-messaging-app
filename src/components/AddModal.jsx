@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import Modal from "@mui/material/Modal";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import socket from "../socket";
 import SearchBar from "./SearchBar";
 import UserCard from "./UserCard";
 import ContactCard from "./ContactCard";
@@ -27,6 +28,15 @@ const style = {
 function AddModal({ open, setOpen, allUsers }) {
   const [searchValue, setSearchValue] = React.useState("");
   const [displayedUsers, setDisplayedUsers] = React.useState([]);
+
+  React.useEffect(() => {
+    socket.on("UpdatePendingContacts", (newPending) => {
+      // Removes the user from the displayedUsers array
+      setDisplayedUsers((prev) =>
+        prev.filter((user) => user._id !== newPending._id),
+      );
+    });
+  }, [allUsers]);
 
   React.useEffect(() => {
     if (!searchValue && allUsers) {
@@ -67,9 +77,9 @@ function AddModal({ open, setOpen, allUsers }) {
         <Stack sx={{ overflow: "auto" }}>
           {displayedUsers.map((user) =>
             user.isContact === true ? (
-              <ContactCard key={user._id} contact={user} basicCard />
+              <ContactCard key={user._id} contact={user} basicCard /> // For adding conversations
             ) : (
-              <UserCard key={user._id} user={user} />
+              <UserCard key={user._id} user={user} /> // For adding contacts
             ),
           )}
         </Stack>

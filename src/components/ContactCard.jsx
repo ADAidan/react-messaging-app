@@ -15,6 +15,7 @@ import Badge from "@mui/material/Badge";
 import styled from "@mui/material/styles/styled";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import DynamicAvatar from "./DynamicAvatar";
+import socket from "../socket";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -80,6 +81,10 @@ function ContactCard({ contact, basicCard }) {
       if (!response) {
         throw new Error("Failed to delete contact");
       }
+
+      socket.emit("DeleteContact", {
+        _id: contact._id,
+      });
     } catch (error) {
       switch (error.response.status) {
         case 400:
@@ -102,6 +107,13 @@ function ContactCard({ contact, basicCard }) {
       if (!response) {
         throw new Error("Failed to accept contact request");
       }
+
+      socket.emit("AcceptContactRequest", {
+        _id: contact._id,
+        username: contact.username,
+        profilePicture: "",
+        status: "Offline", // Get status from user get request
+      });
     } catch (error) {
       switch (error.response.status) {
         case 400:
@@ -124,6 +136,10 @@ function ContactCard({ contact, basicCard }) {
       if (!response) {
         throw new Error("Failed to reject contact request");
       }
+
+      socket.emit("RejectContactRequest", {
+        _id: contact._id,
+      });
     } catch (error) {
       switch (error.response.status) {
         case 400:
@@ -260,6 +276,7 @@ function ContactCard({ contact, basicCard }) {
         )}
         {contact.status === "outgoing contact request" && (
           <Stack direction="row">
+            <Button onClick={handleAccept}>Accept</Button> {/* debug line */}
             <Button onClick={handleReject}>cancel</Button>
           </Stack>
         )}

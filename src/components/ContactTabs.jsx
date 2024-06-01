@@ -31,10 +31,12 @@ export default function ContactTabs({ setSelectedTab }) {
 
       // Sorts the users by username and filters out the current user, contacts, and pending requests
       const allUsersData = response.data.filter((user) => {
+        // if user is the current user, return false
         if (user._id === userId) {
           return false;
         }
 
+        // if user is already a contact or a pending contact, return false
         const isContact = userData.data.contacts.some(
           (contactId) => contactId === user._id,
         );
@@ -51,6 +53,7 @@ export default function ContactTabs({ setSelectedTab }) {
 
         return true;
       });
+      // Sorts the users by username alphabetically
       allUsersData.sort((a, b) => a.username.localeCompare(b.username));
 
       setAllUsers(allUsersData);

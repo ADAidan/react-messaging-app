@@ -18,6 +18,25 @@ function Contacts() {
   const [searchedContacts, setSearchedContacts] = React.useState([]);
   const [selectedTab, setSelectedTab] = React.useState(0);
 
+  const sortPendingContacts = (pending) => {
+    const pendingContacts = pending;
+    const incomingRequests = pendingContacts.filter(
+      (user) => user.status === "incoming contact request",
+    );
+    const outgoingRequests = pendingContacts.filter(
+      (user) => user.status === "outgoing contact request",
+    );
+
+    if (incomingRequests.length) {
+      incomingRequests.sort((a, b) => a.username.localeCompare(b.username));
+    }
+    if (outgoingRequests.length) {
+      outgoingRequests.sort((a, b) => a.username.localeCompare(b.username));
+    }
+    const pendingRequests = incomingRequests.concat(outgoingRequests);
+    return pendingRequests;
+  };
+
   // get user contacts
   React.useEffect(() => {
     const getContactData = async () => {
@@ -69,21 +88,8 @@ function Contacts() {
           pendingContacts[i].status =
             `${pendingData[i].pendingStatus} contact request`;
         }
-        const incomingRequests = pendingContacts.filter(
-          (user) => user.status === "incoming contact request",
-        );
-        const outgoingRequests = pendingContacts.filter(
-          (user) => user.status === "outgoing contact request",
-        );
-
-        if (incomingRequests.length) {
-          incomingRequests.sort((a, b) => a.username.localeCompare(b.username));
-        }
-        if (outgoingRequests.length) {
-          outgoingRequests.sort((a, b) => a.username.localeCompare(b.username));
-        }
-        const pendingRequests = incomingRequests.concat(outgoingRequests);
-        setUserPending(pendingRequests);
+        const sortedPending = sortPendingContacts(pendingContacts);
+        setUserPending(sortedPending);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error("Axios Error:", error);
@@ -92,8 +98,77 @@ function Contacts() {
     getPendingData();
   }, []);
 
+  // Socket event listener for deleting contact
+  React.useEffect(() => {
+    const handleDeleteContact = (data) => {
+      setUserContacts((prevContacts) => {
+        const updatedContacts = prevContacts.filter(
+          (contact) => contact._id !== data._id,
+        );
+        return updatedContacts;
+      });
+    };
+    socket.on("DeleteContact", handleDeleteContact);
+    return () => {
+      socket.off("DeleteContact", handleDeleteContact);
+    };
+  }, [userContacts]);
+
+  // Socket event listener for sending contact request
+  React.useEffect(() => {
+    const handleUpdatePendingContacts = (data) => {
+      setUserPending((prevPending) => {
+        const updatedPending = prevPending.concat(data);
+        return updatedPending;
+      });
+    };
+    socket.on("UpdatePendingContacts", handleUpdatePendingContacts);
+    return () => {
+      socket.off("UpdatePendingContacts", handleUpdatePendingContacts);
+    };
+  }, [userPending]);
+
+  // Socket event listener for accepting contact request
+  React.useEffect(() => {
+    const handleAcceptPendingContacts = (data) => {
+      setUserContacts((prevContacts) => {
+        const updatedContacts = prevContacts.concat(data);
+        return updatedContacts;
+      });
+      setUserPending((prevPending) => {
+        const updatedPending = prevPending.filter(
+          (pending) => pending._id !== data._id,
+        );
+        return updatedPending;
+      });
+    };
+    socket.on("AcceptContactRequest", handleAcceptPendingContacts);
+    return () => {
+      socket.off("AcceptContactRequest", handleAcceptPendingContacts);
+    };
+  }, [userContacts, userPending]);
+
+  // Socket event listener for rejecting contact request
+  React.useEffect(() => {
+    const handleRejectPendingContacts = (data) => {
+      setUserPending((prevPending) => {
+        const updatedPending = prevPending.filter(
+          (pending) => pending._id !== data._id,
+        );
+        return updatedPending;
+      });
+    };
+    socket.on("RejectContactRequest", handleRejectPendingContacts);
+    return () => {
+      socket.off("RejectContactRequest", handleRejectPendingContacts);
+    };
+  }, [userPending]);
+
+  // Filter contacts based on selected tab
   React.useEffect(() => {
     if (!userContacts) return;
+
+    // Sort contacts by username and alphabetically
     userContacts.sort((a, b) => a.username.localeCompare(b.username));
 
     switch (selectedTab) {
@@ -109,12 +184,12 @@ function Contacts() {
         break;
       // Pending tab selected
       case 2:
-        setFilteredContacts(userPending);
+        setFilteredContacts(sortPendingContacts(userPending));
         break;
       default:
         setFilteredContacts([]);
     }
-  }, [userContacts, selectedTab]);
+  }, [userContacts, userPending, selectedTab]);
 
   React.useEffect(() => {
     if (!searchValue && filteredContacts) {

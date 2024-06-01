@@ -6,22 +6,42 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import socket from "../socket";
 import DynamicAvatar from "./DynamicAvatar";
 
 function UserCard({ user }) {
   const userId = sessionStorage.getItem("user");
 
   // Sends a contact request to the user when the add button is clicked
-  const handleAdd = async () => {
+  const handleAdd = () => {
     try {
-      const response = await axios.put(
-        `http://localhost:3000/users/send-contact-request`,
-        { userId, contactId: user._id },
-      );
-
-      if (!response) {
-        throw new Error("Failed to send contact request");
-      }
+      axios
+        .put(`http://localhost:3000/users/send-contact-request`, {
+          userId,
+          contactId: user._id,
+        })
+        .then(() => {
+          const newPending = {
+            _id: user._id,
+            username: user.username,
+            profilePicture: "",
+            status: "outgoing contact request",
+          };
+          socket.emit(
+            "UpdatePendingContacts",
+            newPending, // adds [ undefined ] to the userPending array);
+          );
+        })
+        .catch((error) => {
+          switch (error.response.status) {
+            case 400:
+              throw new Error("Invalid user ID");
+            case 404:
+              throw new Error("User not found");
+            default:
+              throw new Error("Error sending contact request:", error);
+          }
+        });
     } catch (error) {
       switch (error.response.status) {
         case 400:
