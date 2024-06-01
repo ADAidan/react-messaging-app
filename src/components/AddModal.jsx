@@ -29,6 +29,7 @@ function AddModal({ open, setOpen, allUsers }) {
   const [searchValue, setSearchValue] = React.useState("");
   const [displayedUsers, setDisplayedUsers] = React.useState([]);
 
+  // Socket event listener for removing the user from the add contact modal
   React.useEffect(() => {
     socket.on("UpdatePendingContacts", (newPending) => {
       // Removes the user from the displayedUsers array

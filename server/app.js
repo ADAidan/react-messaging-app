@@ -41,6 +41,12 @@ io.on('connection', (socket) => {
   // eslint-disable-next-line no-console
   console.log('a user connected');
 
+  socket.on('DeleteConversation', (conversationId) => {
+    // eslint-disable-next-line no-console
+    console.log('deleting conversation:', conversationId);
+    io.emit('DeleteConversation', conversationId);
+  });
+
   socket.on('addConversation', (conversation) => {
     // eslint-disable-next-line no-console
     console.log('adding conversation:', conversation);

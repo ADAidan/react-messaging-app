@@ -125,7 +125,7 @@ router.put("/create-conversation", async (req, res) => {
   await user.save();
   await contact.save();
 
-  return res.status(200).send({ message: "Conversation created" });
+  return res.status(200).send({ message: "Conversation created", _id: conversation._id, participants: conversation.participants });
 });
 
 // PUT request to accept a contact request
@@ -335,6 +335,26 @@ router.put("/send-contact-request", async (req, res) => {
 router.get("/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
+    return res.json(user);
+  } catch (error) {
+    return res.status(500).send({ message: "Error finding user", error });
+  }
+});
+
+// GET user authentication
+router.get("/:id/authentication", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id);
+    return res.json(user);
+  } catch (error) {
+    return res.status(500).send({ message: "Error finding user", error });
+  }
+});
+
+// GET user info
+router.get("/:id/info", async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select("username profilePicture status");
     return res.json(user);
   } catch (error) {
     return res.status(500).send({ message: "Error finding user", error });

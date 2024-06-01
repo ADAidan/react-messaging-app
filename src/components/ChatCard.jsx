@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
+import socket from "../socket";
 import DynamicAvatar from "./DynamicAvatar";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -70,6 +71,8 @@ function ChatCard({ chat, setSelectedChat }) {
       if (!response) {
         throw new Error("Failed to remove conversation");
       }
+
+      socket.emit("DeleteConversation", chat._id);
 
       setSelectedChat(null);
     } catch (error) {

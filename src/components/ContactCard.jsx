@@ -163,6 +163,11 @@ function ContactCard({ contact, basicCard }) {
       if (!response) {
         throw new Error("Failed to create conversation");
       }
+
+      socket.emit("addConversation", {
+        _id: response.data._id,
+        participants: [userId, contact._id],
+      });
     } catch (error) {
       switch (error.response.status) {
         case 400:
