@@ -41,6 +41,36 @@ io.on('connection', (socket) => {
   // eslint-disable-next-line no-console
   console.log('a user connected');
 
+  socket.on('addConversation', (conversation) => {
+    // eslint-disable-next-line no-console
+    console.log('adding conversation:', conversation);
+    io.emit('addConversation', conversation);
+  });
+
+  socket.on('DeleteContact', (data) => { 
+    // eslint-disable-next-line no-console
+    console.log('deleting contact:', data);
+    io.emit('DeleteContact', data);
+  });
+
+  socket.on('AcceptContactRequest', (data) => { 
+    // eslint-disable-next-line no-console
+    console.log('accepting contact request:', data);
+    io.emit('AcceptContactRequest', data);
+  });
+
+  socket.on('RejectContactRequest', (data) => {
+    // eslint-disable-next-line no-console
+    console.log('rejecting contact request:', data);
+    io.emit('RejectContactRequest', data);
+  });
+
+  socket.on('UpdatePendingContacts', (data) => { // Change to SendContactRequest
+    // eslint-disable-next-line no-console
+    console.log('updating pending contacts:', data);
+    io.emit('UpdatePendingContacts', data);
+  });
+
   socket.on('ChangeUserStatus', (user) => { 
     // eslint-disable-next-line no-console
     console.log('changing user status:', user); // only update user status when user logs in
