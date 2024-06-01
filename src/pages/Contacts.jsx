@@ -18,6 +18,7 @@ function Contacts() {
   const [searchedContacts, setSearchedContacts] = React.useState([]);
   const [selectedTab, setSelectedTab] = React.useState(0);
 
+  // Sort pending contacts by status and username
   const sortPendingContacts = (pending) => {
     const pendingContacts = pending;
     const incomingRequests = pendingContacts.filter(

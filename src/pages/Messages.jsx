@@ -36,6 +36,55 @@ function Messages() {
   const [open, setOpen] = React.useState(false); // AddModal open state
   const [userContacts, setUserContacts] = React.useState([]); // contacts to display on the AddModal
 
+  const getContactData = (participants) => {
+    const contact = participants.find(
+      (participant) => participant._id !== userId,
+    );
+    if (!contact.username && !contact.profilePicture) {
+      return {
+        contactName: "Unknown",
+        contactProfilePicture: "",
+      };
+    }
+    return {
+      contactName: contact.username,
+      contactProfilePicture: contact.profilePicture,
+    };
+  };
+
+  // Socket event listener for adding a new conversation
+  React.useEffect(() => {
+    const handleNewConversation = async (conversation) => {
+      const contactId = conversation.participants.find(
+        (participant) => participant !== userId,
+      );
+      if (!contactId) return;
+      try {
+        const response = await axios.get(
+          `http://localhost:3000/users/${contactId}/info`,
+        );
+        const userData = response.data;
+
+        const newChat = {
+          _id: conversation._id,
+          username: userData.username,
+          profilePicture: userData.profilePicture,
+          messages: [],
+        };
+
+        setDirectMessages((prevChats) => [...prevChats, newChat]);
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.error("Error fetching conversation:", error);
+      }
+    };
+    socket.on("addConversation", handleNewConversation);
+    return () => {
+      socket.off("addConversation");
+    };
+  }, [directMessages]);
+
+  // Socket event listener for creating a new message
   React.useEffect(() => {
     socket.on("newMessage", (message) => {
       axios.get(`http://localhost:3000/users/${userId}`).then((response) => {
@@ -57,6 +106,18 @@ function Messages() {
     };
   }, []);
 
+  // Socket event listener for deleting a conversation
+  React.useEffect(() => {
+    socket.on("DeleteConversation", (conversationId) => {
+      setDirectMessages((prevChats) =>
+        prevChats.filter((chat) => chat._id !== conversationId),
+      );
+    });
+    return () => {
+      socket.off("DeleteConversation");
+    };
+  }, [directMessages]);
+
   React.useEffect(() => {
     const fetchUserContacts = async () => {
       try {
@@ -75,16 +136,6 @@ function Messages() {
     };
     fetchUserContacts();
   }, [userId]);
-
-  const getContactData = (participants) => {
-    const contact = participants.find(
-      (participant) => participant._id !== userId,
-    );
-    return {
-      contactName: contact.username,
-      contactProfilePicture: contact.profilePicture,
-    };
-  };
 
   React.useEffect(() => {
     if (!messageContainerRef.current) return;
