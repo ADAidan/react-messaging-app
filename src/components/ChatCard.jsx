@@ -55,7 +55,7 @@ const EllipsisTypography = styled(Typography)({
   maxWidth: "100%",
 });
 
-function ChatCard({ chat, setSelectedChat }) {
+function ChatCard({ chat, handleJoinChat }) {
   const userId = sessionStorage.getItem("user");
   const [anchorElOptions, setAnchorElOptions] = React.useState(null);
   const open = Boolean(anchorElOptions);
@@ -74,7 +74,7 @@ function ChatCard({ chat, setSelectedChat }) {
 
       socket.emit("DeleteConversation", chat._id);
 
-      setSelectedChat(null);
+      handleJoinChat(null);
     } catch (error) {
       switch (error.response.status) {
         case 400:
@@ -111,7 +111,8 @@ function ChatCard({ chat, setSelectedChat }) {
   };
 
   const handleClickChat = () => {
-    setSelectedChat(chat._id);
+    handleJoinChat(chat._id);
+    socket.emit("JoinRoom", chat._id);
   };
 
   return (
@@ -216,11 +217,11 @@ ChatCard.propTypes = {
       }),
     ),
   }).isRequired,
-  setSelectedChat: PropTypes.func,
+  handleJoinChat: PropTypes.func,
 };
 
 ChatCard.defaultProps = {
-  setSelectedChat: () => {},
+  handleJoinChat: () => {},
 };
 
 export default ChatCard;
