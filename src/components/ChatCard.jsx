@@ -45,6 +45,22 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
+const StyledOfflineBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    backgroundColor: "#9e9e9e",
+    color: "#9e9e9e",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+  },
+}));
+
+const StyledAwayBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    backgroundColor: "#ff9800",
+    color: "#ff9800",
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+  },
+}));
+
 const EllipsisTypography = styled(Typography)({
   m: 0,
   p: 0,
@@ -58,6 +74,8 @@ const EllipsisTypography = styled(Typography)({
 function ChatCard({ chat, handleJoinChat }) {
   const userId = sessionStorage.getItem("user");
   const [anchorElOptions, setAnchorElOptions] = React.useState(null);
+  const [message, setMessage] = React.useState(null);
+  const [status, setStatus] = React.useState(null);
   const open = Boolean(anchorElOptions);
   const options = ["Remove", "Leave", "Archive"];
 
@@ -110,6 +128,26 @@ function ChatCard({ chat, handleJoinChat }) {
     }
   };
 
+  React.useEffect(() => {
+    if (!chat.messages.length) return;
+    const mostRecentMessage = chat.messages[chat.messages.length - 1].content;
+    setMessage(mostRecentMessage);
+  }, [chat.messages]);
+
+  // Socket event listener for changing user status
+  React.useEffect(() => {
+    setStatus(chat.status);
+    const handleChangeStatus = (data) => {
+      setStatus((prevStatus) =>
+        data.id === chat.contactId ? data.status : prevStatus,
+      );
+    };
+    socket.on("ChangeUserStatus", handleChangeStatus);
+    return () => {
+      socket.off("ChangeUserStatus", handleChangeStatus);
+    };
+  }, [chat.status]);
+
   const handleClickChat = () => {
     handleJoinChat(chat._id);
     socket.emit("JoinRoom", chat._id);
@@ -136,19 +174,39 @@ function ChatCard({ chat, handleJoinChat }) {
           alignItems: "center",
         }}
       >
-        <StyledBadge
-          overlap="circular"
-          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          variant="dot"
-        >
-          <DynamicAvatar name={chat.username} />
-        </StyledBadge>
+        {status === "Online" && (
+          <StyledBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+          >
+            <DynamicAvatar name={chat.username} />
+          </StyledBadge>
+        )}
+        {status === "Offline" && (
+          <StyledOfflineBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+          >
+            <DynamicAvatar name={chat.username} />
+          </StyledOfflineBadge>
+        )}
+        {status === "Away" && (
+          <StyledAwayBadge
+            overlap="circular"
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+            variant="dot"
+          >
+            <DynamicAvatar name={chat.username} />
+          </StyledAwayBadge>
+        )}
         <Stack>
           <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
             {chat.username}
           </Typography>
           <EllipsisTypography variant="inherit" component="p">
-            Lorem ipsum dolor sit amet...
+            {message}
           </EllipsisTypography>
         </Stack>
         <Box sx={{ flexGrow: 0, ml: "auto" }}>
@@ -206,6 +264,9 @@ ChatCard.propTypes = {
   chat: PropTypes.shape({
     _id: PropTypes.string.isRequired,
     username: PropTypes.string.isRequired,
+    status: PropTypes.string.isRequired,
+    profilePicture: PropTypes.string.isRequired,
+    contactId: PropTypes.string.isRequired,
     messages: PropTypes.arrayOf(
       PropTypes.shape({
         _id: PropTypes.string.isRequired,

@@ -50,11 +50,14 @@ function Messages() {
       return {
         contactName: "Unknown",
         contactProfilePicture: "",
+        contactStatus: "Unknown",
       };
     }
     return {
       contactName: contact.username,
       contactProfilePicture: contact.profilePicture,
+      contactStatus: contact.status,
+      contactId: contact._id,
     };
   };
 
@@ -74,6 +77,7 @@ function Messages() {
         const newChat = {
           _id: conversation._id,
           username: userData.username,
+          status: userData.status,
           profilePicture: userData.profilePicture,
           messages: [],
         };
@@ -158,12 +162,17 @@ function Messages() {
         );
         const conversationData = response.data;
         const conversations = conversationData.map((conversation) => {
-          const { contactName, contactProfilePicture } = getContactData(
-            conversation.participants,
-          );
+          const {
+            contactName,
+            contactProfilePicture,
+            contactStatus,
+            contactId,
+          } = getContactData(conversation.participants);
           return {
             _id: conversation._id,
+            contactId,
             username: contactName,
+            status: contactStatus,
             profilePicture: contactProfilePicture,
             messages: conversation.messages,
           };

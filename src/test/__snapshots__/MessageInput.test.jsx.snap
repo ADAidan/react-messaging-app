@@ -16,18 +16,18 @@ exports[`should render correctly 1`] = `
         <label
           class="MuiFormLabel-root MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-standard MuiFormLabel-colorPrimary MuiInputLabel-root MuiInputLabel-formControl MuiInputLabel-animated MuiInputLabel-sizeMedium MuiInputLabel-standard css-aqpgxn-MuiFormLabel-root-MuiInputLabel-root"
           data-shrink="false"
-          for="standard-adornment-message"
+          for="standard-adornment-messageValue"
         >
           Message
         </label>
         <div
-          aria-label="message-input"
+          aria-label="messageValue-input"
           class="MuiInputBase-root MuiInput-root MuiInput-underline MuiInputBase-colorPrimary MuiInputBase-formControl MuiInputBase-adornedEnd css-1eed5fa-MuiInputBase-root-MuiInput-root"
         >
           <input
             aria-invalid="false"
             class="MuiInputBase-input MuiInput-input MuiInputBase-inputAdornedEnd css-1x51dt5-MuiInputBase-input-MuiInput-input"
-            id="standard-adornment-message"
+            id="standard-adornment-messageValue"
             type="text"
             value=""
           />
@@ -35,7 +35,7 @@ exports[`should render correctly 1`] = `
             class="MuiInputAdornment-root MuiInputAdornment-positionEnd MuiInputAdornment-standard MuiInputAdornment-sizeMedium css-1laqsz7-MuiInputAdornment-root"
           >
             <button
-              aria-label="send message"
+              aria-label="send messageValue"
               class="MuiButtonBase-root MuiIconButton-root MuiIconButton-edgeEnd MuiIconButton-sizeMedium css-1yq5fb3-MuiButtonBase-root-MuiIconButton-root"
               data-mui-internal-clone-element="true"
               tabindex="0"
