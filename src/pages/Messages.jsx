@@ -36,6 +36,12 @@ function Messages() {
   const [open, setOpen] = React.useState(false); // AddModal open state
   const [userContacts, setUserContacts] = React.useState([]); // contacts to display on the AddModal
 
+  // Join chat room
+  const handleJoinChat = (chatId) => {
+    setSelectedChat(chatId);
+    socket.emit("JoinRoom", chatId);
+  };
+
   const getContactData = (participants) => {
     const contact = participants.find(
       (participant) => participant._id !== userId,
@@ -86,7 +92,7 @@ function Messages() {
 
   // Socket event listener for creating a new message
   React.useEffect(() => {
-    socket.on("newMessage", (message) => {
+    socket.on("receiveMessage", (message) => {
       axios.get(`http://localhost:3000/users/${userId}`).then((response) => {
         const user = response.data;
         const newMessage = {
@@ -102,7 +108,7 @@ function Messages() {
       });
     });
     return () => {
-      socket.off("newMessage");
+      socket.off("receiveMessage");
     };
   }, []);
 
@@ -175,7 +181,7 @@ function Messages() {
   React.useEffect(() => {
     if (!directMessages.length) return;
     if (!selectedChat) {
-      setSelectedChat(directMessages[0]._id);
+      handleJoinChat(directMessages[0]._id);
       return;
     }
     const getDisplayedMessages = () => {
@@ -255,7 +261,7 @@ function Messages() {
                 <ChatCard
                   key={chat._id}
                   chat={chat}
-                  setSelectedChat={setSelectedChat}
+                  handleJoinChat={handleJoinChat}
                 />
               ))}
           </Paper>

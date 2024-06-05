@@ -41,6 +41,18 @@ io.on('connection', (socket) => {
   // eslint-disable-next-line no-console
   console.log('a user connected');
 
+  socket.on('JoinRoom', (room) => {
+    socket.join(room);
+    // eslint-disable-next-line no-console
+    console.log('user joined room:', room);
+  })
+
+  socket.on('sendMessage', (room, message) => { 
+    // eslint-disable-next-line no-console
+    console.log(`New message in room ${room}:`, message);
+    io.to(room).emit('receiveMessage', message);
+  });
+
   socket.on('DeleteConversation', (conversationId) => {
     // eslint-disable-next-line no-console
     console.log('deleting conversation:', conversationId);
@@ -81,12 +93,6 @@ io.on('connection', (socket) => {
     // eslint-disable-next-line no-console
     console.log('changing user status:', user); // only update user status when user logs in
     io.emit('ChangeUserStatus', user);
-  });
-
-  socket.on('newMessage', (message) => { 
-    // eslint-disable-next-line no-console
-    console.log('new message:', message);
-    io.emit('newMessage', message);
   });
 
   socket.on('disconnect', () => {

@@ -91,7 +91,7 @@ router.put("/send-message", async (req, res) => {
 
   await conversation.save();
 
-  return res.status(200).send(message);
+  return res.status(200).send({ room: conversationId, message });
 });
 
 // PUT request to create a conversation

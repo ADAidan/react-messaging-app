@@ -13,7 +13,7 @@ import { Tooltip } from "@mui/material";
 import socket from "../socket";
 
 function MessageInput({ selectedChat }) {
-  const [message, setMessage] = React.useState("");
+  const [messageValue, setMessageValue] = React.useState("");
 
   const userId = sessionStorage.getItem("user");
 
@@ -21,14 +21,15 @@ function MessageInput({ selectedChat }) {
     try {
       const response = await axios.put(
         `http://localhost:3000/users/send-message`,
-        { userId, conversationId: selectedChat, messageContent: message },
+        { userId, conversationId: selectedChat, messageContent: messageValue },
       );
 
       if (!response) {
-        throw new Error("Failed to send message");
+        throw new Error("Failed to send messageValue");
       }
 
-      socket.emit("newMessage", response.data);
+      const { room, message } = response.data;
+      socket.emit("sendMessage", room, message);
     } catch (error) {
       switch (error.response.status) {
         case 400:
@@ -36,15 +37,15 @@ function MessageInput({ selectedChat }) {
         case 404:
           throw new Error("User not found");
         default:
-          throw new Error("Error sending message:", error);
+          throw new Error("Error sending messageValue:", error);
       }
     }
   };
 
   const handleClickSendMessage = () => {
-    if (!message) return;
+    if (!messageValue) return;
     sendMessage();
-    setMessage("");
+    setMessageValue("");
   };
 
   const handleMouseDownMessage = (e) => {
@@ -72,17 +73,19 @@ function MessageInput({ selectedChat }) {
         autoComplete="off"
       >
         <FormControl fullWidth sx={{ m: 1 }} variant="standard">
-          <InputLabel htmlFor="standard-adornment-message">Message</InputLabel>
+          <InputLabel htmlFor="standard-adornment-messageValue">
+            Message
+          </InputLabel>
           <Input
-            value={message}
-            onChange={(e) => setMessage(e.target.value)}
-            id="standard-adornment-message"
-            aria-label="message-input"
+            value={messageValue}
+            onChange={(e) => setMessageValue(e.target.value)}
+            id="standard-adornment-messageValue"
+            aria-label="messageValue-input"
             endAdornment={
               <InputAdornment position="end">
                 <Tooltip title="Send Message">
                   <IconButton
-                    aria-label="send message"
+                    aria-label="send messageValue"
                     onClick={handleClickSendMessage}
                     onMouseDown={handleMouseDownMessage}
                     edge="end"
