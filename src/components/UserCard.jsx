@@ -29,6 +29,7 @@ function UserCard({ user }) {
           };
           socket.emit(
             "UpdatePendingContacts",
+            userId,
             newPending, // adds [ undefined ] to the userPending array);
           );
         })

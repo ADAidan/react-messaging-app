@@ -70,7 +70,7 @@ function Messages() {
       if (!contactId) return;
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${contactId}/info`,
+          `http://localhost:3000/users/${contactId}/info`, // gets the contacts info for the chat card
         );
         const userData = response.data;
 
@@ -129,6 +129,7 @@ function Messages() {
   }, [directMessages]);
 
   React.useEffect(() => {
+    socket.emit("JoinRoom", userId);
     const fetchUserContacts = async () => {
       try {
         const response = await axios.get(

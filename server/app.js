@@ -59,34 +59,35 @@ io.on('connection', (socket) => {
     io.emit('DeleteConversation', conversationId);
   });
 
-  socket.on('addConversation', (conversation) => {
+  socket.on('addConversation', (userRoom, contactRoom, conversation) => {
     // eslint-disable-next-line no-console
     console.log('adding conversation:', conversation);
-    io.emit('addConversation', conversation);
+    io.to(userRoom).emit('addConversation', conversation);
+    io.to(contactRoom).emit('addConversation', conversation);
   });
 
-  socket.on('DeleteContact', (data) => { 
+  socket.on('DeleteContact', (room, data) => { 
     // eslint-disable-next-line no-console
     console.log('deleting contact:', data);
-    io.emit('DeleteContact', data);
+    io.to(room).emit('DeleteContact', data);
   });
 
-  socket.on('AcceptContactRequest', (data) => { 
+  socket.on('AcceptContactRequest', (room, data) => { 
     // eslint-disable-next-line no-console
     console.log('accepting contact request:', data);
-    io.emit('AcceptContactRequest', data);
+    io.to(room).emit('AcceptContactRequest', data);
   });
 
-  socket.on('RejectContactRequest', (data) => {
+  socket.on('RejectContactRequest', (room, data) => {
     // eslint-disable-next-line no-console
     console.log('rejecting contact request:', data);
-    io.emit('RejectContactRequest', data);
+    io.to(room).emit('RejectContactRequest', data);
   });
 
-  socket.on('UpdatePendingContacts', (data) => { // Change to SendContactRequest
+  socket.on('UpdatePendingContacts', (room, data) => { // Change to SendContactRequest
     // eslint-disable-next-line no-console
     console.log('updating pending contacts:', data);
-    io.emit('UpdatePendingContacts', data);
+    io.to(room).emit('UpdatePendingContacts', data);
   });
 
   socket.on('ChangeUserStatus', (user) => { 
