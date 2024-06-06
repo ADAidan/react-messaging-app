@@ -11,6 +11,7 @@ import SearchBar from "../components/SearchBar";
 import ContactCard from "../components/ContactCard";
 
 function Contacts() {
+  const userId = sessionStorage.getItem("user");
   const [userContacts, setUserContacts] = React.useState([]);
   const [userPending, setUserPending] = React.useState([]);
   const [filteredContacts, setFilteredContacts] = React.useState([]);
@@ -40,6 +41,7 @@ function Contacts() {
 
   // get user contacts
   React.useEffect(() => {
+    socket.emit("JoinRoom", userId);
     const getContactData = async () => {
       try {
         const userID = sessionStorage.getItem("user");

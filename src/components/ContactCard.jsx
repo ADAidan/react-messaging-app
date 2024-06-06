@@ -82,7 +82,7 @@ function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
         throw new Error("Failed to delete contact");
       }
 
-      socket.emit("DeleteContact", {
+      socket.emit("DeleteContact", userId, {
         _id: contact._id,
       });
     } catch (error) {
@@ -108,7 +108,7 @@ function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
         throw new Error("Failed to accept contact request");
       }
 
-      socket.emit("AcceptContactRequest", {
+      socket.emit("AcceptContactRequest", userId, {
         _id: contact._id,
         username: contact.username,
         profilePicture: "",
@@ -137,7 +137,7 @@ function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
         throw new Error("Failed to reject contact request");
       }
 
-      socket.emit("RejectContactRequest", {
+      socket.emit("RejectContactRequest", userId, {
         _id: contact._id,
       });
     } catch (error) {
@@ -170,7 +170,7 @@ function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
       setSelectedChat(conversationId);
       socket.emit("JoinRoom", conversationId);
 
-      socket.emit("addConversation", {
+      socket.emit("addConversation", userId, contact._id, {
         _id: conversationId,
         participants: [userId, contact._id],
       });
