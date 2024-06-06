@@ -25,7 +25,7 @@ const style = {
   padding: 8,
 };
 
-function AddModal({ open, setOpen, allUsers }) {
+function AddModal({ open, setOpen, allUsers, setSelectedChat }) {
   const [searchValue, setSearchValue] = React.useState("");
   const [displayedUsers, setDisplayedUsers] = React.useState([]);
 
@@ -78,7 +78,13 @@ function AddModal({ open, setOpen, allUsers }) {
         <Stack sx={{ overflow: "auto" }}>
           {displayedUsers.map((user) =>
             user.isContact === true ? (
-              <ContactCard key={user._id} contact={user} basicCard /> // For adding conversations
+              <ContactCard
+                key={user._id}
+                contact={user}
+                setOpen={setOpen}
+                setSelectedChat={setSelectedChat}
+                basicCard
+              /> // For adding conversations
             ) : (
               <UserCard key={user._id} user={user} /> // For adding contacts
             ),
@@ -92,11 +98,16 @@ function AddModal({ open, setOpen, allUsers }) {
 AddModal.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
+  setSelectedChat: PropTypes.func,
   allUsers: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
     }),
   ).isRequired,
+};
+
+AddModal.defaultProps = {
+  setSelectedChat: () => {},
 };
 
 export default AddModal;

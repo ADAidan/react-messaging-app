@@ -263,7 +263,12 @@ function Messages() {
               >
                 <AddIcon />
               </IconButton>
-              <AddModal open={open} setOpen={setOpen} allUsers={userContacts} />
+              <AddModal
+                open={open}
+                setOpen={setOpen}
+                setSelectedChat={setSelectedChat}
+                allUsers={userContacts}
+              />
             </Stack>
             {directMessages.length > 0 &&
               directMessages.map((chat) => (
