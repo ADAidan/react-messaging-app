@@ -266,7 +266,7 @@ ChatCard.propTypes = {
     username: PropTypes.string.isRequired,
     status: PropTypes.string.isRequired,
     profilePicture: PropTypes.string.isRequired,
-    contactId: PropTypes.string.isRequired,
+    contactId: PropTypes.string,
     messages: PropTypes.arrayOf(
       PropTypes.shape({
         _id: PropTypes.string.isRequired,

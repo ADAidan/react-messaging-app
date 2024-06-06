@@ -62,7 +62,7 @@ const StyledAwayBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-function ContactCard({ contact, basicCard }) {
+function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
   const userId = sessionStorage.getItem("user");
   const contactStatuses = ["Online", "Offline", "Away"];
   const options = ["delete", "block", "message"];
@@ -164,8 +164,14 @@ function ContactCard({ contact, basicCard }) {
         throw new Error("Failed to create conversation");
       }
 
+      const conversationId = response.data._id;
+
+      setOpen(false);
+      setSelectedChat(conversationId);
+      socket.emit("JoinRoom", conversationId);
+
       socket.emit("addConversation", {
-        _id: response.data._id,
+        _id: conversationId,
         participants: [userId, contact._id],
       });
     } catch (error) {
@@ -354,10 +360,14 @@ ContactCard.propTypes = {
     username: PropTypes.string.isRequired,
     status: PropTypes.string,
   }).isRequired,
+  setOpen: PropTypes.func,
+  setSelectedChat: PropTypes.func,
   basicCard: PropTypes.bool,
 };
 
 ContactCard.defaultProps = {
+  setOpen: () => {},
+  setSelectedChat: () => {},
   basicCard: false,
 };
 
