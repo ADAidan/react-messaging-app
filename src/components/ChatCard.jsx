@@ -2,7 +2,6 @@
 import * as React from "react";
 import axios from "axios";
 import PropTypes from "prop-types";
-import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Badge from "@mui/material/Badge";
@@ -154,109 +153,119 @@ function ChatCard({ chat, handleJoinChat }) {
   };
 
   return (
-    <Paper
+    <Stack
+      direction="row"
       test-dataid="chat-card"
       aria-label={chat.username}
       onClick={handleClickChat}
       elevation={0}
       sx={{
         p: 1,
+        borderRadius: 1,
+        alignItems: "center",
         "&:hover": {
           bgcolor: "rgba(0, 0, 0, 0.1)",
           cursor: "pointer",
         },
       }}
     >
-      <Stack
+      {/* <Stack
         direction="row"
         spacing={2}
         sx={{
           alignItems: "center",
         }}
+      > */}
+      {status === "Online" && (
+        <StyledBadge
+          overlap="circular"
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          variant="dot"
+        >
+          <DynamicAvatar name={chat.username} />
+        </StyledBadge>
+      )}
+      {status === "Offline" && (
+        <StyledOfflineBadge
+          overlap="circular"
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          variant="dot"
+        >
+          <DynamicAvatar name={chat.username} />
+        </StyledOfflineBadge>
+      )}
+      {status === "Away" && (
+        <StyledAwayBadge
+          overlap="circular"
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          variant="dot"
+        >
+          <DynamicAvatar name={chat.username} />
+        </StyledAwayBadge>
+      )}
+      <Stack
+        direction="column"
+        sx={{
+          ml: 2,
+          flexGrow: 0,
+          overflow: "hidden",
+        }}
       >
-        {status === "Online" && (
-          <StyledBadge
-            overlap="circular"
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            variant="dot"
-          >
-            <DynamicAvatar name={chat.username} />
-          </StyledBadge>
-        )}
-        {status === "Offline" && (
-          <StyledOfflineBadge
-            overlap="circular"
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            variant="dot"
-          >
-            <DynamicAvatar name={chat.username} />
-          </StyledOfflineBadge>
-        )}
-        {status === "Away" && (
-          <StyledAwayBadge
-            overlap="circular"
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            variant="dot"
-          >
-            <DynamicAvatar name={chat.username} />
-          </StyledAwayBadge>
-        )}
-        <Stack>
-          <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
-            {chat.username}
-          </Typography>
-          <EllipsisTypography variant="inherit" component="p">
-            {message}
-          </EllipsisTypography>
-        </Stack>
-        <Box sx={{ flexGrow: 0, ml: "auto" }}>
-          <Tooltip title="Options">
-            <IconButton
-              id="basic-button"
-              aria-controls={open ? "basic-menu" : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? "true" : undefined}
-              onClick={handleOpenOptionsMenu}
-            >
-              <MoreVertIcon />
-            </IconButton>
-          </Tooltip>
-          <Menu
-            sx={{
-              mt: "45px",
-            }}
-            slotProps={{
-              paper: {
-                sx: {
-                  width: "25ch",
-                },
-              },
-            }}
-            id="menu-appbar"
-            anchorEl={anchorElOptions}
-            anchorOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            keepMounted
-            transformOrigin={{
-              vertical: "top",
-              horizontal: "right",
-            }}
-            open={open}
-            onClose={handleCloseUserMenu}
-          >
-            {options.map((option) => (
-              <MenuItem key={option} onClick={handleClickOption}>
-                <Typography variant="button" component="p">
-                  {option}
-                </Typography>
-              </MenuItem>
-            ))}
-          </Menu>
-        </Box>
+        <EllipsisTypography variant="subtitle1" component="p" sx={{ m: 0 }}>
+          {chat.username}
+        </EllipsisTypography>
+        <EllipsisTypography variant="inherit" component="p">
+          {message}
+        </EllipsisTypography>
       </Stack>
-    </Paper>
+      <Box sx={{ flexGrow: 0, ml: "auto" }}>
+        <Tooltip title="Options">
+          <IconButton
+            id="basic-button"
+            aria-controls={open ? "basic-menu" : undefined}
+            aria-haspopup="true"
+            aria-expanded={open ? "true" : undefined}
+            onClick={handleOpenOptionsMenu}
+          >
+            <MoreVertIcon />
+          </IconButton>
+        </Tooltip>
+        <Menu
+          sx={{
+            mt: "45px",
+          }}
+          slotProps={{
+            paper: {
+              sx: {
+                width: "25ch",
+              },
+            },
+          }}
+          id="menu-appbar"
+          anchorEl={anchorElOptions}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          keepMounted
+          transformOrigin={{
+            vertical: "top",
+            horizontal: "right",
+          }}
+          open={open}
+          onClose={handleCloseUserMenu}
+        >
+          {options.map((option) => (
+            <MenuItem key={option} onClick={handleClickOption}>
+              <Typography variant="button" component="p">
+                {option}
+              </Typography>
+            </MenuItem>
+          ))}
+        </Menu>
+      </Box>
+      {/* </Stack> */}
+    </Stack>
   );
 }
 
