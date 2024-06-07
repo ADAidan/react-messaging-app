@@ -7,6 +7,7 @@ import Tab from "@mui/material/Tab";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import { useSelector } from "react-redux";
 import AddModal from "./AddModal";
 
 export default function ContactTabs({ setSelectedTab }) {
@@ -14,6 +15,10 @@ export default function ContactTabs({ setSelectedTab }) {
   const [value, setValue] = React.useState(0);
   const [allUsers, setAllUsers] = React.useState([]); // The list of all users
   const [open, setOpen] = React.useState(false);
+
+  const onlineCounter = useSelector((state) => state.onlineCounter.value);
+  const contactsCounter = useSelector((state) => state.contactsCounter.value);
+  const pendingCounter = useSelector((state) => state.pendingCounter.value);
 
   const fetchAllUsers = async () => {
     try {
@@ -91,9 +96,12 @@ export default function ContactTabs({ setSelectedTab }) {
           scrollButtons={false}
           aria-label="contact tabs"
         >
-          <Tab label="Online" aria-label="Online contacts" />
-          <Tab label="All" aria-label="All contacts" />
-          <Tab label="Pending" aria-label="Pending contacts" />
+          <Tab label={`Online ${onlineCounter}`} aria-label="Online contacts" />
+          <Tab label={`All ${contactsCounter}`} aria-label="All contacts" />
+          <Tab
+            label={`Pending ${pendingCounter}`}
+            aria-label="Pending contacts"
+          />
         </Tabs>
         <Button variant="contained" color="success" onClick={handleOpen}>
           Add Contact
