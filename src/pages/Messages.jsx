@@ -2,7 +2,6 @@
 import * as React from "react";
 import axios from "axios";
 import Container from "@mui/material/Container";
-import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { Box, IconButton, Stack, Toolbar } from "@mui/material";
@@ -244,7 +243,7 @@ function Messages() {
           direction="row"
           spacing={2}
           sx={{
-            flex: 1,
+            height: "calc(100vh - 64px)",
           }}
         >
           <Paper
@@ -305,19 +304,21 @@ function Messages() {
                 flex: 2,
               }}
             >
-              <Box
-                data-testid="messages-container"
-                ref={messageContainerRef}
+              <Stack
+                spacing={0}
                 sx={{
-                  overflowY: "auto",
-                  p: 1,
-                  height: "calc(100vh - 150px)",
+                  height: "100%",
                 }}
               >
-                <Grid
-                  data-testid={`chat-${selectedChat}`}
-                  container
+                <Stack
+                  data-testid="messages-container"
+                  ref={messageContainerRef}
                   spacing={2}
+                  sx={{
+                    overflowY: "auto",
+                    p: 1,
+                    flex: 1,
+                  }}
                 >
                   {displayedMessages.length > 0 ? (
                     displayedMessages.map((message) => (
@@ -326,16 +327,27 @@ function Messages() {
                   ) : (
                     <NoMessages />
                   )}
-                </Grid>
-              </Box>
-              <MessageInput
-                setDisplayedMessages={setDisplayedMessages}
-                // username={user.username}
-                selectedChat={selectedChat}
-              />
+                </Stack>
+                <Box
+                  sx={{
+                    flexShrink: 0,
+                  }}
+                >
+                  <MessageInput
+                    setDisplayedMessages={setDisplayedMessages}
+                    selectedChat={selectedChat}
+                  />
+                </Box>
+              </Stack>
             </Paper>
           ) : (
-            <NoDirectMessages />
+            <Box
+              sx={{
+                flex: 2,
+              }}
+            >
+              <NoDirectMessages />
+            </Box>
           )}
         </Stack>
       </Stack>
