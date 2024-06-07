@@ -5,6 +5,10 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
+import { useDispatch } from "react-redux";
+import { setOnlineAmount } from "../features/onlineCounter/onlineCounterSlice";
+import { setContactsAmount } from "../features/contactsCounter/contactsCounterSlice";
+import { setPendingAmount } from "../features/pendingCounter/pendingCounterSlice";
 import socket from "../socket";
 import ContactTabs from "../components/ContactTabs";
 import SearchBar from "../components/SearchBar";
@@ -18,6 +22,8 @@ function Contacts() {
   const [searchValue, setSearchValue] = React.useState("");
   const [searchedContacts, setSearchedContacts] = React.useState([]);
   const [selectedTab, setSelectedTab] = React.useState(0);
+
+  const dispatch = useDispatch();
 
   // Sort pending contacts by status and username
   const sortPendingContacts = (pending) => {
@@ -171,15 +177,21 @@ function Contacts() {
   React.useEffect(() => {
     if (!userContacts) return;
 
+    const onlineContacts = userContacts.filter(
+      (contact) => contact.status === "Online",
+    );
+
+    dispatch(setOnlineAmount(onlineContacts.length));
+    dispatch(setContactsAmount(userContacts.length));
+    dispatch(setPendingAmount(userPending.length));
+
     // Sort contacts by username and alphabetically
     userContacts.sort((a, b) => a.username.localeCompare(b.username));
 
     switch (selectedTab) {
       // Online tab selected
       case 0:
-        setFilteredContacts(
-          userContacts.filter((contact) => contact.status === "Online"),
-        );
+        setFilteredContacts(onlineContacts);
         break;
       // All tab selected
       case 1:
