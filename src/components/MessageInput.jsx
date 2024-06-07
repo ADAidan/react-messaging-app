@@ -57,10 +57,8 @@ function MessageInput({ selectedChat }) {
       elevation={0}
       sx={{
         display: "flex",
-        position: "absolute",
-        width: "90%",
+        width: "100%",
         bottom: 0,
-        mb: 1,
       }}
     >
       <Box

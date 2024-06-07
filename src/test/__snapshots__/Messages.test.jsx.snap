@@ -9,19 +9,22 @@ exports[`Messages > should render the Direct Message Component 1`] = `
         class="MuiContainer-root MuiContainer-maxWidthLg css-emql7a-MuiContainer-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+          class="MuiStack-root css-3jcj1o-MuiStack-root"
         >
           <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 css-1k23dfp-MuiGrid-root"
+            class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-hyum1k-MuiToolbar-root"
+          />
+          <div
+            class="MuiStack-root css-15i7rvr-MuiStack-root"
           >
             <div
-              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-1tiru08-MuiPaper-root"
+              class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18f8nu4-MuiPaper-root"
             >
               <div
-                class="MuiStack-root css-1fdhh1r-MuiStack-root"
+                class="MuiStack-root css-1h1xhva-MuiStack-root"
               >
                 <h1
-                  class="MuiTypography-root MuiTypography-h5 css-oahfe1-MuiTypography-root"
+                  class="MuiTypography-root MuiTypography-h5 css-ch2k2f-MuiTypography-root"
                 >
                   Direct Message
                 </h1>
@@ -48,24 +51,24 @@ exports[`Messages > should render the Direct Message Component 1`] = `
                 </button>
               </div>
             </div>
-          </div>
-          <div
-            class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
-          >
             <div
-              class="MuiStack-root css-llo7ln-MuiStack-root"
-              test-id="no-direct-messages"
+              class="MuiBox-root css-kzfr2u"
             >
-              <h3
-                class="MuiTypography-root MuiTypography-h3 css-1wlq30w-MuiTypography-root"
+              <div
+                class="MuiStack-root css-llo7ln-MuiStack-root"
+                test-id="no-direct-messages"
               >
-                No direct messages
-              </h3>
-              <p
-                class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
-              >
-                Start a conversation by adding a new chat
-              </p>
+                <h3
+                  class="MuiTypography-root MuiTypography-h3 css-1wlq30w-MuiTypography-root"
+                >
+                  No direct messages
+                </h3>
+                <p
+                  class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+                >
+                  Start a conversation by adding a new chat
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -77,19 +80,22 @@ exports[`Messages > should render the Direct Message Component 1`] = `
       class="MuiContainer-root MuiContainer-maxWidthLg css-emql7a-MuiContainer-root"
     >
       <div
-        class="MuiGrid-root MuiGrid-container MuiGrid-spacing-xs-2 css-mhc70k-MuiGrid-root"
+        class="MuiStack-root css-3jcj1o-MuiStack-root"
       >
         <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-4 MuiGrid-grid-sm-6 MuiGrid-grid-md-4 css-1k23dfp-MuiGrid-root"
+          class="MuiToolbar-root MuiToolbar-gutters MuiToolbar-regular css-hyum1k-MuiToolbar-root"
+        />
+        <div
+          class="MuiStack-root css-15i7rvr-MuiStack-root"
         >
           <div
-            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-1tiru08-MuiPaper-root"
+            class="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation3 css-18f8nu4-MuiPaper-root"
           >
             <div
-              class="MuiStack-root css-1fdhh1r-MuiStack-root"
+              class="MuiStack-root css-1h1xhva-MuiStack-root"
             >
               <h1
-                class="MuiTypography-root MuiTypography-h5 css-oahfe1-MuiTypography-root"
+                class="MuiTypography-root MuiTypography-h5 css-ch2k2f-MuiTypography-root"
               >
                 Direct Message
               </h1>
@@ -116,24 +122,24 @@ exports[`Messages > should render the Direct Message Component 1`] = `
               </button>
             </div>
           </div>
-        </div>
-        <div
-          class="MuiGrid-root MuiGrid-item MuiGrid-grid-xs-8 css-vok43g-MuiGrid-root"
-        >
           <div
-            class="MuiStack-root css-llo7ln-MuiStack-root"
-            test-id="no-direct-messages"
+            class="MuiBox-root css-kzfr2u"
           >
-            <h3
-              class="MuiTypography-root MuiTypography-h3 css-1wlq30w-MuiTypography-root"
+            <div
+              class="MuiStack-root css-llo7ln-MuiStack-root"
+              test-id="no-direct-messages"
             >
-              No direct messages
-            </h3>
-            <p
-              class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
-            >
-              Start a conversation by adding a new chat
-            </p>
+              <h3
+                class="MuiTypography-root MuiTypography-h3 css-1wlq30w-MuiTypography-root"
+              >
+                No direct messages
+              </h3>
+              <p
+                class="MuiTypography-root MuiTypography-h6 css-2ulfj5-MuiTypography-root"
+              >
+                Start a conversation by adding a new chat
+              </p>
+            </div>
           </div>
         </div>
       </div>
