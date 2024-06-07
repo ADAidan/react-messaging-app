@@ -239,7 +239,7 @@ function Messages() {
             sx={{
               pt: 10,
               pb: 1,
-              px: 2,
+              px: 1,
               my: 0,
               height: "100vh",
               overflowY: "auto",
@@ -250,11 +250,12 @@ function Messages() {
               direction="row"
               spacing={2}
               sx={{
+                p: 1,
                 justifyContent: "space-between",
                 alignItems: "center",
               }}
             >
-              <Typography variant="h5" component="h1" sx={{ mb: 2, px: 1 }}>
+              <Typography variant="h5" component="h1" sx={{ mb: 2 }}>
                 Direct Message
               </Typography>
               <IconButton
