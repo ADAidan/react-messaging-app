@@ -5,7 +5,7 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
-import { Box, IconButton, Stack } from "@mui/material";
+import { Box, IconButton, Stack, Toolbar } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import socket from "../socket";
 import Message from "../components/Message";
@@ -232,18 +232,30 @@ function Messages() {
         my: 0,
       }}
     >
-      <Grid container spacing={2}>
-        <Grid item xs={4} sm={6} md={4}>
+      <Stack
+        direction="column"
+        spacing={0}
+        sx={{
+          height: "100vh",
+        }}
+      >
+        <Toolbar />
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
+            flex: 1,
+          }}
+        >
           <Paper
             elevation={3}
             sx={{
-              pt: 10,
               pb: 1,
               px: 1,
               my: 0,
-              height: "100vh",
               overflowY: "auto",
               borderRadius: 0,
+              flex: 1,
             }}
           >
             <Stack
@@ -281,19 +293,16 @@ function Messages() {
                 />
               ))}
           </Paper>
-        </Grid>
-        <Grid item xs={8}>
           {selectedChat ? (
             <Paper
               elevation={3}
               sx={{
                 position: "relative",
-                pt: 10,
                 pb: 1,
                 px: 3,
                 my: 0,
-                height: "100vh",
                 borderRadius: 0,
+                flex: 2,
               }}
             >
               <Box
@@ -328,8 +337,8 @@ function Messages() {
           ) : (
             <NoDirectMessages />
           )}
-        </Grid>
-      </Grid>
+        </Stack>
+      </Stack>
     </Container>
   );
 }
