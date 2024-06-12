@@ -23,6 +23,7 @@
     "axios": "^1.6.8",
     "bcrypt": "^5.1.1",
     "cors": "^2.8.5",
+    "jsonwebtoken": "^9.0.2",
     "prop-types": "^15.8.1",
     "react": "latest",
     "react-dom": "latest",

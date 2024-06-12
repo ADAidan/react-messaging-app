@@ -2,6 +2,7 @@
 /* eslint-disable no-underscore-dangle */
 const express = require("express");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Conversation = require("../models/Conversation");
 const Message = require("../models/Message");
@@ -54,11 +55,15 @@ router.put("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid password" });
     }
 
+    const token = jwt.sign({ id: user._id }, 'TestSecretToken', {
+      expiresIn: "1h",
+    });
+
     user.status = "Online";
 
     await user.save();
 
-    return res.status(200).send('Login successful')
+    return res.status(200).send({ message: 'Login successful', token, id: user.id})
   } catch (error) {
     return res.status(500).send({ message: "Error logging in", error });
   }

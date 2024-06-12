@@ -44,6 +44,11 @@ describe("SignUp", () => {
     const signUpButton = await renderedComponent.findByRole("button", {
       name: /Sign Up/i,
     });
+
+    const termsAndConditionsCheckbox = await renderedComponent.findByLabelText(
+      /agree to terms of service/i,
+    );
+    await user.click(termsAndConditionsCheckbox);
     await user.click(signUpButton);
 
     expect(emailInput).toHaveValue("");
@@ -64,7 +69,7 @@ describe("SignUp", () => {
   });
   it("should validate the email", () => {
     expect(() => emailValidate("notAValidEmail.com")).toThrowError(
-      "Invalid email format",
+      "Please enter a valid email address",
     );
     expect(() => emailValidate(`${"a".repeat(51)}@testing.com`)).toThrowError(
       "Email must be less than 50 characters",

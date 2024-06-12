@@ -169,7 +169,7 @@ exports[`SignUp > should render the Sign Up header 1`] = `
               </span>
             </label>
             <label
-              class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+              class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd Mui-required css-j204z7-MuiFormControlLabel-root"
             >
               <span
                 class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -178,6 +178,7 @@ exports[`SignUp > should render the Sign Up header 1`] = `
                   aria-label="agree to terms of service"
                   class="PrivateSwitchBase-input css-1m9pwf3"
                   data-indeterminate="false"
+                  required=""
                   type="checkbox"
                 />
                 <svg
@@ -195,11 +196,22 @@ exports[`SignUp > should render the Sign Up header 1`] = `
                   class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                 />
               </span>
-              <span
-                class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+              <div
+                class="MuiStack-root css-10hyoxo-MuiStack-root"
               >
-                Agree to terms of service
-              </span>
+                <span
+                  class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+                >
+                  Agree to terms of service
+                </span>
+                <span
+                  aria-hidden="true"
+                  class="MuiFormControlLabel-asterisk css-1x2jons-MuiFormControlLabel-asterisk"
+                >
+                   
+                  *
+                </span>
+              </div>
             </label>
             <button
               class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-1v61gf7-MuiButtonBase-root-MuiButton-root"
@@ -400,7 +412,7 @@ exports[`SignUp > should render the Sign Up header 1`] = `
             </span>
           </label>
           <label
-            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd css-j204z7-MuiFormControlLabel-root"
+            class="MuiFormControlLabel-root MuiFormControlLabel-labelPlacementEnd Mui-required css-j204z7-MuiFormControlLabel-root"
           >
             <span
               class="MuiButtonBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium PrivateSwitchBase-root MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium MuiCheckbox-root MuiCheckbox-colorPrimary MuiCheckbox-sizeMedium css-12wnr2w-MuiButtonBase-root-MuiCheckbox-root"
@@ -409,6 +421,7 @@ exports[`SignUp > should render the Sign Up header 1`] = `
                 aria-label="agree to terms of service"
                 class="PrivateSwitchBase-input css-1m9pwf3"
                 data-indeterminate="false"
+                required=""
                 type="checkbox"
               />
               <svg
@@ -426,11 +439,22 @@ exports[`SignUp > should render the Sign Up header 1`] = `
                 class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
               />
             </span>
-            <span
-              class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+            <div
+              class="MuiStack-root css-10hyoxo-MuiStack-root"
             >
-              Agree to terms of service
-            </span>
+              <span
+                class="MuiTypography-root MuiTypography-body1 MuiFormControlLabel-label css-ahj2mt-MuiTypography-root"
+              >
+                Agree to terms of service
+              </span>
+              <span
+                aria-hidden="true"
+                class="MuiFormControlLabel-asterisk css-1x2jons-MuiFormControlLabel-asterisk"
+              >
+                 
+                *
+              </span>
+            </div>
           </label>
           <button
             class="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeMedium MuiButton-containedSizeMedium MuiButton-colorPrimary MuiButton-fullWidth css-1v61gf7-MuiButtonBase-root-MuiButton-root"

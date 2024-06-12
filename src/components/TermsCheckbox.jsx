@@ -1,11 +1,12 @@
 import * as React from "react";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
+import propTypes from "prop-types";
+import { Checkbox, FormControlLabel } from "@mui/material";
 
-function TermsCheckbox() {
+function TermsCheckbox({ setAgreeTerms }) {
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (event) => {
+    setAgreeTerms(event.target.checked);
     setChecked(event.target.checked);
   };
 
@@ -14,6 +15,7 @@ function TermsCheckbox() {
       label="Agree to terms of service"
       control={
         <Checkbox
+          required
           checked={checked}
           onChange={handleChange}
           inputProps={{ "aria-label": "agree to terms of service" }}
@@ -22,5 +24,13 @@ function TermsCheckbox() {
     />
   );
 }
+
+TermsCheckbox.propTypes = {
+  setAgreeTerms: propTypes.func,
+};
+
+TermsCheckbox.defaultProps = {
+  setAgreeTerms: () => {},
+};
 
 export default TermsCheckbox;
