@@ -41,7 +41,7 @@ function Login() {
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response);
-        sessionStorage.setItem("user", response.data.id);
+        // sessionStorage.setItem("user", response.data.id);
         socket.emit("ChangeUserStatus", {
           status: "Online",
           id: response.data.id,
@@ -50,7 +50,7 @@ function Login() {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.error("Error:", error);
+        console.error("Error:", error.response);
       });
     setEmailValue("");
     setPasswordValue("");

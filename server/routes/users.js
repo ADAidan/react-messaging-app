@@ -1,5 +1,7 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 const express = require("express");
+const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const Conversation = require("../models/Conversation");
 const Message = require("../models/Message");
@@ -14,29 +16,52 @@ router.get("/", async (req, res) => {
 
 // POST request to create a new user
 router.post("/signup", async (req, res) => {
-  const user = new User(req.body);
+  const { email, username, password } = req.body;
+
+  // generate a salt
+  const salt = await bcrypt.genSalt(10);
+
+  // hash the password
+  const hashedPassword = await bcrypt.hash(password, salt);
+
+  const user = new User({
+    email,
+    username,
+    password: hashedPassword,
+  });
+
   await user.save();
-  return res.json(user);
+  return res.status(200).json('User created successfully');
 });
 
 // PUT request to login
 router.put("/login", async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ email });
+  try {
+    const { email, password } = req.body;
+    const user = await User.findOne({ email });
 
-  if (!user) {
-    return res.status(404).json({ message: "User not found" });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    // eslint-disable-next-line no-console
+    console.log('comparing passwords:', password, user.password)
+    const isMatch = await bcrypt.compare(password, user.password);
+    // eslint-disable-next-line no-console
+    console.log('isMatch:', isMatch)
+
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid password" });
+    }
+
+    user.status = "Online";
+
+    await user.save();
+
+    return res.status(200).send('Login successful')
+  } catch (error) {
+    return res.status(500).send({ message: "Error logging in", error });
   }
-
-  if (user.password !== password) {
-    return res.status(401).json({ message: "Invalid password" });
-  }
-
-  user.status = "Online";
-
-  await user.save();
-
-  return res.json({ message: "Login successful", id: user.id });
 });
 
 // PUT request to logout
