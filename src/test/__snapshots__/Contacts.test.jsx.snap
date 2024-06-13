@@ -42,7 +42,7 @@ exports[`Contacts > should render the Contacts page 1`] = `
                     tabindex="0"
                     type="button"
                   >
-                    Online
+                    Online 0
                     <span
                       class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                     />
@@ -55,7 +55,7 @@ exports[`Contacts > should render the Contacts page 1`] = `
                     tabindex="-1"
                     type="button"
                   >
-                    All
+                    All 0
                     <span
                       class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                     />
@@ -68,7 +68,7 @@ exports[`Contacts > should render the Contacts page 1`] = `
                     tabindex="-1"
                     type="button"
                   >
-                    Pending
+                    Pending 0
                     <span
                       class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                     />
@@ -174,7 +174,7 @@ exports[`Contacts > should render the Contacts page 1`] = `
                   tabindex="0"
                   type="button"
                 >
-                  Online
+                  Online 0
                   <span
                     class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                   />
@@ -187,7 +187,7 @@ exports[`Contacts > should render the Contacts page 1`] = `
                   tabindex="-1"
                   type="button"
                 >
-                  All
+                  All 0
                   <span
                     class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                   />
@@ -200,7 +200,7 @@ exports[`Contacts > should render the Contacts page 1`] = `
                   tabindex="-1"
                   type="button"
                 >
-                  Pending
+                  Pending 0
                   <span
                     class="MuiTouchRipple-root css-8je8zh-MuiTouchRipple-root"
                   />

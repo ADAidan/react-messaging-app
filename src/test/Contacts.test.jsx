@@ -5,8 +5,10 @@ import axios from "axios";
 import "@testing-library/jest-dom";
 import MockAdapter from "axios-mock-adapter";
 import user from "@testing-library/user-event";
+import { Provider } from "react-redux";
 import Contacts from "../pages/Contacts";
 import { mockContacts, mockPending } from "./testUtils/MockData";
+import store from "../app/store";
 
 const mockAxios = new MockAdapter(axios);
 
@@ -28,11 +30,19 @@ describe("Contacts", () => {
   });
 
   it("should render the Contacts page", () => {
-    const renderedComponent = render(<Contacts />);
+    const renderedComponent = render(
+      <Provider store={store}>
+        <Contacts />
+      </Provider>,
+    );
     expect(renderedComponent).toMatchSnapshot();
   });
   it("should allow the user to type in the search bar", async () => {
-    const renderedComponent = render(<Contacts />);
+    const renderedComponent = render(
+      <Provider store={store}>
+        <Contacts />
+      </Provider>,
+    );
     const searchInput = await renderedComponent.findByRole("textbox", {
       name: /search/i,
     });
@@ -40,12 +50,20 @@ describe("Contacts", () => {
     expect(searchInput).toHaveValue("test");
   });
   it("should render a list of online contacts", async () => {
-    const renderedComponent = render(<Contacts />);
+    const renderedComponent = render(
+      <Provider store={store}>
+        <Contacts />
+      </Provider>,
+    );
     const contacts = await renderedComponent.findAllByTestId("contact-card");
     expect(contacts).toHaveLength(1);
   });
   it("should render a list of contacts that match the search when the user types in the search bar", async () => {
-    const renderedComponent = render(<Contacts />);
+    const renderedComponent = render(
+      <Provider store={store}>
+        <Contacts />
+      </Provider>,
+    );
     const searchInput = await renderedComponent.findByRole("textbox", {
       name: /search/i,
     });
@@ -54,7 +72,11 @@ describe("Contacts", () => {
     expect(contacts).toHaveLength(1);
   });
   it("should render all contacts when the user clicks the 'All' tab", async () => {
-    const renderedComponent = render(<Contacts />);
+    const renderedComponent = render(
+      <Provider store={store}>
+        <Contacts />
+      </Provider>,
+    );
     const allTab = await renderedComponent.findByRole("tab", {
       name: /All contacts/i,
     });
@@ -63,7 +85,11 @@ describe("Contacts", () => {
     expect(contacts).toHaveLength(2);
   });
   it("should render a list of contacts that match the search when the user types in the search bar and clicks the 'All' tab", async () => {
-    const renderedComponent = render(<Contacts />);
+    const renderedComponent = render(
+      <Provider store={store}>
+        <Contacts />
+      </Provider>,
+    );
     const allTab = await renderedComponent.findByRole("tab", {
       name: /All contacts/i,
     });
@@ -78,7 +104,11 @@ describe("Contacts", () => {
     expect(contacts).toHaveLength(1);
   });
   it("should render a list of pending contacts when the user clicks the 'Pending' tab", async () => {
-    const renderedComponent = render(<Contacts />);
+    const renderedComponent = render(
+      <Provider store={store}>
+        <Contacts />
+      </Provider>,
+    );
     const pendingTab = await renderedComponent.findByRole("tab", {
       name: /Pending contacts/i,
     });
@@ -88,7 +118,11 @@ describe("Contacts", () => {
     expect(contacts).toHaveLength(3);
   });
   it("should render a list of contacts that match the search when the user types in the search bar and clicks the 'Pending' tab", async () => {
-    const renderedComponent = render(<Contacts />);
+    const renderedComponent = render(
+      <Provider store={store}>
+        <Contacts />
+      </Provider>,
+    );
     const pendingTab = await renderedComponent.findByRole("tab", {
       name: /Pending contacts/i,
     });
