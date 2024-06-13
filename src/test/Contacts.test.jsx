@@ -7,6 +7,7 @@ import MockAdapter from "axios-mock-adapter";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import user from "@testing-library/user-event";
+import { Provider } from "react-redux";
 import Contacts from "../pages/Contacts";
 import { mockContacts, mockPending } from "./testUtils/MockData";
 import store from "../app/store";
