@@ -14,6 +14,7 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Button } from "@mui/material";
+import socket from "../socket";
 import EmailNotificationCheckbox from "../components/EmailNotificationCheckbox";
 import TermsCheckbox from "../components/TermsCheckbox";
 
@@ -36,7 +37,7 @@ export const emailValidate = (email) => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   switch (true) {
     case !emailRegex.test(email):
-      throw new Error("Invalid email format");
+      throw new Error("Please enter a valid email address");
     case email.length > 50:
       throw new Error("Email must be less than 50 characters");
     default:
@@ -60,6 +61,10 @@ function SignUp() {
   const [emailValue, setEmailValue] = React.useState("");
   const [usernameValue, setUsernameValue] = React.useState("");
   const [passwordValue, setPasswordValue] = React.useState("");
+  const [emailError, setEmailError] = React.useState(null);
+  const [usernameError, setUsernameError] = React.useState(null);
+  const [passwordError, setPasswordError] = React.useState(null);
+  const [agreeTerms, setAgreeTerms] = React.useState(false);
   const navigate = useNavigate();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -68,14 +73,57 @@ function SignUp() {
     event.preventDefault();
   };
 
-  const handleSubmit = () => {
+  const handleUsernameError = (error) => {
+    setUsernameError(error.message);
+  };
+
+  const handleEmailError = (error) => {
+    setEmailError(error.message);
+  };
+
+  const handlePasswordError = (error) => {
+    setPasswordError(error.message);
+  };
+
+  const validateForm = () => {
+    let hasError = false;
+    try {
+      emailValidate(emailValue);
+      setEmailError(null);
+    } catch (error) {
+      handleEmailError(error);
+      hasError = true;
+    }
+
     try {
       usernameValidate(usernameValue);
-      emailValidate(emailValue);
-      passwordValidate(passwordValue);
+      setUsernameError(null);
     } catch (error) {
+      handleUsernameError(error);
+      hasError = true;
+    }
+
+    try {
+      passwordValidate(passwordValue);
+      setPasswordError(null);
+    } catch (error) {
+      handlePasswordError(error);
+      hasError = true;
+    }
+
+    return hasError;
+  };
+
+  const handleSubmit = () => {
+    const hasError = validateForm();
+
+    if (hasError) {
+      return;
+    }
+
+    if (!agreeTerms) {
       // eslint-disable-next-line no-console
-      console.error(error);
+      console.error("Please agree to the terms of service");
       return;
     }
 
@@ -85,17 +133,40 @@ function SignUp() {
       password: passwordValue,
     };
 
-    axios
-      .post("http://localhost:3000/users/signup", data)
-      .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log(response);
-        navigate("/");
-      })
-      .catch((error) => {
-        // eslint-disable-next-line no-console
-        console.error("Error:", error);
-      });
+    const registerUser = () => {
+      axios
+        .post("http://localhost:3000/users/signup", data)
+        .then((response) => {
+          // eslint-disable-next-line no-console
+          console.log(response);
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error("Error:", error);
+        });
+    };
+
+    const loginUser = () => {
+      axios
+        .post("http://localhost:3000/users/login", data)
+        .then((response) => {
+          // eslint-disable-next-line no-console
+          console.log(response);
+          // sessionStorage.setItem("user", response.data.id);
+          socket.emit("ChangeUserStatus", {
+            status: "Online",
+            id: response.data.id,
+          });
+          navigate("/");
+        })
+        .catch((error) => {
+          // eslint-disable-next-line no-console
+          console.error("Error:", error.response);
+        });
+    };
+
+    registerUser();
+    loginUser();
 
     setEmailValue("");
     setUsernameValue("");
@@ -134,7 +205,7 @@ function SignUp() {
           >
             Sign Up
           </Typography>
-          <FormControl variant="standard" fullWidth>
+          <FormControl variant="standard" fullWidth error={Boolean(emailError)}>
             <InputLabel htmlFor="email-input">Email</InputLabel>
             <Input
               id="email-input"
@@ -143,10 +214,14 @@ function SignUp() {
               onChange={handleChangeEmail}
             />
             <FormHelperText id="email-helper-text">
-              Enter your email
+              {emailError || "Enter your email"}
             </FormHelperText>
           </FormControl>
-          <FormControl variant="standard" fullWidth>
+          <FormControl
+            variant="standard"
+            fullWidth
+            error={Boolean(usernameError)}
+          >
             <InputLabel htmlFor="username-input">Username</InputLabel>
             <Input
               id="username-input"
@@ -155,10 +230,14 @@ function SignUp() {
               onChange={handleChangeUsername}
             />
             <FormHelperText id="username-helper-text">
-              Create a username
+              {usernameError || "Create a username"}
             </FormHelperText>
           </FormControl>
-          <FormControl variant="standard" fullWidth>
+          <FormControl
+            variant="standard"
+            fullWidth
+            error={Boolean(passwordError)}
+          >
             <InputLabel htmlFor="password-input">Password</InputLabel>
             <Input
               id="password-input"
@@ -182,11 +261,11 @@ function SignUp() {
               onChange={handleChangePassword}
             />
             <FormHelperText id="password-helper-text">
-              Create a password
+              {passwordError || "Create a password"}
             </FormHelperText>
           </FormControl>
           <EmailNotificationCheckbox />
-          <TermsCheckbox />
+          <TermsCheckbox setAgreeTerms={setAgreeTerms} />
           <Button
             onClick={handleSubmit}
             variant="contained"

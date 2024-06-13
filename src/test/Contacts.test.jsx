@@ -4,6 +4,8 @@ import { expect, vi } from "vitest";
 import axios from "axios";
 import "@testing-library/jest-dom";
 import MockAdapter from "axios-mock-adapter";
+import { Provider } from "react-redux";
+import { MemoryRouter } from "react-router-dom";
 import user from "@testing-library/user-event";
 import { Provider } from "react-redux";
 import Contacts from "../pages/Contacts";
@@ -32,7 +34,9 @@ describe("Contacts", () => {
   it("should render the Contacts page", () => {
     const renderedComponent = render(
       <Provider store={store}>
-        <Contacts />
+        <MemoryRouter>
+          <Contacts />
+        </MemoryRouter>
       </Provider>,
     );
     expect(renderedComponent).toMatchSnapshot();
@@ -40,7 +44,9 @@ describe("Contacts", () => {
   it("should allow the user to type in the search bar", async () => {
     const renderedComponent = render(
       <Provider store={store}>
-        <Contacts />
+        <MemoryRouter>
+          <Contacts />
+        </MemoryRouter>
       </Provider>,
     );
     const searchInput = await renderedComponent.findByRole("textbox", {
@@ -52,7 +58,9 @@ describe("Contacts", () => {
   it("should render a list of online contacts", async () => {
     const renderedComponent = render(
       <Provider store={store}>
-        <Contacts />
+        <MemoryRouter>
+          <Contacts />
+        </MemoryRouter>
       </Provider>,
     );
     const contacts = await renderedComponent.findAllByTestId("contact-card");
@@ -61,7 +69,9 @@ describe("Contacts", () => {
   it("should render a list of contacts that match the search when the user types in the search bar", async () => {
     const renderedComponent = render(
       <Provider store={store}>
-        <Contacts />
+        <MemoryRouter>
+          <Contacts />
+        </MemoryRouter>
       </Provider>,
     );
     const searchInput = await renderedComponent.findByRole("textbox", {
@@ -74,7 +84,9 @@ describe("Contacts", () => {
   it("should render all contacts when the user clicks the 'All' tab", async () => {
     const renderedComponent = render(
       <Provider store={store}>
-        <Contacts />
+        <MemoryRouter>
+          <Contacts />
+        </MemoryRouter>
       </Provider>,
     );
     const allTab = await renderedComponent.findByRole("tab", {
@@ -87,7 +99,9 @@ describe("Contacts", () => {
   it("should render a list of contacts that match the search when the user types in the search bar and clicks the 'All' tab", async () => {
     const renderedComponent = render(
       <Provider store={store}>
-        <Contacts />
+        <MemoryRouter>
+          <Contacts />
+        </MemoryRouter>
       </Provider>,
     );
     const allTab = await renderedComponent.findByRole("tab", {
@@ -106,7 +120,9 @@ describe("Contacts", () => {
   it("should render a list of pending contacts when the user clicks the 'Pending' tab", async () => {
     const renderedComponent = render(
       <Provider store={store}>
-        <Contacts />
+        <MemoryRouter>
+          <Contacts />
+        </MemoryRouter>
       </Provider>,
     );
     const pendingTab = await renderedComponent.findByRole("tab", {
@@ -120,7 +136,9 @@ describe("Contacts", () => {
   it("should render a list of contacts that match the search when the user types in the search bar and clicks the 'Pending' tab", async () => {
     const renderedComponent = render(
       <Provider store={store}>
-        <Contacts />
+        <MemoryRouter>
+          <Contacts />
+        </MemoryRouter>
       </Provider>,
     );
     const pendingTab = await renderedComponent.findByRole("tab", {

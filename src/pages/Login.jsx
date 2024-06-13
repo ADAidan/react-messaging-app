@@ -21,6 +21,8 @@ function Login() {
   const [showPassword, setShowPassword] = React.useState(false);
   const [emailValue, setEmailValue] = React.useState("");
   const [passwordValue, setPasswordValue] = React.useState("");
+  const [authError, setAuthError] = React.useState(false);
+  const [rememberUser, setRememberUser] = React.useState(false);
 
   const navigate = useNavigate();
 
@@ -30,14 +32,24 @@ function Login() {
     event.preventDefault();
   };
 
-  const data = {
-    email: emailValue,
-    password: passwordValue,
-  };
-
   const handleSubmit = () => {
+    if (!emailValue || !passwordValue) {
+      setAuthError(true);
+      return;
+    }
+
+    const data = {
+      email: emailValue,
+      password: passwordValue,
+    };
+
+    setEmailValue("");
+    setPasswordValue("");
+
     axios
-      .put("http://localhost:3000/users/login", data)
+      .post("http://localhost:3000/users/login", data, {
+        withCredentials: true,
+      })
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response);
@@ -50,11 +62,17 @@ function Login() {
       })
       .catch((error) => {
         // eslint-disable-next-line no-console
-        console.error("Error:", error);
+        console.error("Error:", error.response);
+        setAuthError(true);
       });
-    setEmailValue("");
-    setPasswordValue("");
   };
+
+  React.useEffect(() => {
+    if (rememberUser) {
+      // eslint-disable-next-line no-console
+      console.log("Remember user");
+    }
+  }, [rememberUser]);
 
   const handleForgotPassword = () => {};
 
@@ -86,7 +104,7 @@ function Login() {
           >
             Log in
           </Typography>
-          <FormControl variant="standard" fullWidth>
+          <FormControl variant="standard" fullWidth error={authError}>
             <InputLabel htmlFor="email-input">Email</InputLabel>
             <Input
               id="email-input"
@@ -95,10 +113,10 @@ function Login() {
               onChange={(e) => setEmailValue(e.target.value)}
             />
             <FormHelperText id="email-helper-text">
-              Enter your email
+              {authError ? "Invalid email or password" : "Enter your email"}
             </FormHelperText>
           </FormControl>
-          <FormControl variant="standard" fullWidth>
+          <FormControl variant="standard" fullWidth error={authError}>
             <InputLabel htmlFor="password-input">Password</InputLabel>
             <Input
               id="password-input"
@@ -120,7 +138,7 @@ function Login() {
               aria-describedby="password-helper-text"
             />
             <FormHelperText id="password-helper-text">
-              Enter your password
+              {authError ? "Invalid email or password" : "Enter your password"}
             </FormHelperText>
           </FormControl>
           <Stack
@@ -130,7 +148,7 @@ function Login() {
               alignItems: "center",
             }}
           >
-            <RememberUserCheckbox />
+            <RememberUserCheckbox setRememberUser={setRememberUser} />
             <Button variant="text" onClick={handleForgotPassword}>
               Forgot password?
             </Button>
