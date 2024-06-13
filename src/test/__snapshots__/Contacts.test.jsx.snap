@@ -96,7 +96,7 @@ exports[`Contacts > should render the Contacts page 1`] = `
           class="MuiStack-root css-1sazv7p-MuiStack-root"
         >
           <div
-            class="MuiBox-root css-pppzjk"
+            class="MuiBox-root css-18hxoek"
             data-testid="search-bar"
           >
             <div
@@ -228,7 +228,7 @@ exports[`Contacts > should render the Contacts page 1`] = `
         class="MuiStack-root css-1sazv7p-MuiStack-root"
       >
         <div
-          class="MuiBox-root css-pppzjk"
+          class="MuiBox-root css-18hxoek"
           data-testid="search-bar"
         >
           <div

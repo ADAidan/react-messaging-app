@@ -227,78 +227,89 @@ function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
         spacing={2}
         sx={{
           alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
-        {contact.status === "Online" && (
-          <StyledBadge
-            overlap="circular"
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            variant="dot"
-          >
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
+            alignItems: "center",
+          }}
+        >
+          {contact.status === "Online" && (
+            <StyledBadge
+              overlap="circular"
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              variant="dot"
+            >
+              <DynamicAvatar name={contact.username} />
+            </StyledBadge>
+          )}
+          {contact.status === "Offline" && (
+            <StyledOfflineBadge
+              overlap="circular"
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              variant="dot"
+            >
+              <DynamicAvatar name={contact.username} />
+            </StyledOfflineBadge>
+          )}
+          {contact.status === "Away" && (
+            <StyledAwayBadge
+              overlap="circular"
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right",
+              }}
+              variant="dot"
+            >
+              <DynamicAvatar name={contact.username} />
+            </StyledAwayBadge>
+          )}
+          {contact.status === "incoming contact request" && (
             <DynamicAvatar name={contact.username} />
-          </StyledBadge>
-        )}
-        {contact.status === "Offline" && (
-          <StyledOfflineBadge
-            overlap="circular"
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            variant="dot"
-          >
+          )}
+          {contact.status === "outgoing contact request" && (
             <DynamicAvatar name={contact.username} />
-          </StyledOfflineBadge>
-        )}
-        {contact.status === "Away" && (
-          <StyledAwayBadge
-            overlap="circular"
-            anchorOrigin={{
-              vertical: "bottom",
-              horizontal: "right",
-            }}
-            variant="dot"
-          >
-            <DynamicAvatar name={contact.username} />
-          </StyledAwayBadge>
-        )}
-        {contact.status === "incoming contact request" && (
-          <DynamicAvatar name={contact.username} />
-        )}
-        {contact.status === "outgoing contact request" && (
-          <DynamicAvatar name={contact.username} />
-        )}
-        <Stack>
-          <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
-            {contact.username}
-          </Typography>
-          <Typography variant="body2" component="p" sx={{ m: 0, p: 0 }}>
-            {contact.status[0].toUpperCase() + contact.status.slice(1)}
-          </Typography>
+          )}
+          <Stack>
+            <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
+              {contact.username}
+            </Typography>
+            <Typography variant="body2" component="p" sx={{ m: 0, p: 0 }}>
+              {contact.status[0].toUpperCase() + contact.status.slice(1)}
+            </Typography>
+          </Stack>
+          {contact.status === "incoming contact request" && (
+            <Stack direction="row">
+              <Button onClick={handleAccept}>Accept</Button>
+              <Button onClick={handleReject}>Reject</Button>
+            </Stack>
+          )}
+          {contact.status === "outgoing contact request" && (
+            <Stack direction="row">
+              <Button onClick={handleAccept}>Accept</Button> {/* debug line */}
+              <Button onClick={handleReject}>cancel</Button>
+            </Stack>
+          )}
         </Stack>
-        {contact.status === "incoming contact request" && (
-          <Stack direction="row">
-            <Button onClick={handleAccept}>Accept</Button>
-            <Button onClick={handleReject}>Reject</Button>
-          </Stack>
-        )}
-        {contact.status === "outgoing contact request" && (
-          <Stack direction="row">
-            <Button onClick={handleAccept}>Accept</Button> {/* debug line */}
-            <Button onClick={handleReject}>cancel</Button>
-          </Stack>
-        )}
         {basicCard ? (
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCreateConversation}
-          >
-            Message
-          </Button>
+          <Box>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCreateConversation}
+            >
+              Message
+            </Button>
+          </Box>
         ) : (
           contactStatuses.includes(contact.status) && (
             <Box sx={{ flexGrow: 0, ml: "auto" }}>

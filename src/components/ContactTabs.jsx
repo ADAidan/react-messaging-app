@@ -8,7 +8,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { useSelector } from "react-redux";
-import AddModal from "./AddModal";
+import AddContactModal from "./AddContactModal";
 
 export default function ContactTabs({ setSelectedTab }) {
   const userId = sessionStorage.getItem("user"); // The ID of the user to update
@@ -106,7 +106,7 @@ export default function ContactTabs({ setSelectedTab }) {
         <Button variant="contained" color="success" onClick={handleOpen}>
           Add Contact
         </Button>
-        <AddModal open={open} setOpen={setOpen} allUsers={allUsers} />
+        <AddContactModal open={open} setOpen={setOpen} allUsers={allUsers} />
       </Stack>
     </Box>
   );

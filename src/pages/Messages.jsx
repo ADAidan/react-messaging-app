@@ -13,7 +13,7 @@ import MessageInput from "../components/MessageInput";
 import ChatCard from "../components/ChatCard";
 import NoMessages from "../components/NoMessages";
 import NoDirectMessages from "../components/NoDirectMessages";
-import AddModal from "../components/AddModal";
+import AddConversationModal from "../components/AddConversationModal";
 
 const formatTime = (isoString) => {
   const date = new Date(isoString);
@@ -296,7 +296,7 @@ function Messages() {
               >
                 <AddIcon />
               </IconButton>
-              <AddModal
+              <AddConversationModal
                 open={open}
                 setOpen={setOpen}
                 setSelectedChat={setSelectedChat}
