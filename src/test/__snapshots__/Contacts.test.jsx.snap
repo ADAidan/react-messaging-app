@@ -320,4 +320,3 @@ exports[`Contacts > should render the Contacts page 1`] = `
   "unmount": [Function],
 }
 `;
-

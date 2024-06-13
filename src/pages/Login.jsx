@@ -32,16 +32,19 @@ function Login() {
     event.preventDefault();
   };
 
-  const data = {
-    email: emailValue,
-    password: passwordValue,
-  };
-
   const handleSubmit = () => {
     if (!emailValue || !passwordValue) {
       setAuthError(true);
       return;
     }
+
+    const data = {
+      email: emailValue,
+      password: passwordValue,
+    };
+
+    setEmailValue("");
+    setPasswordValue("");
 
     axios
       .post("http://localhost:3000/users/login", data, {
@@ -55,8 +58,6 @@ function Login() {
           status: "Online",
           id: response.data.id,
         });
-        setEmailValue("");
-        setPasswordValue("");
         navigate("/");
       })
       .catch((error) => {

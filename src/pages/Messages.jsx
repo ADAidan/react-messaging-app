@@ -38,6 +38,7 @@ function Messages() {
 
   const navigate = useNavigate();
 
+  // If user is not logged in, redirect to login page
   React.useEffect(() => {
     axios
       .get("http://localhost:3000/users/protected", {

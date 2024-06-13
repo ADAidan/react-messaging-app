@@ -45,12 +45,8 @@ router.post("/login", async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // eslint-disable-next-line no-console
-    console.log('comparing passwords:', password, user.password)
     const isMatch = await bcrypt.compare(password, user.password);
-    // eslint-disable-next-line no-console
-    console.log('isMatch:', isMatch)
-
+    
     if (!isMatch) {
       return res.status(400).json({ message: "Invalid password" });
     }

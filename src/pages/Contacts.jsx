@@ -27,6 +27,7 @@ function Contacts() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // If user is not logged in, redirect to logout page
   React.useEffect(() => {
     axios
       .get("http://localhost:3000/users/protected", {

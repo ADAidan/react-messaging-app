@@ -4,6 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import socket from "../socket";
 
+// Log the user out and redirect to the login page
 function Logout() {
   const navigate = useNavigate();
 
