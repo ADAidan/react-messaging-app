@@ -44,10 +44,13 @@ function Login() {
     }
 
     axios
-      .put("http://localhost:3000/users/login", data)
+      .post("http://localhost:3000/users/login", data, {
+        withCredentials: true,
+      })
       .then((response) => {
         // eslint-disable-next-line no-console
         console.log(response);
+        sessionStorage.setItem("user", response.data.id);
         socket.emit("ChangeUserStatus", {
           status: "Online",
           id: response.data.id,

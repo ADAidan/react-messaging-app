@@ -5,6 +5,7 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setOnlineAmount } from "../features/onlineCounter/onlineCounterSlice";
 import { setContactsAmount } from "../features/contactsCounter/contactsCounterSlice";
@@ -24,6 +25,21 @@ function Contacts() {
   const [selectedTab, setSelectedTab] = React.useState(0);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3000/users/protected", {
+        withCredentials: true,
+      })
+      .then(() => {
+        // eslint-disable-next-line no-console
+        console.log("accessed protected route");
+      })
+      .catch(() => {
+        navigate("/logout");
+      });
+  }, []);
 
   // Sort pending contacts by status and username
   const sortPendingContacts = (pending) => {
@@ -47,12 +63,12 @@ function Contacts() {
 
   // get user contacts
   React.useEffect(() => {
+    if (!userId) return;
     socket.emit("JoinRoom", userId);
     const getContactData = async () => {
       try {
-        const userID = sessionStorage.getItem("user");
         const response = await axios.get(
-          `http://localhost:3000/users/${userID}/contacts`,
+          `http://localhost:3000/users/${userId}/contacts`,
         );
         const contactData = response.data;
         setUserContacts(contactData);
@@ -84,12 +100,12 @@ function Contacts() {
 
   // get user pending contacts
   React.useEffect(() => {
+    if (!userId) return;
     const getPendingData = async () => {
       const pendingContacts = [];
       try {
-        const userID = sessionStorage.getItem("user");
         const response = await axios.get(
-          `http://localhost:3000/users/${userID}/pending`,
+          `http://localhost:3000/users/${userId}/pending`,
         );
         const pendingData = response.data;
         for (let i = 0; i < pendingData.length; i += 1) {

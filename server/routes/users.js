@@ -36,7 +36,7 @@ router.post("/signup", async (req, res) => {
 });
 
 // PUT request to login
-router.put("/login", async (req, res) => {
+router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -56,14 +56,20 @@ router.put("/login", async (req, res) => {
     }
 
     const token = jwt.sign({ id: user._id }, 'TestSecretToken', {
-      expiresIn: "1h",
+      expiresIn: "10m",
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      sameSite: "None",
+      secure: true,
     });
 
     user.status = "Online";
 
     await user.save();
 
-    return res.status(200).send({ message: 'Login successful', token, id: user.id})
+    return res.status(200).send({ message: 'Login successful', id: user.id})
   } catch (error) {
     return res.status(500).send({ message: "Error logging in", error });
   }
@@ -83,9 +89,31 @@ router.put("/logout", async (req, res) => {
 
     await user.save();
 
+    res.clearCookie("token");
+
     return res.status(200).json({ message: "Logout successful", id: user.id });
   } catch (error) {
     return res.status(500).send({ message: "Error logging out", error });
+  }
+});
+
+// Protected route to get user data
+router.get("/protected", async (req, res) => {
+  const { token } = req.cookies;
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, 'TestSecretToken');
+    const userId = decoded.id
+    return res.json(userId);
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ message: "Token expired" });
+    }
+    res.clearCookie("token");
+    return res.status(500).send({ message: "Error finding user", error });
   }
 });
 

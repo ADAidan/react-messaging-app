@@ -148,7 +148,7 @@ function SignUp() {
 
     const loginUser = () => {
       axios
-        .put("http://localhost:3000/users/login", data)
+        .post("http://localhost:3000/users/login", data)
         .then((response) => {
           // eslint-disable-next-line no-console
           console.log(response);

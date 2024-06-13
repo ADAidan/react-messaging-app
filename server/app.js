@@ -24,6 +24,7 @@ io.listen(4000);
 
 app.use(cors({
   origin: "http://localhost:5173",
+  credentials: true,
 }));
 
 // eslint-disable-next-line no-use-before-define, no-console

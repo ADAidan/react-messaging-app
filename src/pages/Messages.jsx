@@ -6,6 +6,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import { Box, IconButton, Stack, Toolbar } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
+import { useNavigate } from "react-router-dom";
 import socket from "../socket";
 import Message from "../components/Message";
 import MessageInput from "../components/MessageInput";
@@ -34,6 +35,22 @@ function Messages() {
   const [selectedChat, setSelectedChat] = React.useState(null);
   const [open, setOpen] = React.useState(false); // AddModal open state
   const [userContacts, setUserContacts] = React.useState([]); // contacts to display on the AddModal
+
+  const navigate = useNavigate();
+
+  React.useEffect(() => {
+    axios
+      .get("http://localhost:3000/users/protected", {
+        withCredentials: true,
+      })
+      .then(() => {
+        // eslint-disable-next-line no-console
+        console.log("accessed protected route");
+      })
+      .catch(() => {
+        navigate("/logout");
+      });
+  }, []);
 
   // Join chat room
   const handleJoinChat = (chatId) => {
@@ -128,6 +145,7 @@ function Messages() {
   }, [directMessages]);
 
   React.useEffect(() => {
+    if (!userId) return;
     socket.emit("JoinRoom", userId);
     const fetchUserContacts = async () => {
       try {
@@ -154,6 +172,7 @@ function Messages() {
   }, [displayedMessages]);
 
   React.useEffect(() => {
+    if (!userId) return;
     // eslint-disable-next-line consistent-return
     const getDirectMessages = async () => {
       try {
