@@ -6,6 +6,7 @@ import Paper from "@mui/material/Paper";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import socket from "../socket";
 import DynamicAvatar from "./DynamicAvatar";
 
@@ -72,15 +73,26 @@ function UserCard({ user }) {
         spacing={2}
         sx={{
           alignItems: "center",
+          justifyContent: "space-between",
         }}
       >
-        <DynamicAvatar name={user.username} />
-        <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
-          {user.username}
-        </Typography>
-        <Button variant="contained" color="primary" onClick={handleAdd}>
-          Add
-        </Button>
+        <Stack
+          direction="row"
+          spacing={2}
+          sx={{
+            alignItems: "center",
+          }}
+        >
+          <DynamicAvatar name={user.username} />
+          <Typography variant="subtitle1" component="p" sx={{ m: 0 }}>
+            {user.username}
+          </Typography>
+        </Stack>
+        <Box>
+          <Button variant="contained" color="primary" onClick={handleAdd}>
+            Add
+          </Button>
+        </Box>
       </Stack>
     </Paper>
   );

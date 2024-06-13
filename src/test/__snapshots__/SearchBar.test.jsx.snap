@@ -6,7 +6,7 @@ exports[`renders SearchBar component 1`] = `
   "baseElement": <body>
     <div>
       <div
-        class="MuiBox-root css-pppzjk"
+        class="MuiBox-root css-18hxoek"
         data-testid="search-bar"
       >
         <div
@@ -40,7 +40,7 @@ exports[`renders SearchBar component 1`] = `
   </body>,
   "container": <div>
     <div
-      class="MuiBox-root css-pppzjk"
+      class="MuiBox-root css-18hxoek"
       data-testid="search-bar"
     >
       <div

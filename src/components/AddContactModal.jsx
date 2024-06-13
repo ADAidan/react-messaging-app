@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import * as React from "react";
 import PropTypes from "prop-types";
 import Modal from "@mui/material/Modal";
@@ -7,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import socket from "../socket";
 import SearchBar from "./SearchBar";
 import UserCard from "./UserCard";
-import ContactCard from "./ContactCard";
 
 const style = {
   position: "absolute",
@@ -25,7 +23,7 @@ const style = {
   padding: 8,
 };
 
-function AddModal({ open, setOpen, allUsers, setSelectedChat }) {
+function AddContactModal({ open, setOpen, allUsers }) {
   const [searchValue, setSearchValue] = React.useState("");
   const [displayedUsers, setDisplayedUsers] = React.useState([]);
 
@@ -34,6 +32,7 @@ function AddModal({ open, setOpen, allUsers, setSelectedChat }) {
     socket.on("UpdatePendingContacts", (newPending) => {
       // Removes the user from the displayedUsers array
       setDisplayedUsers((prev) =>
+        // eslint-disable-next-line no-underscore-dangle
         prev.filter((user) => user._id !== newPending._id),
       );
     });
@@ -76,29 +75,19 @@ function AddModal({ open, setOpen, allUsers, setSelectedChat }) {
           handleSearchChange={handleSearchChange}
         />
         <Stack sx={{ overflow: "auto" }}>
-          {displayedUsers.map((user) =>
-            user.isContact === true ? (
-              <ContactCard
-                key={user._id}
-                contact={user}
-                setOpen={setOpen}
-                setSelectedChat={setSelectedChat}
-                basicCard
-              /> // For adding conversations
-            ) : (
-              <UserCard key={user._id} user={user} /> // For adding contacts
-            ),
-          )}
+          {displayedUsers.map((user) => (
+            // eslint-disable-next-line no-underscore-dangle
+            <UserCard key={user._id} user={user} />
+          ))}
         </Stack>
       </Stack>
     </Modal>
   );
 }
 
-AddModal.propTypes = {
+AddContactModal.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
-  setSelectedChat: PropTypes.func,
   allUsers: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
@@ -106,8 +95,4 @@ AddModal.propTypes = {
   ).isRequired,
 };
 
-AddModal.defaultProps = {
-  setSelectedChat: () => {},
-};
-
-export default AddModal;
+export default AddContactModal;
