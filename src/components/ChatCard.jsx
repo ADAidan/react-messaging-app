@@ -81,7 +81,7 @@ function ChatCard({ chat, handleJoinChat }) {
   const removeChat = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/users/remove-conversation`,
+        `${import.meta.env.VITE_API_URL}/users/remove-conversation`,
         { userId, conversationId: chat._id },
       );
 

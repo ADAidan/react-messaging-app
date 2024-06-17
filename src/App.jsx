@@ -25,7 +25,7 @@ export default function App() {
 
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${userID}`,
+          `${import.meta.env.VITE_API_URL}/users/${userID}`,
         );
         const userData = response.data;
         setUsername(userData.username);

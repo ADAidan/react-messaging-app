@@ -30,7 +30,7 @@ function Contacts() {
   // If user is not logged in, redirect to logout page
   React.useEffect(() => {
     axios
-      .get("http://localhost:3000/users/protected", {
+      .get(`${import.meta.env.VITE_API_URL}/users/protected`, {
         withCredentials: true,
       })
       .then(() => {
@@ -69,7 +69,7 @@ function Contacts() {
     const getContactData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${userId}/contacts`,
+          `${import.meta.env.VITE_API_URL}/users/${userId}/contacts`,
         );
         const contactData = response.data;
         setUserContacts(contactData);
@@ -106,7 +106,7 @@ function Contacts() {
       const pendingContacts = [];
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${userId}/pending`,
+          `${import.meta.env.VITE_API_URL}/users/${userId}/pending`,
         );
         const pendingData = response.data;
         for (let i = 0; i < pendingData.length; i += 1) {

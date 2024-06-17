@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const path = require("path");
 const cookieParser = require("cookie-parser");
 const logger = require("morgan");
+require("dotenv").config();
 // eslint-disable-next-line import/no-extraneous-dependencies
 const cors = require("cors");
 
@@ -14,13 +15,15 @@ const conversationsRouter = require("./routes/conversations");
 
 const app = express();
 
+const port = process.env.SOCKET_PORT || "4000";
+
 const io = new Server({
   cors: {
     origin: "http://localhost:5173",
   }
 });
 
-io.listen(4000);
+io.listen(port);
 
 app.use(cors({
   origin: "http://localhost:5173",
@@ -32,7 +35,7 @@ main().catch((err) => console.log(err));
 
 async function main() {
   await mongoose.connect(
-    `mongodb+srv://ADyer4201:bzAo29ZAYXHKhP5t@messagesdb.wosk06l.mongodb.net/?retryWrites=true&w=majority&appName=MessagesDB`,
+    process.env.MONGODB_URI,
   );
   // eslint-disable-next-line no-console
   console.log("Connected to MongoDB");

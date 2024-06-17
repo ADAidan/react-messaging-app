@@ -41,7 +41,7 @@ function Messages() {
   // If user is not logged in, redirect to login page
   React.useEffect(() => {
     axios
-      .get("http://localhost:3000/users/protected", {
+      .get(`${import.meta.env.VITE_API_URL}/users/protected`, {
         withCredentials: true,
       })
       .then(() => {
@@ -87,7 +87,7 @@ function Messages() {
       if (!contactId) return;
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${contactId}/info`, // gets the contacts info for the chat card
+          `${import.meta.env.VITE_API_URL}/users/${contactId}/info`, // gets the contacts info for the chat card
         );
         const userData = response.data;
 
@@ -114,19 +114,21 @@ function Messages() {
   // Socket event listener for creating a new message
   React.useEffect(() => {
     socket.on("receiveMessage", (message) => {
-      axios.get(`http://localhost:3000/users/${userId}`).then((response) => {
-        const user = response.data;
-        const newMessage = {
-          _id: message._id,
-          author: {
-            username: user.username,
-            profilePicture: user.profilePicture,
-          },
-          content: message.content,
-          formattedTime: formatTime(message.createdAt),
-        };
-        setDisplayedMessages((prevMessages) => [...prevMessages, newMessage]);
-      });
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/users/${userId}`)
+        .then((response) => {
+          const user = response.data;
+          const newMessage = {
+            _id: message._id,
+            author: {
+              username: user.username,
+              profilePicture: user.profilePicture,
+            },
+            content: message.content,
+            formattedTime: formatTime(message.createdAt),
+          };
+          setDisplayedMessages((prevMessages) => [...prevMessages, newMessage]);
+        });
     });
     return () => {
       socket.off("receiveMessage");
@@ -151,7 +153,7 @@ function Messages() {
     const fetchUserContacts = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${userId}/contacts`,
+          `${import.meta.env.VITE_API_URL}/users/${userId}/contacts`,
         );
         const updatedContacts = response.data.map((contact) => ({
           ...contact,
@@ -178,7 +180,7 @@ function Messages() {
     const getDirectMessages = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/users/${userId}/direct-messages`,
+          `${import.meta.env.VITE_API_URL}/users/${userId}/direct-messages`,
         );
         const conversationData = response.data;
         const conversations = conversationData.map((conversation) => {

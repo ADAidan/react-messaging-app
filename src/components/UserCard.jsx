@@ -17,7 +17,7 @@ function UserCard({ user }) {
   const handleAdd = () => {
     try {
       axios
-        .put(`http://localhost:3000/users/send-contact-request`, {
+        .put(`${import.meta.env.VITE_API_URL}/users/send-contact-request`, {
           userId,
           contactId: user._id,
         })

@@ -17,9 +17,12 @@ function Logout() {
 
     const logOutUser = async () => {
       try {
-        const response = await axios.put("http://localhost:3000/users/logout", {
-          userId,
-        });
+        const response = await axios.put(
+          `${import.meta.env.VITE_API_URL}/users/logout`,
+          {
+            userId,
+          },
+        );
 
         if (response.status === 200) {
           socket.emit("ChangeUserStatus", { id: userId, status: "Offline" });

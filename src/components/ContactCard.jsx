@@ -74,7 +74,7 @@ function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
   const handleDeleteContact = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/users/delete-contact`,
+        `${import.meta.env.VITE_API_URL}/users/delete-contact`,
         { userId, contactId: contact._id },
       );
 
@@ -100,7 +100,7 @@ function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
   const handleAccept = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/users/accept-contact-request`,
+        `${import.meta.env.VITE_API_URL}/users/accept-contact-request`,
         { userId, contactId: contact._id },
       );
 
@@ -129,7 +129,7 @@ function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
   const handleReject = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/users/reject-contact-request`,
+        `${import.meta.env.VITE_API_URL}/users/reject-contact-request`,
         { userId, contactId: contact._id },
       );
 
@@ -156,7 +156,7 @@ function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
   const handleCreateConversation = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/users/create-conversation`,
+        `${import.meta.env.VITE_API_URL}/users/create-conversation`,
         { userId, contactId: contact._id },
       );
 

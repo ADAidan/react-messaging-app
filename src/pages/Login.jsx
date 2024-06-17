@@ -47,12 +47,10 @@ function Login() {
     setPasswordValue("");
 
     axios
-      .post("http://localhost:3000/users/login", data, {
+      .post(`${import.meta.env.VITE_API_URL}/users/login`, data, {
         withCredentials: true,
       })
       .then((response) => {
-        // eslint-disable-next-line no-console
-        console.log(response);
         sessionStorage.setItem("user", response.data.id);
         socket.emit("ChangeUserStatus", {
           status: "Online",

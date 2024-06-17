@@ -135,7 +135,7 @@ function SignUp() {
 
     const registerUser = () => {
       axios
-        .post("http://localhost:3000/users/signup", data)
+        .post(`${import.meta.env.VITE_API_URL}/users/signup`, data)
         .then((response) => {
           // eslint-disable-next-line no-console
           console.log(response);
@@ -148,7 +148,7 @@ function SignUp() {
 
     const loginUser = () => {
       axios
-        .post("http://localhost:3000/users/login", data)
+        .post(`${import.meta.env.VITE_API_URL}/users/login`, data)
         .then((response) => {
           // eslint-disable-next-line no-console
           console.log(response);

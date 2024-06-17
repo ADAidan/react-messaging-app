@@ -22,13 +22,17 @@ export default function ContactTabs({ setSelectedTab }) {
 
   const fetchAllUsers = async () => {
     try {
-      const response = await axios.get("http://localhost:3000/users/list");
+      const response = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users/list`,
+      );
 
       if (!response) {
         throw new Error("Failed to fetch users");
       }
 
-      const userData = await axios.get(`http://localhost:3000/users/${userId}`);
+      const userData = await axios.get(
+        `${import.meta.env.VITE_API_URL}/users/${userId}`,
+      );
 
       if (!userData) {
         throw new Error("Failed to fetch user");

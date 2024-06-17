@@ -20,7 +20,7 @@ function MessageInput({ selectedChat }) {
   const sendMessage = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:3000/users/send-message`,
+        `${import.meta.env.VITE_API_URL}/users/send-message`,
         { userId, conversationId: selectedChat, messageContent: messageValue },
       );
 
