@@ -16,7 +16,7 @@ function Home() {
     >
       <Box
         sx={{
-          backgroundImage: "url(../../public/images/homepage-background.jpg)",
+          backgroundImage: "url(../../images/homepage-background.jpg)",
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "fixed",
