@@ -4,9 +4,13 @@
 const debug = require("debug")("server:server");
 const http = require("http");
 const app = require("../app");
+const initializeSocket = require("../socket");
 
 // Create HTTP server.
 const server = http.createServer(app);
+
+// Initialize socket.io
+initializeSocket(server);
 
 // Normalize a port into a number, string, or false.
 function normalizePort(val) {
