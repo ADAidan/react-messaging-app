@@ -70,7 +70,7 @@ const EllipsisTypography = styled(Typography)({
   maxWidth: "100%",
 });
 
-function ChatCard({ chat, handleJoinChat }) {
+function ChatCard({ chat, handleJoinChat = () => {} }) {
   const userId = sessionStorage.getItem("user");
   const [anchorElOptions, setAnchorElOptions] = React.useState(null);
   const [message, setMessage] = React.useState(null);
@@ -169,13 +169,6 @@ function ChatCard({ chat, handleJoinChat }) {
         },
       }}
     >
-      {/* <Stack
-        direction="row"
-        spacing={2}
-        sx={{
-          alignItems: "center",
-        }}
-      > */}
       {status === "Online" && (
         <StyledBadge
           overlap="circular"
@@ -287,11 +280,7 @@ ChatCard.propTypes = {
       }),
     ),
   }).isRequired,
-  handleJoinChat: PropTypes.func,
-};
-
-ChatCard.defaultProps = {
-  handleJoinChat: () => {},
+  handleJoinChat: PropTypes.func.isRequired,
 };
 
 export default ChatCard;

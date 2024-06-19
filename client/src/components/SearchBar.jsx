@@ -47,7 +47,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
   },
 }));
 
-function SearchBar({ searchValue, handleSearchChange }) {
+function SearchBar({ searchValue, handleSearchChange = () => {} }) {
   return (
     <Search data-testid="search-bar">
       <SearchIconWrapper>

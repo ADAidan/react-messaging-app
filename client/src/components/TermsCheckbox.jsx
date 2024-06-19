@@ -2,7 +2,7 @@ import * as React from "react";
 import propTypes from "prop-types";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
-function TermsCheckbox({ setAgreeTerms }) {
+function TermsCheckbox({ setAgreeTerms = () => {} }) {
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (event) => {
@@ -26,11 +26,7 @@ function TermsCheckbox({ setAgreeTerms }) {
 }
 
 TermsCheckbox.propTypes = {
-  setAgreeTerms: propTypes.func,
-};
-
-TermsCheckbox.defaultProps = {
-  setAgreeTerms: () => {},
+  setAgreeTerms: propTypes.func.isRequired,
 };
 
 export default TermsCheckbox;

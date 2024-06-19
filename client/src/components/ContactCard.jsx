@@ -62,7 +62,12 @@ const StyledAwayBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-function ContactCard({ contact, setOpen, setSelectedChat, basicCard }) {
+function ContactCard({
+  contact,
+  setOpen = () => {},
+  setSelectedChat = () => {},
+  basicCard = false,
+}) {
   const userId = sessionStorage.getItem("user");
   const contactStatuses = ["Online", "Offline", "Away"];
   const options = ["delete", "block", "message"];
@@ -371,15 +376,9 @@ ContactCard.propTypes = {
     username: PropTypes.string.isRequired,
     status: PropTypes.string,
   }).isRequired,
-  setOpen: PropTypes.func,
-  setSelectedChat: PropTypes.func,
-  basicCard: PropTypes.bool,
-};
-
-ContactCard.defaultProps = {
-  setOpen: () => {},
-  setSelectedChat: () => {},
-  basicCard: false,
+  setOpen: PropTypes.func.isRequired,
+  setSelectedChat: PropTypes.func.isRequired,
+  basicCard: PropTypes.bool.isRequired,
 };
 
 export default ContactCard;

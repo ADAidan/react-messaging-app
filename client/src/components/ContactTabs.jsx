@@ -10,7 +10,7 @@ import Stack from "@mui/material/Stack";
 import { useSelector } from "react-redux";
 import AddContactModal from "./AddContactModal";
 
-export default function ContactTabs({ setSelectedTab }) {
+export default function ContactTabs({ setSelectedTab = () => {} }) {
   const userId = sessionStorage.getItem("user"); // The ID of the user to update
   const [value, setValue] = React.useState(0);
   const [allUsers, setAllUsers] = React.useState([]); // The list of all users

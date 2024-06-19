@@ -24,7 +24,12 @@ const style = {
   padding: 8,
 };
 
-function AddConversationModal({ open, setOpen, allUsers, setSelectedChat }) {
+function AddConversationModal({
+  open,
+  setOpen,
+  allUsers,
+  setSelectedChat = () => {},
+}) {
   const [searchValue, setSearchValue] = React.useState("");
   const [displayedUsers, setDisplayedUsers] = React.useState([]);
 
@@ -93,16 +98,12 @@ function AddConversationModal({ open, setOpen, allUsers, setSelectedChat }) {
 AddConversationModal.propTypes = {
   open: PropTypes.bool.isRequired,
   setOpen: PropTypes.func.isRequired,
-  setSelectedChat: PropTypes.func,
+  setSelectedChat: PropTypes.func.isRequired,
   allUsers: PropTypes.arrayOf(
     PropTypes.shape({
       _id: PropTypes.string.isRequired,
     }),
   ).isRequired,
-};
-
-AddConversationModal.defaultProps = {
-  setSelectedChat: () => {},
 };
 
 export default AddConversationModal;

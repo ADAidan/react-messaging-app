@@ -2,7 +2,7 @@ import * as React from "react";
 import propTypes from "prop-types";
 import { Checkbox, FormControlLabel } from "@mui/material";
 
-export default function RememberUserCheckbox({ setRememberUser }) {
+export default function RememberUserCheckbox({ setRememberUser = () => {} }) {
   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (event) => {
@@ -25,9 +25,5 @@ export default function RememberUserCheckbox({ setRememberUser }) {
 }
 
 RememberUserCheckbox.propTypes = {
-  setRememberUser: propTypes.func,
-};
-
-RememberUserCheckbox.defaultProps = {
-  setRememberUser: () => {},
+  setRememberUser: propTypes.func.isRequired,
 };

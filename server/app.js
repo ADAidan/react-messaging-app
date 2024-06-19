@@ -15,7 +15,7 @@ const conversationsRouter = require("./routes/conversations");
 
 const app = express();
 
-const port = process.env.SOCKET_PORT || "4000";
+const port = process.env.SOCKET_PORT || "3001";
 
 const io = new Server({
   cors: {
