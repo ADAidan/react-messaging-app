@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import ChatCard from "../components/ChatCard";
+import ChatCard from "../client/components/ChatCard";
 
 describe("ChatCard", () => {
   it("should render the ChatCard component", () => {
@@ -28,7 +28,7 @@ describe("ChatCard", () => {
     expect(usernameElement).toBeInTheDocument();
 
     const lastMessageElement = screen.getByText(
-      /Lorem ipsum dolor sit amet.../i,
+      /Lorem ipsum dolor sit amet.../i
     );
     expect(lastMessageElement).toBeInTheDocument();
   });

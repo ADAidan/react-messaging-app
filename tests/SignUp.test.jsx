@@ -6,14 +6,14 @@ import SignUp, {
   usernameValidate,
   emailValidate,
   passwordValidate,
-} from "../pages/SignUp";
+} from "../client/pages/SignUp";
 
 describe("SignUp", () => {
   it("should render the Sign Up header", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <SignUp />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     expect(renderedComponent).toMatchSnapshot();
   });
@@ -21,7 +21,7 @@ describe("SignUp", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <SignUp />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     const emailInput = await renderedComponent.findByRole("textbox", {
@@ -36,8 +36,9 @@ describe("SignUp", () => {
     await user.type(usernameInput, "testuser");
     expect(usernameInput).toHaveValue("testuser");
 
-    const passwordInput =
-      await renderedComponent.findByLabelText(/password-input/i);
+    const passwordInput = await renderedComponent.findByLabelText(
+      /password-input/i
+    );
     await user.type(passwordInput, "password");
     expect(passwordInput).toHaveValue("password");
 
@@ -46,7 +47,7 @@ describe("SignUp", () => {
     });
 
     const termsAndConditionsCheckbox = await renderedComponent.findByLabelText(
-      /agree to terms of service/i,
+      /agree to terms of service/i
     );
     await user.click(termsAndConditionsCheckbox);
     await user.click(signUpButton);
@@ -57,31 +58,31 @@ describe("SignUp", () => {
   });
   it("should validate the username", () => {
     expect(() => usernameValidate("a")).toThrowError(
-      "Username must be at least 2 characters",
+      "Username must be at least 2 characters"
     );
     expect(() => usernameValidate("a".repeat(21))).toThrowError(
-      "Username must be less than 20 characters",
+      "Username must be less than 20 characters"
     );
     expect(() => usernameValidate("a!")).toThrowError(
-      "Username must contain only letters, numbers, spaces, _ and -",
+      "Username must contain only letters, numbers, spaces, _ and -"
     );
     expect(usernameValidate("testuser")).toBe(true);
   });
   it("should validate the email", () => {
     expect(() => emailValidate("notAValidEmail.com")).toThrowError(
-      "Please enter a valid email address",
+      "Please enter a valid email address"
     );
     expect(() => emailValidate(`${"a".repeat(51)}@testing.com`)).toThrowError(
-      "Email must be less than 50 characters",
+      "Email must be less than 50 characters"
     );
     expect(emailValidate("testuser@testing.com")).toBe(true);
   });
   it("should validate the password", () => {
     expect(() => passwordValidate("a")).toThrowError(
-      "Password must be at least 8 characters",
+      "Password must be at least 8 characters"
     );
     expect(() => passwordValidate("a".repeat(21))).toThrowError(
-      "Password must be less than 20 characters",
+      "Password must be less than 20 characters"
     );
     expect(passwordValidate("password")).toBe(true);
   });
@@ -89,15 +90,16 @@ describe("SignUp", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <SignUp />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
-    const passwordInput =
-      await renderedComponent.findByLabelText(/password-input/i);
+    const passwordInput = await renderedComponent.findByLabelText(
+      /password-input/i
+    );
     expect(passwordInput).toHaveAttribute("type", "password");
 
     const showPasswordButton = await renderedComponent.findByLabelText(
-      /toggle password visibility/i,
+      /toggle password visibility/i
     );
     await user.click(showPasswordButton);
 
@@ -110,7 +112,7 @@ describe("SignUp", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <SignUp />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     const receiveEmailNotificationsCheckbox =
@@ -124,11 +126,11 @@ describe("SignUp", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <SignUp />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     const termsAndConditionsCheckbox = await renderedComponent.findByLabelText(
-      /agree to terms of service/i,
+      /agree to terms of service/i
     );
     expect(termsAndConditionsCheckbox).not.toBeChecked();
 

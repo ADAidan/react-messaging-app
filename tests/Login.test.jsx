@@ -2,14 +2,14 @@ import * as React from "react";
 import { MemoryRouter } from "react-router-dom";
 import { render } from "@testing-library/react";
 import user from "@testing-library/user-event";
-import Login from "../pages/Login";
+import Login from "../client/pages/Login";
 
 describe("Login", () => {
   it("should render the Log in Component", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <Login />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     expect(renderedComponent).toMatchSnapshot();
   });
@@ -17,7 +17,7 @@ describe("Login", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <Login />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
     const emailInput = await renderedComponent.findByRole("textbox", {
@@ -26,8 +26,9 @@ describe("Login", () => {
     await user.type(emailInput, "testuser@testing.com");
     expect(emailInput).toHaveValue("testuser@testing.com");
 
-    const passwordInput =
-      await renderedComponent.findByLabelText(/password-input/i);
+    const passwordInput = await renderedComponent.findByLabelText(
+      /password-input/i
+    );
     await user.type(passwordInput, "password");
     expect(passwordInput).toHaveValue("password");
 
@@ -43,11 +44,12 @@ describe("Login", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <Login />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
 
-    const rememberMeCheckbox =
-      await renderedComponent.findByLabelText(/Remember me/i);
+    const rememberMeCheckbox = await renderedComponent.findByLabelText(
+      /Remember me/i
+    );
     expect(rememberMeCheckbox).not.toBeChecked();
 
     await user.click(rememberMeCheckbox);

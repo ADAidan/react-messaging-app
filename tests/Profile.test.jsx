@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render } from "@testing-library/react";
-import Profile from "../pages/Profile";
+import Profile from "../client/pages/Profile";
 
 describe("Profile", () => {
   it("should render the Account header", () => {

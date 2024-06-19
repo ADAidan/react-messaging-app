@@ -7,9 +7,9 @@ import MockAdapter from "axios-mock-adapter";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import user from "@testing-library/user-event";
-import Contacts from "../pages/Contacts";
+import Contacts from "../client/src/pages/Contacts";
 import { mockContacts, mockPending } from "./testUtils/MockData";
-import store from "../app/store";
+import store from "../client/src/app/store";
 
 const mockAxios = new MockAdapter(axios);
 
@@ -36,7 +36,7 @@ describe("Contacts", () => {
         <MemoryRouter>
           <Contacts />
         </MemoryRouter>
-      </Provider>,
+      </Provider>
     );
     expect(renderedComponent).toMatchSnapshot();
   });
@@ -46,7 +46,7 @@ describe("Contacts", () => {
         <MemoryRouter>
           <Contacts />
         </MemoryRouter>
-      </Provider>,
+      </Provider>
     );
     const searchInput = await renderedComponent.findByRole("textbox", {
       name: /search/i,
@@ -60,7 +60,7 @@ describe("Contacts", () => {
         <MemoryRouter>
           <Contacts />
         </MemoryRouter>
-      </Provider>,
+      </Provider>
     );
     const contacts = await renderedComponent.findAllByTestId("contact-card");
     expect(contacts).toHaveLength(1);
@@ -71,7 +71,7 @@ describe("Contacts", () => {
         <MemoryRouter>
           <Contacts />
         </MemoryRouter>
-      </Provider>,
+      </Provider>
     );
     const searchInput = await renderedComponent.findByRole("textbox", {
       name: /search/i,
@@ -86,7 +86,7 @@ describe("Contacts", () => {
         <MemoryRouter>
           <Contacts />
         </MemoryRouter>
-      </Provider>,
+      </Provider>
     );
     const allTab = await renderedComponent.findByRole("tab", {
       name: /All contacts/i,
@@ -101,7 +101,7 @@ describe("Contacts", () => {
         <MemoryRouter>
           <Contacts />
         </MemoryRouter>
-      </Provider>,
+      </Provider>
     );
     const allTab = await renderedComponent.findByRole("tab", {
       name: /All contacts/i,
@@ -122,12 +122,13 @@ describe("Contacts", () => {
         <MemoryRouter>
           <Contacts />
         </MemoryRouter>
-      </Provider>,
+      </Provider>
     );
     const pendingTab = await renderedComponent.findByRole("tab", {
       name: /Pending contacts/i,
     });
     await user.click(pendingTab);
+    renderedComponent.debug();
     const contacts = renderedComponent.queryAllByTestId("contact-card");
     renderedComponent.debug();
     expect(contacts).toHaveLength(3);
@@ -138,7 +139,7 @@ describe("Contacts", () => {
         <MemoryRouter>
           <Contacts />
         </MemoryRouter>
-      </Provider>,
+      </Provider>
     );
     const pendingTab = await renderedComponent.findByRole("tab", {
       name: /Pending contacts/i,

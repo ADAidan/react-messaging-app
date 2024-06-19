@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import ContactCard from "../components/ContactCard";
+import ContactCard from "../client/components/ContactCard";
 
 test("renders ContactCard component", () => {
   const contact = {

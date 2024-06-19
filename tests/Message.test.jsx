@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render, screen } from "@testing-library/react";
-import Message from "../components/Message";
+import Message from "../client/components/Message";
 
 test("renders Messages component", () => {
   const message = {

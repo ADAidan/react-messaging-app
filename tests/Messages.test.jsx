@@ -7,7 +7,7 @@ import "@testing-library/jest-dom";
 import MockAdapter from "axios-mock-adapter";
 import { MemoryRouter } from "react-router-dom";
 import user from "@testing-library/user-event";
-import Messages from "../pages/Messages";
+import Messages from "../client/pages/Messages";
 import mockData from "./testUtils/MockData";
 
 const mockAxios = new MockAdapter(axios);
@@ -33,7 +33,7 @@ describe("Messages", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <Messages />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     expect(renderedComponent).toMatchSnapshot();
   });
@@ -41,17 +41,17 @@ describe("Messages", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <Messages />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     await waitFor(() => {
       expect(renderedComponent.getByTestId("message-author")).toHaveTextContent(
-        "John",
+        "John"
       );
       expect(renderedComponent.getByTestId("message-text")).toHaveTextContent(
-        "Hello",
+        "Hello"
       );
       expect(renderedComponent.getByTestId("message-time")).toHaveTextContent(
-        "12:00 PM",
+        "12:00 PM"
       );
     });
   });
@@ -60,7 +60,7 @@ describe("Messages", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <Messages />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     const messageInput = await renderedComponent.findByRole("textbox", {
       name: /Message/i,
@@ -79,7 +79,7 @@ describe("Messages", () => {
           userId: "1",
           conversationId: "1",
           messageContent: "Hello, World!",
-        },
+        }
       );
     });
   });
@@ -87,7 +87,7 @@ describe("Messages", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <Messages />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     const messageInput = await renderedComponent.findByRole("textbox", {
       name: /Message/i,
@@ -105,7 +105,7 @@ describe("Messages", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <Messages />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     const sendMessageButton = await renderedComponent.findByRole("button", {
       name: /send message/i,
@@ -119,7 +119,7 @@ describe("Messages", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <Messages />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     const chat = await renderedComponent.findByTestId("message-text");
     expect(chat).toHaveTextContent("Hello");
@@ -128,7 +128,7 @@ describe("Messages", () => {
     await user.click(chatButton);
 
     const noMessages = await renderedComponent.findByText(
-      /Looks like there are no messages yet! How about starting with hello\?/i,
+      /Looks like there are no messages yet! How about starting with hello\?/i
     );
     expect(noMessages).toBeInTheDocument();
   });
@@ -136,13 +136,13 @@ describe("Messages", () => {
     const renderedComponent = render(
       <MemoryRouter>
         <Messages />
-      </MemoryRouter>,
+      </MemoryRouter>
     );
     const chatButton = await renderedComponent.findByLabelText(/Jane/i);
     await user.click(chatButton);
 
     const noMessages = await renderedComponent.findByText(
-      /Looks like there are no messages yet! How about starting with hello\?/i,
+      /Looks like there are no messages yet! How about starting with hello\?/i
     );
     expect(noMessages).toBeInTheDocument();
   });

@@ -1,6 +1,6 @@
 import * as React from "react";
 import { render } from "@testing-library/react";
-import MessageInput from "../components/MessageInput";
+import MessageInput from "../client/components/MessageInput";
 
 test("should render correctly", () => {
   const { container } = render(<MessageInput />);
