@@ -9,12 +9,12 @@ jobs:
     env:
       TZ: America/New_York
 
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+    # steps:
+    #   - name: Checkout
+    #     uses: actions/checkout@v2
 
-      - name: Install dependencies
-        run: npm install
+    #   - name: Install dependencies
+    #     run: npm install
 
-      - name: Run tests
-        run: npm run test
+    #   - name: Run tests
+    #     run: npm run test

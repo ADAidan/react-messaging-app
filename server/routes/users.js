@@ -6,6 +6,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 const Conversation = require("../models/Conversation");
 const Message = require("../models/Message");
+require("dotenv").config();
 
 const router = express.Router();
 
@@ -51,7 +52,7 @@ router.post("/login", async (req, res) => {
       return res.status(400).json({ message: "Invalid password" });
     }
 
-    const token = jwt.sign({ id: user._id }, 'TestSecretToken', {
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
       expiresIn: "10m",
     });
 
@@ -101,7 +102,7 @@ router.get("/protected", async (req, res) => {
   }
 
   try {
-    const decoded = jwt.verify(token, 'TestSecretToken');
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.id
     return res.json(userId);
   } catch (error) {
