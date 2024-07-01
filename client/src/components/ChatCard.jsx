@@ -70,7 +70,7 @@ const EllipsisTypography = styled(Typography)({
   maxWidth: "100%",
 });
 
-function ChatCard({ chat, handleJoinChat = () => {} }) {
+function ChatCard({ chat, handleJoinChat = () => {}, selected = false }) {
   const userId = sessionStorage.getItem("user");
   const [anchorElOptions, setAnchorElOptions] = React.useState(null);
   const [message, setMessage] = React.useState(null);
@@ -167,6 +167,7 @@ function ChatCard({ chat, handleJoinChat = () => {} }) {
           bgcolor: "rgba(0, 0, 0, 0.1)",
           cursor: "pointer",
         },
+        bgcolor: selected ? "rgba(0, 0, 0, 0.1)" : "transparent",
       }}
     >
       {status === "Online" && (
@@ -281,6 +282,7 @@ ChatCard.propTypes = {
     ),
   }).isRequired,
   handleJoinChat: PropTypes.func.isRequired,
+  selected: PropTypes.bool.isRequired,
 };
 
 export default ChatCard;
