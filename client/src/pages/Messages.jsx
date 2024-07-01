@@ -311,6 +311,7 @@ function Messages() {
                   key={chat._id}
                   chat={chat}
                   handleJoinChat={handleJoinChat}
+                  selected={selectedChat === chat._id}
                 />
               ))}
           </Paper>
