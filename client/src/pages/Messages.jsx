@@ -248,6 +248,7 @@ function Messages() {
   return (
     <Container
       maxWidth="lg"
+      disableGutters
       sx={{
         height: "100vh",
         my: 0,
@@ -263,16 +264,15 @@ function Messages() {
         <Toolbar />
         <Stack
           direction="row"
-          spacing={2}
+          spacing={0}
           sx={{
             height: "calc(100vh - 64px)",
           }}
         >
           <Paper
-            elevation={3}
+            elevation={1}
             sx={{
-              pb: 1,
-              px: 1,
+              px: 3,
               my: 0,
               overflowY: "auto",
               borderRadius: 0,
@@ -317,10 +317,9 @@ function Messages() {
           </Paper>
           {selectedChat ? (
             <Paper
-              elevation={3}
+              elevation={1}
               sx={{
                 position: "relative",
-                pb: 1,
                 px: 3,
                 my: 0,
                 borderRadius: 0,
