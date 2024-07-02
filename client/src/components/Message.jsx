@@ -1,62 +1,84 @@
 import * as React from "react";
 import PropTypes from "prop-types";
-import Box from "@mui/material/Box";
 import Paper from "@mui/material/Paper";
-import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { AccessTime } from "@mui/icons-material";
+import DynamicAvatar from "./DynamicAvatar";
 
-function Message({ message }) {
+export function MessageContent({ content }) {
   return (
-    <Grid data-testid="message" item xs={12}>
-      <Paper elevation={3}>
-        <Box paddingX={1}>
-          <Typography
-            variant="subtitle1"
-            component="h3"
-            data-testid="message-author"
-          >
-            {message.author.username}
-          </Typography>
-          <Typography variant="body2" component="p" data-testid="message-text">
-            {message.content}
-          </Typography>
-          <Box
-            sx={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "flex-end",
-            }}
-          >
-            <AccessTime
-              sx={{
-                width: 15,
-                height: 15,
-              }}
-            />
-            <Typography
-              variant="caption"
-              component="p"
-              data-testid="message-time"
-            >
-              {message.formattedTime}
-            </Typography>
-          </Box>
-        </Box>
-      </Paper>
-    </Grid>
+    <Paper
+      elevation={2}
+      sx={{
+        padding: 1,
+        marginBottom: 1,
+      }}
+    >
+      <Typography variant="body2" component="p" data-testid="message-text">
+        {content}
+      </Typography>
+    </Paper>
   );
 }
 
-Message.propTypes = {
-  message: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    author: PropTypes.shape({
-      username: PropTypes.string.isRequired,
-    }).isRequired,
-    content: PropTypes.string.isRequired,
-    formattedTime: PropTypes.string.isRequired,
-  }).isRequired,
+export function Message({ messageHeader, children }) {
+  return (
+    <Stack data-testid="message">
+      <Stack paddingX={1}>
+        <Stack
+          direction="row"
+          spacing={1}
+          p={1}
+          alignItems="start"
+          justifyContent="space-between"
+        >
+          <DynamicAvatar name={messageHeader.author} />
+          <Stack
+            sx={{
+              alignItems: "flex-start",
+              justifyContent: "flex-start",
+              width: "100%",
+            }}
+          >
+            <Stack
+              direction="row"
+              spacing={1}
+              sx={{
+                alignItems: "baseline",
+              }}
+            >
+              <Typography
+                variant="subtitle1"
+                component="h3"
+                data-testid="message-author"
+              >
+                {messageHeader.author}
+              </Typography>
+              <Typography
+                variant="caption"
+                component="p"
+                data-testid="message-time"
+              >
+                {messageHeader.time}
+              </Typography>
+            </Stack>
+            {children}
+          </Stack>
+        </Stack>
+      </Stack>
+    </Stack>
+  );
+}
+
+MessageContent.propTypes = {
+  content: PropTypes.string.isRequired,
 };
 
-export default Message;
+Message.propTypes = {
+  messageHeader: PropTypes.shape({
+    profilePicture: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    time: PropTypes.string.isRequired,
+  }).isRequired,
+  children: PropTypes.node.isRequired,
+};
