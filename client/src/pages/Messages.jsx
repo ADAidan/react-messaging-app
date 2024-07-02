@@ -8,7 +8,7 @@ import { Box, IconButton, Stack, Toolbar } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
 import socket from "../socket";
-import Message from "../components/Message";
+import { Message, MessageContent } from "../components/Message";
 import MessageInput from "../components/MessageInput";
 import ChatCard from "../components/ChatCard";
 import NoMessages from "../components/NoMessages";
@@ -32,6 +32,8 @@ function Messages() {
   const messageContainerRef = React.useRef(null);
   const [directMessages, setDirectMessages] = React.useState([]);
   const [displayedMessages, setDisplayedMessages] = React.useState([]);
+  const [formattedDisplayedMessages, setFormattedDisplayedMessages] =
+    React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState(null);
   const [open, setOpen] = React.useState(false); // AddModal open state
   const [userContacts, setUserContacts] = React.useState([]); // contacts to display on the AddModal
@@ -172,7 +174,7 @@ function Messages() {
     if (!messageContainerRef.current) return;
     messageContainerRef.current.scrollTop =
       messageContainerRef.current.scrollHeight;
-  }, [displayedMessages]);
+  }, [displayedMessages, formattedDisplayedMessages]);
 
   React.useEffect(() => {
     if (!userId) return;
@@ -244,6 +246,55 @@ function Messages() {
   const handleClickAddChat = () => {
     setOpen(true);
   };
+
+  const formatMessages = (messages) => {
+    const combinedMessages = [];
+
+    let currentMessage = {};
+
+    messages.forEach((message, index) => {
+      if (
+        currentMessage.header &&
+        currentMessage.header.author === message.author.username
+      ) {
+        currentMessage.messagesContent.push({
+          id: message._id,
+          content: message.content,
+          timeSent: message.formattedTime,
+        });
+      } else {
+        if (currentMessage.header) {
+          combinedMessages.push(currentMessage);
+        }
+
+        // create a new current message object
+        currentMessage = {
+          id: combinedMessages.length,
+          header: {
+            profilePicture: message.author.profilePicture,
+            author: message.author.username,
+            time: message.formattedTime,
+          },
+          messagesContent: [
+            {
+              id: message._id,
+              content: message.content,
+              timeSent: message.formattedTime,
+            },
+          ],
+        };
+      }
+      if (index === messages.length - 1) {
+        combinedMessages.push(currentMessage);
+      }
+    });
+
+    return combinedMessages;
+  };
+
+  React.useEffect(() => {
+    setFormattedDisplayedMessages(formatMessages(displayedMessages));
+  }, [displayedMessages]);
 
   return (
     <Container
@@ -342,9 +393,16 @@ function Messages() {
                     flex: 1,
                   }}
                 >
-                  {displayedMessages.length > 0 ? (
-                    displayedMessages.map((message) => (
-                      <Message key={message._id} message={message} />
+                  {formattedDisplayedMessages.length > 0 ? (
+                    formattedDisplayedMessages.map((message) => (
+                      <Message key={message.id} messageHeader={message.header}>
+                        {message.messagesContent.map((content) => (
+                          <MessageContent
+                            key={content.id}
+                            content={content.content}
+                          />
+                        ))}
+                      </Message>
                     ))
                   ) : (
                     <NoMessages />
