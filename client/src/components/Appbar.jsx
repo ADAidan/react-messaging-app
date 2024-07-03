@@ -14,6 +14,7 @@ import AdbIcon from "@mui/icons-material/Adb";
 import Divider from "@mui/material/Divider";
 import { Link as MuiLink, Stack } from "@mui/material";
 import DynamicAvatar from "./DynamicAvatar";
+import NotificationsIcon from "./NotificationsIcon";
 import UserContext from "../Context";
 
 const pages = ["Messages", "Contacts"];
@@ -150,6 +151,7 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
+            {user.username && <NotificationsIcon />}
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                 {user.username && <DynamicAvatar name={user.username} />}
