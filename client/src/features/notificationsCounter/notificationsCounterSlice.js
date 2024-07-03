@@ -1,10 +1,10 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 
-export const onlineCounterSlice = createSlice({
-  name: 'onlineCounter',
+export const notificationsCounterSlice = createSlice({
+  name: 'notificationsCounter',
   initialState: {
-    value: 0,
+    value: 1,
   },
   reducers: {
     increment: (state) => {
@@ -13,13 +13,13 @@ export const onlineCounterSlice = createSlice({
     decrement: (state) => {
       state.value -= 1
     },
-    setOnlineAmount: (state, action) => {
+    setNotificationsAmount: (state, action) => {
       state.value = action.payload
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, setOnlineAmount } = onlineCounterSlice.actions
+export const { increment, decrement, setNotificationsAmount } = notificationsCounterSlice.actions
 
-export default onlineCounterSlice.reducer
+export default notificationsCounterSlice.reducer
