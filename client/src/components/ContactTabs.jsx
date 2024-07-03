@@ -19,6 +19,7 @@ export default function ContactTabs({ setSelectedTab = () => {} }) {
   const onlineCounter = useSelector((state) => state.onlineCounter.value);
   const contactsCounter = useSelector((state) => state.contactsCounter.value);
   const pendingCounter = useSelector((state) => state.pendingCounter.value);
+  const blockedCounter = useSelector((state) => state.blockedCounter.value);
 
   const fetchAllUsers = async () => {
     try {
@@ -105,6 +106,10 @@ export default function ContactTabs({ setSelectedTab = () => {} }) {
           <Tab
             label={`Pending ${pendingCounter}`}
             aria-label="Pending contacts"
+          />
+          <Tab
+            label={`Blocked ${blockedCounter}`}
+            aria-label="Blocked contacts"
           />
         </Tabs>
         <Button variant="contained" color="success" onClick={handleOpen}>
