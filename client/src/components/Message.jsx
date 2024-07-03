@@ -5,16 +5,23 @@ import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import DynamicAvatar from "./DynamicAvatar";
 
-export function MessageContent({ content }) {
+export function MessageContent({ content, bgColor = "#f3f3f3" }) {
   return (
     <Paper
       elevation={2}
       sx={{
         padding: 1,
         marginBottom: 1,
+        backgroundColor: bgColor,
       }}
     >
-      <Typography variant="body2" component="p" data-testid="message-text">
+      <Typography
+        variant="body2"
+        component="p"
+        sx={{
+          color: bgColor === "#1e90ff" ? "white" : "black",
+        }}
+      >
         {content}
       </Typography>
     </Paper>
@@ -72,6 +79,7 @@ export function Message({ messageHeader, children }) {
 
 MessageContent.propTypes = {
   content: PropTypes.string.isRequired,
+  bgColor: PropTypes.string.isRequired,
 };
 
 Message.propTypes = {

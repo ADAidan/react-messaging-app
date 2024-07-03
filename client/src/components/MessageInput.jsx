@@ -58,11 +58,13 @@ function MessageInput({ selectedChat }) {
       sx={{
         display: "flex",
         width: "100%",
-        bottom: 0,
+        borderTop: "2px solid #f3f3f3",
       }}
     >
       <Box
         component="form"
+        px={2}
+        py={1}
         sx={{
           display: "flex",
           width: "100%",

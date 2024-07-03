@@ -14,6 +14,7 @@ import ChatCard from "../components/ChatCard";
 import NoMessages from "../components/NoMessages";
 import NoDirectMessages from "../components/NoDirectMessages";
 import AddConversationModal from "../components/AddConversationModal";
+import UserContext from "../Context";
 
 const formatTime = (isoString) => {
   const date = new Date(isoString);
@@ -74,6 +75,7 @@ const bundleMessages = (messages) => {
 
 function Messages() {
   const userId = sessionStorage.getItem("user");
+  const userContextData = React.useContext(UserContext);
   const messageContainerRef = React.useRef(null);
   const [directMessages, setDirectMessages] = React.useState([]);
   const [displayedMessages, setDisplayedMessages] = React.useState([]);
@@ -399,8 +401,6 @@ function Messages() {
               elevation={1}
               sx={{
                 position: "relative",
-                px: 3,
-                my: 0,
                 borderRadius: 0,
                 flex: 2,
               }}
@@ -418,7 +418,6 @@ function Messages() {
                   sx={{
                     overflowY: "auto",
                     p: 1,
-                    flex: 1,
                   }}
                 >
                   {displayedMessages.length > 0 ? (
@@ -428,6 +427,11 @@ function Messages() {
                           <MessageContent
                             key={content.id}
                             content={content.content}
+                            bgColor={
+                              userContextData.username === message.header.author
+                                ? "#f3f3f3"
+                                : "#1e90ff"
+                            }
                           />
                         ))}
                       </Message>
@@ -436,13 +440,7 @@ function Messages() {
                     <NoMessages />
                   )}
                 </Stack>
-                <Box
-                  sx={{
-                    flexShrink: 0,
-                  }}
-                >
-                  <MessageInput selectedChat={selectedChat} />
-                </Box>
+                <MessageInput selectedChat={selectedChat} />
               </Stack>
             </Paper>
           ) : (
