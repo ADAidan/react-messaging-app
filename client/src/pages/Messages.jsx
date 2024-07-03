@@ -27,13 +27,56 @@ const formatTime = (isoString) => {
   return date.toLocaleTimeString("en-US", options);
 };
 
+const bundleMessages = (messages) => {
+  const combinedMessages = [];
+
+  let currentMessage = {};
+
+  messages.forEach((message, index) => {
+    if (
+      currentMessage.header &&
+      currentMessage.header.author === message.author.username
+    ) {
+      currentMessage.messagesContent.push({
+        id: message._id,
+        content: message.content,
+        timeSent: message.formattedTime,
+      });
+    } else {
+      if (currentMessage.header) {
+        combinedMessages.push(currentMessage);
+      }
+
+      // create a new current message object
+      currentMessage = {
+        id: combinedMessages.length,
+        header: {
+          profilePicture: message.author.profilePicture,
+          author: message.author.username,
+          time: message.formattedTime,
+        },
+        messagesContent: [
+          {
+            id: message._id,
+            content: message.content,
+            timeSent: message.formattedTime,
+          },
+        ],
+      };
+    }
+    if (index === messages.length - 1) {
+      combinedMessages.push(currentMessage);
+    }
+  });
+
+  return combinedMessages;
+};
+
 function Messages() {
   const userId = sessionStorage.getItem("user");
   const messageContainerRef = React.useRef(null);
   const [directMessages, setDirectMessages] = React.useState([]);
   const [displayedMessages, setDisplayedMessages] = React.useState([]);
-  const [formattedDisplayedMessages, setFormattedDisplayedMessages] =
-    React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState(null);
   const [open, setOpen] = React.useState(false); // AddModal open state
   const [userContacts, setUserContacts] = React.useState([]); // contacts to display on the AddModal
@@ -113,6 +156,14 @@ function Messages() {
     };
   }, [directMessages]);
 
+  const lastMessageRef = React.useRef(null);
+
+  React.useEffect(() => {
+    if (displayedMessages.length > 0) {
+      lastMessageRef.current = displayedMessages[displayedMessages.length - 1];
+    }
+  }, [displayedMessages]);
+
   // Socket event listener for creating a new message
   React.useEffect(() => {
     socket.on("receiveMessage", (message) => {
@@ -120,16 +171,40 @@ function Messages() {
         .get(`${import.meta.env.VITE_API_URL}/users/${userId}`)
         .then((response) => {
           const user = response.data;
+
+          const lastMessage = lastMessageRef.current;
+
+          const formattedTime = formatTime(message.createdAt);
+
           const newMessage = {
-            _id: message._id,
-            author: {
-              username: user.username,
+            id: displayedMessages.length,
+            header: {
               profilePicture: user.profilePicture,
+              author: user.username,
+              time: formattedTime,
             },
-            content: message.content,
-            formattedTime: formatTime(message.createdAt),
+            messagesContent: [
+              {
+                id: message._id,
+                content: message.content,
+                timeSent: formattedTime,
+              },
+            ],
           };
-          setDisplayedMessages((prevMessages) => [...prevMessages, newMessage]);
+
+          if (lastMessage && lastMessage.header.author === user.username) {
+            lastMessage.messagesContent.push({
+              id: message._id,
+              content: message.content,
+              timeSent: formattedTime,
+            });
+            setDisplayedMessages((prevMessages) => [...prevMessages]);
+          } else {
+            setDisplayedMessages((prevMessages) => [
+              ...prevMessages,
+              newMessage,
+            ]);
+          }
         });
     });
     return () => {
@@ -174,7 +249,7 @@ function Messages() {
     if (!messageContainerRef.current) return;
     messageContainerRef.current.scrollTop =
       messageContainerRef.current.scrollHeight;
-  }, [displayedMessages, formattedDisplayedMessages]);
+  }, [displayedMessages]);
 
   React.useEffect(() => {
     if (!userId) return;
@@ -236,7 +311,9 @@ function Messages() {
       formattedTime: formatTime(message.createdAt),
     }));
 
-    setDisplayedMessages(formattedMessages);
+    const bundledMessages = bundleMessages(formattedMessages);
+
+    setDisplayedMessages(bundledMessages);
   }, [directMessages, selectedChat]);
 
   const handleMouseDownAdd = (e) => {
@@ -246,55 +323,6 @@ function Messages() {
   const handleClickAddChat = () => {
     setOpen(true);
   };
-
-  const formatMessages = (messages) => {
-    const combinedMessages = [];
-
-    let currentMessage = {};
-
-    messages.forEach((message, index) => {
-      if (
-        currentMessage.header &&
-        currentMessage.header.author === message.author.username
-      ) {
-        currentMessage.messagesContent.push({
-          id: message._id,
-          content: message.content,
-          timeSent: message.formattedTime,
-        });
-      } else {
-        if (currentMessage.header) {
-          combinedMessages.push(currentMessage);
-        }
-
-        // create a new current message object
-        currentMessage = {
-          id: combinedMessages.length,
-          header: {
-            profilePicture: message.author.profilePicture,
-            author: message.author.username,
-            time: message.formattedTime,
-          },
-          messagesContent: [
-            {
-              id: message._id,
-              content: message.content,
-              timeSent: message.formattedTime,
-            },
-          ],
-        };
-      }
-      if (index === messages.length - 1) {
-        combinedMessages.push(currentMessage);
-      }
-    });
-
-    return combinedMessages;
-  };
-
-  React.useEffect(() => {
-    setFormattedDisplayedMessages(formatMessages(displayedMessages));
-  }, [displayedMessages]);
 
   return (
     <Container
@@ -393,8 +421,8 @@ function Messages() {
                     flex: 1,
                   }}
                 >
-                  {formattedDisplayedMessages.length > 0 ? (
-                    formattedDisplayedMessages.map((message) => (
+                  {displayedMessages.length > 0 ? (
+                    displayedMessages.map((message) => (
                       <Message key={message.id} messageHeader={message.header}>
                         {message.messagesContent.map((content) => (
                           <MessageContent
@@ -413,10 +441,7 @@ function Messages() {
                     flexShrink: 0,
                   }}
                 >
-                  <MessageInput
-                    setDisplayedMessages={setDisplayedMessages}
-                    selectedChat={selectedChat}
-                  />
+                  <MessageInput selectedChat={selectedChat} />
                 </Box>
               </Stack>
             </Paper>
