@@ -24,12 +24,7 @@ const style = {
   padding: 8,
 };
 
-function AddConversationModal({
-  open,
-  setOpen,
-  allUsers,
-  setSelectedChat = () => {},
-}) {
+function AddConversationModal({ open, setOpen, allUsers, setSelectedChat }) {
   const [searchValue, setSearchValue] = React.useState("");
   const [displayedUsers, setDisplayedUsers] = React.useState([]);
 
