@@ -2,13 +2,19 @@
 import * as React from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import socket from "../socket";
+import { persistor } from "../app/store";
+import { logoutAction } from "../features/userData/userDataSlice";
 
 // Log the user out and redirect to the login page
 function Logout() {
-  const navigate = useNavigate();
+  const user = useSelector((state) => state.userData.user);
 
-  const userId = sessionStorage.getItem("user");
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
+  const userId = user?.id;
   React.useEffect(() => {
     if (!userId) {
       navigate("/login");
@@ -17,17 +23,20 @@ function Logout() {
 
     const logOutUser = async () => {
       try {
-        const response = await axios.put(
+        const response = await axios.post(
           `${import.meta.env.VITE_API_URL}/users/logout`,
-          {
-            userId,
-          },
+          { userId },
+          { withCredentials: true },
         );
 
         if (response.status === 200) {
-          socket.emit("ChangeUserStatus", { id: userId, status: "Offline" });
+          socket.emit("ChangeUserStatus", {
+            id: response.id,
+            status: "Offline",
+          });
+          persistor.purge();
+          dispatch(logoutAction());
 
-          sessionStorage.removeItem("user");
           navigate("/login");
         } else {
           console.error("Failed to log out user");

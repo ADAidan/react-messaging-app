@@ -14,6 +14,8 @@ import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Button } from "@mui/material";
+import { useDispatch } from "react-redux";
+import { setUser } from "../features/userData/userDataSlice";
 import socket from "../socket";
 import RememberUserCheckbox from "../components/RememberUserCheckbox";
 
@@ -25,6 +27,7 @@ function Login() {
   const [rememberUser, setRememberUser] = React.useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);
 
@@ -51,10 +54,11 @@ function Login() {
         withCredentials: true,
       })
       .then((response) => {
-        sessionStorage.setItem("user", response.data.id);
+        const authedUser = response.data.body;
+        dispatch(setUser(authedUser));
         socket.emit("ChangeUserStatus", {
           status: "Online",
-          id: response.data.id,
+          id: authedUser.id,
         });
         navigate("/");
       })

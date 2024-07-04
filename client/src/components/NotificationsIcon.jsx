@@ -3,21 +3,27 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
 import { Menu, MenuItem } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
+import { setNotificationsAmount } from "../features/notificationsCounter/notificationsCounterSlice";
 
 function NotificationsIcon() {
-  const [notificationsCount, setNotificationsCount] = React.useState(0);
   const [notifications, setNotifications] = React.useState(null);
   const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const dispatch = useDispatch();
+
+  const notificationsCounter = useSelector(
+    (state) => state.notificationsCounter.value,
+  );
 
   React.useEffect(() => {
     // Fetch notifications
     setNotifications(null);
-    setNotificationsCount(1);
   }, []);
 
   const handleOpenNotifications = () => {
     setAnchorEl(true);
-    setNotificationsCount(0);
+    dispatch(setNotificationsAmount(0));
   };
 
   const handleCloseNotifications = () => {
@@ -33,7 +39,7 @@ function NotificationsIcon() {
           mr: 1,
         }}
       >
-        <Badge badgeContent={notificationsCount} color="error">
+        <Badge badgeContent={notificationsCounter} color="error">
           <NotificationsOutlinedIcon />
         </Badge>
       </IconButton>

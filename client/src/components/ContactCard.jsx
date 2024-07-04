@@ -1,5 +1,7 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-underscore-dangle */
 import * as React from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
@@ -68,7 +70,8 @@ function ContactCard({
   setSelectedChat = () => {},
   basicCard = false,
 }) {
-  const userId = sessionStorage.getItem("user");
+  const user = useSelector((state) => state.userData.user);
+  const userId = user?.id;
   const contactStatuses = ["Online", "Offline", "Away"];
   const options = ["delete", "block", "message"];
 
@@ -376,9 +379,9 @@ ContactCard.propTypes = {
     username: PropTypes.string.isRequired,
     status: PropTypes.string,
   }).isRequired,
-  setOpen: PropTypes.func.isRequired,
-  setSelectedChat: PropTypes.func.isRequired,
-  basicCard: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func,
+  setSelectedChat: PropTypes.func,
+  basicCard: PropTypes.bool,
 };
 
 export default ContactCard;

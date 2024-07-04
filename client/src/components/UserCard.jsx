@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import * as React from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
@@ -11,7 +12,7 @@ import socket from "../socket";
 import DynamicAvatar from "./DynamicAvatar";
 
 function UserCard({ user }) {
-  const userId = sessionStorage.getItem("user");
+  const userId = useSelector((state) => state.userData.user.id);
 
   // Sends a contact request to the user when the add button is clicked
   const handleAdd = () => {

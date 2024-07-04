@@ -10,6 +10,25 @@ require("dotenv").config();
 
 const router = express.Router();
 
+const authentication = (req, res, next) => { 
+  console.log(req.cookies)
+  const token = req.cookies.access_token;
+  if (!token) {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.userId = decoded.id;
+    return next();
+  } catch (error) {
+    if (error.name === "TokenExpiredError") {
+      return res.status(401).json({ message: "Token expired" });
+    }
+    return res.status(403).send({ error });
+  }
+};
+
 /* GET users listing. */
 router.get("/", async (req, res) => {
   const users = await User.find();
@@ -56,7 +75,7 @@ router.post("/login", async (req, res) => {
       expiresIn: "1h",
     });
 
-    res.cookie("token", token, {
+    res.cookie("access_token", token, {
       httpOnly: true,
       sameSite: "None",
       secure: true,
@@ -66,14 +85,23 @@ router.post("/login", async (req, res) => {
 
     await user.save();
 
-    return res.status(200).send({ message: 'Login successful', id: user.id})
+    return res.status(200).send({
+      message: 'Login successful',
+      body: {
+        id: user.id,
+        username: user.username,
+        profilePicture: user.profilePicture,
+        status: user.status,
+        email: user.email,
+      }
+    })
   } catch (error) {
     return res.status(500).send({ message: "Error logging in", error });
   }
 });
 
-// PUT request to logout
-router.put("/logout", async (req, res) => {
+// POST request to logout
+router.post("/logout", authentication, async (req, res) => {
   const { userId } = req.body;
   try {
     const user = await User.findById(userId);
@@ -86,32 +114,16 @@ router.put("/logout", async (req, res) => {
 
     await user.save();
 
-    res.clearCookie("token");
-
-    return res.status(200).json({ message: "Logout successful", id: user.id });
+    return res.status(200).clearCookie("access_token").json({ message: "Logout successful", id: user.id });
   } catch (error) {
     return res.status(500).send({ message: "Error logging out", error });
   }
 });
 
 // Protected route to get user data
-router.get("/protected", async (req, res) => {
-  const { token } = req.cookies;
-  if (!token) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
-
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    const userId = decoded.id
-    return res.json(userId);
-  } catch (error) {
-    if (error.name === "TokenExpiredError") {
-      return res.status(401).json({ message: "Token expired" });
-    }
-    res.clearCookie("token");
-    return res.status(500).send({ message: "Error finding user", error });
-  }
+router.get("/protected", authentication, async (req, res) => {
+  return res.status(200).send({
+    message: "accessed rotected route", user: {id: req.userId,} });
 });
 
 // GET request to get a list of all users

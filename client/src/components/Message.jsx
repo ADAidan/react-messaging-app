@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 import * as React from "react";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
@@ -79,7 +80,7 @@ export function Message({ messageHeader, children }) {
 
 MessageContent.propTypes = {
   content: PropTypes.string.isRequired,
-  bgColor: PropTypes.string.isRequired,
+  bgColor: PropTypes.string,
 };
 
 Message.propTypes = {

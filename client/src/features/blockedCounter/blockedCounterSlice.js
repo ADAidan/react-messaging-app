@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit'
 
-export const onlineCounterSlice = createSlice({
-  name: 'onlineCounter',
+export const blockedCounterSlice = createSlice({
+  name: 'blockedCounter',
   initialState: {
     value: 0,
   },
@@ -13,13 +13,13 @@ export const onlineCounterSlice = createSlice({
     decrement: (state) => {
       state.value -= 1
     },
-    setOnlineAmount: (state, action) => {
+    setBlockedAmount: (state, action) => {
       state.value = action.payload
     },
   },
 })
 
 // Action creators are generated for each case reducer function
-export const { increment, decrement, setOnlineAmount } = onlineCounterSlice.actions
+export const { increment, decrement, setBlockedAmount } = blockedCounterSlice.actions
 
-export default onlineCounterSlice.reducer
+export default blockedCounterSlice.reducer

@@ -6,7 +6,7 @@ import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import Divider from "@mui/material/Divider";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setOnlineAmount } from "../features/onlineCounter/onlineCounterSlice";
 import { setContactsAmount } from "../features/contactsCounter/contactsCounterSlice";
 import { setPendingAmount } from "../features/pendingCounter/pendingCounterSlice";
@@ -16,7 +16,7 @@ import SearchBar from "../components/SearchBar";
 import ContactCard from "../components/ContactCard";
 
 function Contacts() {
-  const userId = sessionStorage.getItem("user");
+  const userId = useSelector((state) => state.userData.user.id);
   const [userContacts, setUserContacts] = React.useState([]);
   const [userPending, setUserPending] = React.useState([]);
   const [filteredContacts, setFilteredContacts] = React.useState([]);

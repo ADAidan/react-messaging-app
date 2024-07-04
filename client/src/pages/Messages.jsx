@@ -7,6 +7,7 @@ import Paper from "@mui/material/Paper";
 import { Box, IconButton, Stack, Toolbar } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 import socket from "../socket";
 import { Message, MessageContent } from "../components/Message";
 import MessageInput from "../components/MessageInput";
@@ -14,7 +15,6 @@ import ChatCard from "../components/ChatCard";
 import NoMessages from "../components/NoMessages";
 import NoDirectMessages from "../components/NoDirectMessages";
 import AddConversationModal from "../components/AddConversationModal";
-import UserContext from "../Context";
 
 const formatTime = (isoString) => {
   const date = new Date(isoString);
@@ -74,14 +74,16 @@ const bundleMessages = (messages) => {
 };
 
 function Messages() {
-  const userId = sessionStorage.getItem("user");
-  const userContextData = React.useContext(UserContext);
   const messageContainerRef = React.useRef(null);
   const [directMessages, setDirectMessages] = React.useState([]);
   const [displayedMessages, setDisplayedMessages] = React.useState([]);
   const [selectedChat, setSelectedChat] = React.useState(null);
   const [open, setOpen] = React.useState(false); // AddModal open state
   const [userContacts, setUserContacts] = React.useState([]); // contacts to display on the AddModal
+
+  const user = useSelector((state) => state.userData.user);
+
+  const userId = user?.id;
 
   const navigate = useNavigate();
 
@@ -172,7 +174,7 @@ function Messages() {
       axios
         .get(`${import.meta.env.VITE_API_URL}/users/${userId}`)
         .then((response) => {
-          const user = response.data;
+          const userData = response.data;
 
           const lastMessage = lastMessageRef.current;
 
@@ -181,8 +183,8 @@ function Messages() {
           const newMessage = {
             id: displayedMessages.length,
             header: {
-              profilePicture: user.profilePicture,
-              author: user.username,
+              profilePicture: userData.profilePicture,
+              author: userData.username,
               time: formattedTime,
             },
             messagesContent: [
@@ -412,12 +414,12 @@ function Messages() {
                 }}
               >
                 <Stack
-                  data-testid="messages-container"
                   ref={messageContainerRef}
                   spacing={2}
                   sx={{
                     overflowY: "auto",
                     p: 1,
+                    flex: 1,
                   }}
                 >
                   {displayedMessages.length > 0 ? (
@@ -428,7 +430,7 @@ function Messages() {
                             key={content.id}
                             content={content.content}
                             bgColor={
-                              userContextData.username === message.header.author
+                              user.username === message.header.author
                                 ? "#f3f3f3"
                                 : "#1e90ff"
                             }
