@@ -66,7 +66,16 @@ router.post("/login", async (req, res) => {
 
     await user.save();
 
-    return res.status(200).send({ message: 'Login successful', id: user.id})
+    return res.status(200).send({
+      message: 'Login successful',
+      body: {
+        id: user.id,
+        username: user.username,
+        profilePicture: user.profilePicture,
+        status: user.status,
+        email: user.email,
+      }
+    })
   } catch (error) {
     return res.status(500).send({ message: "Error logging in", error });
   }

@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import * as React from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import PropTypes from "prop-types";
 import Paper from "@mui/material/Paper";
@@ -68,7 +69,8 @@ function ContactCard({
   setSelectedChat = () => {},
   basicCard = false,
 }) {
-  const userId = sessionStorage.getItem("user");
+  const user = useSelector((state) => state.userData.user);
+  const userId = user?.id;
   const contactStatuses = ["Online", "Offline", "Away"];
   const options = ["delete", "block", "message"];
 

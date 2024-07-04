@@ -1,5 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 import * as React from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import PropTypes from "prop-types";
 import Stack from "@mui/material/Stack";
@@ -71,7 +72,8 @@ const EllipsisTypography = styled(Typography)({
 });
 
 function ChatCard({ chat, handleJoinChat = () => {}, selected = false }) {
-  const userId = sessionStorage.getItem("user");
+  const user = useSelector((state) => state.userData.user);
+  const userId = user?.id;
   const [anchorElOptions, setAnchorElOptions] = React.useState(null);
   const [message, setMessage] = React.useState(null);
   const [status, setStatus] = React.useState(null);
