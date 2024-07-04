@@ -27,7 +27,7 @@ const userDataSlice = createSlice({
     },
     logoutAction: (state) => {
       state.user = initialState.user
-      state.settings = initialState
+      state.settings = initialState.settings
     },
   },
 })
