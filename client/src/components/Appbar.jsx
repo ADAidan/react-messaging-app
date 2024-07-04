@@ -1,4 +1,5 @@
 import * as React from "react";
+import { useSelector } from "react-redux";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -15,15 +16,15 @@ import Divider from "@mui/material/Divider";
 import { Link as MuiLink, Stack } from "@mui/material";
 import DynamicAvatar from "./DynamicAvatar";
 import NotificationsIcon from "./NotificationsIcon";
-import UserContext from "../Context";
 
 const pages = ["Messages", "Contacts"];
 const settings = ["Profile", "Settings", "Logout"];
 
 function ResponsiveAppBar() {
-  const user = React.useContext(UserContext);
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+
+  const user = useSelector((state) => state.userData.user);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -189,7 +190,7 @@ function ResponsiveAppBar() {
                   alignItems: "center",
                 }}
               >
-                <DynamicAvatar name={user.username} />
+                {user.username && <DynamicAvatar name={user.username} />}
                 <Typography
                   variant="subtitle1"
                   component="p"

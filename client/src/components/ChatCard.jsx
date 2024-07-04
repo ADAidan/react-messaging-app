@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-underscore-dangle */
 import * as React from "react";
 import { useSelector } from "react-redux";
@@ -283,8 +284,8 @@ ChatCard.propTypes = {
       }),
     ),
   }).isRequired,
-  handleJoinChat: PropTypes.func.isRequired,
-  selected: PropTypes.bool.isRequired,
+  handleJoinChat: PropTypes.func,
+  selected: PropTypes.bool,
 };
 
 export default ChatCard;

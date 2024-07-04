@@ -1,3 +1,4 @@
+/* eslint-disable react/require-default-props */
 /* eslint-disable no-underscore-dangle */
 import * as React from "react";
 import { useSelector } from "react-redux";
@@ -378,9 +379,9 @@ ContactCard.propTypes = {
     username: PropTypes.string.isRequired,
     status: PropTypes.string,
   }).isRequired,
-  setOpen: PropTypes.func.isRequired,
-  setSelectedChat: PropTypes.func.isRequired,
-  basicCard: PropTypes.bool.isRequired,
+  setOpen: PropTypes.func,
+  setSelectedChat: PropTypes.func,
+  basicCard: PropTypes.bool,
 };
 
 export default ContactCard;
