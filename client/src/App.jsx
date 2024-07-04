@@ -1,5 +1,6 @@
 import * as React from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import ResponsiveAppBar from "./components/Appbar";
 import Home from "./pages/Home";
@@ -16,9 +17,11 @@ export default function App() {
   const [profilePicture, setProfilePicture] = React.useState("");
   const [status, setStatus] = React.useState("");
 
+  const user = useSelector((state) => state.userData.user);
+
   React.useEffect(() => {
     const getUserData = async () => {
-      const userID = sessionStorage.getItem("user");
+      const userID = user?.id;
       if (!userID) {
         return;
       }

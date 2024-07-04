@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import AddContactModal from "./AddContactModal";
 
 export default function ContactTabs({ setSelectedTab = () => {} }) {
-  const userId = sessionStorage.getItem("user"); // The ID of the user to update
+  const userId = useSelector((state) => state.userData.user.id);
   const [value, setValue] = React.useState(0);
   const [allUsers, setAllUsers] = React.useState([]); // The list of all users
   const [open, setOpen] = React.useState(false);

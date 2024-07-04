@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import * as React from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
@@ -15,7 +16,9 @@ import socket from "../socket";
 function MessageInput({ selectedChat }) {
   const [messageValue, setMessageValue] = React.useState("");
 
-  const userId = sessionStorage.getItem("user");
+  const user = useSelector((state) => state.userData.user);
+
+  const userId = user?.id;
 
   const sendMessage = async () => {
     try {
