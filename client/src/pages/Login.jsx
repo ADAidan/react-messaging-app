@@ -17,6 +17,7 @@ import { Button } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { setUser } from "../features/userData/userDataSlice";
 import socket from "../socket";
+import Background from "../components/Background";
 import RememberUserCheckbox from "../components/RememberUserCheckbox";
 
 function Login() {
@@ -80,6 +81,7 @@ function Login() {
 
   return (
     <Container maxWidth="md">
+      <Background />
       <Stack
         direction="column"
         sx={{
