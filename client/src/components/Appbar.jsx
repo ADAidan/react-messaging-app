@@ -13,6 +13,7 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import Divider from "@mui/material/Divider";
+import LoginIcon from "@mui/icons-material/Login";
 import { Link as MuiLink, Stack } from "@mui/material";
 import DynamicAvatar from "./DynamicAvatar";
 import NotificationsIcon from "./NotificationsIcon";
@@ -152,12 +153,27 @@ function ResponsiveAppBar() {
           </Box>
 
           <Box sx={{ flexGrow: 0 }}>
-            {user.username && <NotificationsIcon />}
-            <Tooltip title="Open settings">
-              <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                {user.username && <DynamicAvatar name={user.username} />}
+            {user.username ? (
+              <>
+                <NotificationsIcon />
+                <Tooltip title="Open settings">
+                  <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    {user.username && <DynamicAvatar name={user.username} />}
+                  </IconButton>
+                </Tooltip>
+              </>
+            ) : (
+              <IconButton
+                size="large"
+                aria-label="Login Button"
+                aria-controls="Login-appbar"
+                aria-haspopup="false"
+                href="/login"
+                color="inherit"
+              >
+                <LoginIcon />
               </IconButton>
-            </Tooltip>
+            )}
             <Menu
               sx={{
                 mt: "45px",
@@ -190,7 +206,20 @@ function ResponsiveAppBar() {
                   alignItems: "center",
                 }}
               >
-                {user.username && <DynamicAvatar name={user.username} />}
+                {user.username ? (
+                  <DynamicAvatar name={user.username} />
+                ) : (
+                  <IconButton
+                    size="large"
+                    aria-label="Login Button"
+                    aria-controls="Login-appbar"
+                    aria-haspopup="false"
+                    href="/login"
+                    color="inherit"
+                  >
+                    <LoginIcon />
+                  </IconButton>
+                )}
                 <Typography
                   variant="subtitle1"
                   component="p"
