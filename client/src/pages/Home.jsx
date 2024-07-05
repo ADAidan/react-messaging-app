@@ -54,10 +54,10 @@ function Home() {
           }}
         >
           <Button variant="contained" href="/signup">
-            join for free
+            Join for free
           </Button>
-          <Button variant="contained" href="/messages">
-            messages
+          <Button variant="contained" href="/login">
+            Log In
           </Button>
         </Stack>
         <Copyright />
