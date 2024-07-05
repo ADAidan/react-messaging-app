@@ -15,6 +15,7 @@ import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Button } from "@mui/material";
 import socket from "../socket";
+import Background from "../components/Background";
 import EmailNotificationCheckbox from "../components/EmailNotificationCheckbox";
 import TermsCheckbox from "../components/TermsCheckbox";
 
@@ -179,6 +180,7 @@ function SignUp() {
 
   return (
     <Container maxWidth="md">
+      <Background />
       <Stack
         direction="column"
         sx={{
