@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import LoginIcon from "@mui/icons-material/Login";
 import Background from "../components/Background";
 import Copyright from "../Copyright";
 
@@ -54,10 +55,15 @@ function Home() {
           }}
         >
           <Button variant="contained" href="/signup">
-            join for free
+            Join for free
           </Button>
-          <Button variant="contained" href="/messages">
-            messages
+          <Button variant="contained" href="/login">
+            <Stack direction="row" spacing={1}>
+              <Typography variant="button" component="p">
+                Log In
+              </Typography>
+              <LoginIcon />
+            </Stack>
           </Button>
         </Stack>
         <Copyright />
