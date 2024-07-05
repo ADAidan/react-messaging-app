@@ -1,7 +1,6 @@
 import * as React from "react";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
-import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Background from "../components/Background";
@@ -16,19 +15,6 @@ function Home() {
       }}
     >
       <Background />
-      <Box
-        sx={{
-          bgcolor: "rgba(255, 255, 255, 0.35)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: -1,
-        }}
-      />
       <Stack
         direction="column"
         spacing={2}
