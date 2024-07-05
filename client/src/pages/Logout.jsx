@@ -23,15 +23,20 @@ function Logout() {
 
     const logOutUser = async () => {
       try {
-        const response = await axios.post(
+        await axios.post(
           `${import.meta.env.VITE_API_URL}/users/logout`,
           { userId },
           { withCredentials: true },
         );
+      } catch (error) {
+        console.error("Unexpected error:", error);
+        return false;
+      }
 
-        if (response.status === 200) {
+      try {
+        if (userId) {
           socket.emit("ChangeUserStatus", {
-            id: response.id,
+            id: userId,
             status: "Offline",
           });
           persistor.purge();
@@ -42,7 +47,7 @@ function Logout() {
           console.error("Failed to log out user");
         }
 
-        return response.status;
+        return true;
       } catch (error) {
         console.error("Unexpected error:", error);
         return false;
