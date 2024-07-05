@@ -4,6 +4,7 @@ import Stack from "@mui/material/Stack";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
+import Background from "../components/Background";
 import Copyright from "../Copyright";
 
 function Home() {
@@ -14,19 +15,7 @@ function Home() {
         height: "100vh",
       }}
     >
-      <Box
-        sx={{
-          backgroundImage: "url(../../images/homepage-background.jpg)",
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          zIndex: -1,
-        }}
-      />
+      <Background />
       <Box
         sx={{
           bgcolor: "rgba(255, 255, 255, 0.35)",
