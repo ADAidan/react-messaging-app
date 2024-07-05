@@ -20,10 +20,12 @@ import NotificationsIcon from "./NotificationsIcon";
 
 const pages = ["Messages", "Contacts"];
 const settings = ["Profile", "Settings", "Logout"];
+const menuItems = ["Login", "Signup"];
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
+  const [anchorElLogin, setAnchorElLogin] = React.useState(null);
 
   const user = useSelector((state) => state.userData.user);
 
@@ -34,12 +36,20 @@ function ResponsiveAppBar() {
     setAnchorElUser(event.currentTarget);
   };
 
+  const handleOpenLoginMenu = (event) => {
+    setAnchorElLogin(event.currentTarget);
+  };
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const handleCloseLoginMenu = () => {
+    setAnchorElLogin(null);
   };
 
   return (
@@ -73,10 +83,11 @@ function ResponsiveAppBar() {
             </Typography>
           </MuiLink>
 
+          {/* Shown when displayed on a mobile device */}
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
             <IconButton
               size="large"
-              aria-label="account of current user"
+              aria-label="account of current user who is authenticated"
               aria-controls="menu-appbar"
               aria-haspopup="true"
               onClick={handleOpenNavMenu}
@@ -125,7 +136,7 @@ function ResponsiveAppBar() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -137,7 +148,7 @@ function ResponsiveAppBar() {
               textDecoration: "none",
             }}
           >
-            LOGO
+            CONCORD
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
@@ -163,17 +174,18 @@ function ResponsiveAppBar() {
                 </Tooltip>
               </>
             ) : (
-              <IconButton
-                size="large"
-                aria-label="Login Button"
-                aria-controls="Login-appbar"
-                aria-haspopup="false"
-                href="/login"
-                color="inherit"
-              >
-                <LoginIcon />
-              </IconButton>
+              <Tooltip title="Log In">
+                <IconButton
+                  size="large"
+                  color="inherit"
+                  onClick={handleOpenLoginMenu}
+                >
+                  <LoginIcon />
+                </IconButton>
+              </Tooltip>
             )}
+            {/* Menu that is shown when the users avatar is clicked
+             it shows buttons to edit profile */}
             <Menu
               sx={{
                 mt: "45px",
@@ -206,20 +218,7 @@ function ResponsiveAppBar() {
                   alignItems: "center",
                 }}
               >
-                {user.username ? (
-                  <DynamicAvatar name={user.username} />
-                ) : (
-                  <IconButton
-                    size="large"
-                    aria-label="Login Button"
-                    aria-controls="Login-appbar"
-                    aria-haspopup="false"
-                    href="/login"
-                    color="inherit"
-                  >
-                    <LoginIcon />
-                  </IconButton>
-                )}
+                {user.username && <DynamicAvatar name={user.username} />}
                 <Typography
                   variant="subtitle1"
                   component="p"
@@ -234,15 +233,45 @@ function ResponsiveAppBar() {
               <Divider />
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                  <MuiLink
-                    href={`/${setting.toLowerCase()}`}
-                    underline="none"
-                    sx={{
-                      width: "100%",
-                    }}
-                  >
+                  <MuiLink href={`/${setting.toLowerCase()}`} underline="none">
                     <Typography variant="button" component="p">
                       {setting}
+                    </Typography>
+                  </MuiLink>
+                </MenuItem>
+              ))}
+            </Menu>
+            {/* Menu that is displayed when the Login icon is clicked */}
+            <Menu
+              sx={{
+                mt: "45px",
+              }}
+              slotProps={{
+                paper: {
+                  sx: {
+                    width: "15ch",
+                  },
+                },
+              }}
+              id="login-appbar"
+              anchorEl={anchorElLogin}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchorElLogin)}
+              onClose={handleCloseLoginMenu}
+            >
+              {menuItems.map((item) => (
+                <MenuItem key={item} onClick={handleCloseUserMenu}>
+                  <MuiLink href={`/${item.toLowerCase()}`} underline="none">
+                    <Typography variant="button" component="p">
+                      {item}
                     </Typography>
                   </MuiLink>
                 </MenuItem>
